@@ -14,7 +14,7 @@
     <tr>
 
       <td >{{ $variable->idVariable }}</th>
-      <td style="cursor:pointer"><a href="{{ url('tables')}}/{{$variable->idVariable}}">{{ $variable->Descripcion }}</a></th>
+      <td style="cursor:pointer"><a href="{{ url('form')}}/{{$variable->idVariable}}">{{ $variable->Nombre }}</a></th>
       <td class="col-xs-3">{{ $variable->Tipo }}
       </td>
     </tr>

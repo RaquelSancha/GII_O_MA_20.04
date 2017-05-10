@@ -34,12 +34,13 @@
             <li class="header">{{ trans('adminlte_lang::message.header') }}</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="{{ url('home') }}"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li>
-            <li><a href="#"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.anotherlink') }}</span></a></li>
+            <li><a href="{{ url('/tables') }}"><i class='fa fa-table'></i> <span>{{ trans('adminlte_lang::message.tables') }}</span></a></li>
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.multilevel') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-edit'></i> <span>{{ trans('adminlte_lang::message.administration') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <!--<li><a href="{{ url('/admin/roles') }}">{{ trans('adminlte_lang::message.roles') }}</a></li>
+                    <li><a href="{{ url('/admin/permissions') }}">{{ trans('adminlte_lang::message.permissions') }}</a></li>-->
+                    <li><a href="{{ url('/admin/users') }}"><i class='fa fa-user-o'></i>{{ trans('adminlte_lang::message.users') }}</span></a></li>
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->

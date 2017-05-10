@@ -15,6 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+    //    Route::get('/link1', function ()    {
+//        // Uses Auth Middleware
+//    });
 
-Route::get('/home', 'HomeController@index');
+    //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
+    #adminlte_routes
+
+
+    
+});
+
+Route::get('/tables', 'VariableController@index');
+
+Route::post('/tables/{id}', 'TableController@show');
+
+Route::get('/form/{id}', 'FormController@show');

@@ -24,6 +24,17 @@
           
       </div>
   </div>
+  <div class="form-group">
+      <label for="filtrado" class="col-md-4 control-label">Selecciona cómo deseas filtrar los datos</label>
+      <div class="col-md-2">
+          <select class="selectpicker" name="filtrado">
+            <option>Meses</option>
+            <option>Años</option>
+            <option>Trimestres</option>
+          </select>
+      </div>
+  </div>
+  
 
   <div class="form-group">
       <div class="col-md-8 col-md-offset-4">
