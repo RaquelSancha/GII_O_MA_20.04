@@ -1,3 +1,5 @@
+<?php $asterisco=0;?>
+
 <table  class="table table-striped"  align="center" border="5">
   @if($filtrado == "Meses")
     <thead >
@@ -64,13 +66,48 @@
       @for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]}}</th> 
         @for ($j = 0; $j < count($years); $j++)
-          @for ($k = 0; $k < 12; $k=$k+3)   
-            <td>{{ (($values[($i * count($years))+$j][$k][0]->Valor)+($values[($i * count($years))+$j][$k+1][0]->Valor)+($values[($i * count($years))+$j][$k+2][0]->Valor))/3 }}</td>
+          @for ($k = 0; $k < 12; $k=$k+3) 
+
+            @if(empty($values[($i * count($years))+$j][$k][0]->Valor))
+              @if(empty($values[($i * count($years))+$j][$k+1][0]->Valor))
+                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
+                  <td>-</td><?php $asterisco=1?>
+                @else
+                  <td>{{$values[($i * count($years))+$j][$k+2][0]->Valor}}*</td><?php $asterisco=1?>
+                @endif
+              @else
+                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
+                  <td>{{$values[($i * count($years))+$j][$k+1][0]->Valor}}*</td><?php $asterisco=1?>
+                @else
+                  <td>{{(($values[($i * count($years))+$j][$k+2][0]->Valor)+
+                  ($values[($i * count($years))+$j][$k+1][0]->Valor))/2}}*</td><?php $asterisco=1?>
+                @endif
+              @endif
+            @else  
+              @if(empty($values[($i * count($years))+$j][$k+1][0]->Valor))
+                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
+                  <td>{{$values[($i * count($years))+$j][$k][0]->Valor}}*</td><?php $asterisco=1?>
+                @else
+                   <td>{{(($values[($i * count($years))+$j][$k+2][0]->Valor)+
+                  ($values[($i * count($years))+$j][$k][0]->Valor))/2}}*</td><?php $asterisco=1?>
+                @endif
+              @else
+                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
+                  <td>{{(($values[($i * count($years))+$j][$k+1][0]->Valor)+
+                  ($values[($i * count($years))+$j][$k][0]->Valor))/2}}*</td><?php $asterisco=1?> 
+                @else 
+                  <td>{{ (($values[($i * count($years))+$j][$k][0]->Valor)+
+                  ($values[($i * count($years))+$j][$k+1][0]->Valor)+
+                  ($values[($i * count($years))+$j][$k+2][0]->Valor))/3 }}</td>
+                @endif
+              @endif
+            @endif
           @endfor
         @endfor
       </tr>  
       @endfor
     </tbody>
+
   @else
      <thead >
       <tr>
@@ -85,6 +122,7 @@
       @for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]}}</th> 
         @for ($j = 0; $j < count($years); $j++)
+
             <td>{{ 
               ((($values[($i * count($years))+$j][0][0]->Valor)+
               ($values[($i * count($years))+$j][1][0]->Valor)+
@@ -105,4 +143,9 @@
     </tbody>
   @endif
 </table>
+<?php if($asterisco==1){
+            echo "* Existen campos por rellenar";
+
+          }
+      ?>
  

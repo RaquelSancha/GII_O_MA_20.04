@@ -32,3 +32,9 @@ Route::get('/tables', 'VariableController@index');
 Route::post('/tables/{id}', 'TableController@show');
 
 Route::get('/form/{id}', 'FormController@show');
+
+Route::get('/tables/create', 'TableController@create');
+
+Route::get('tables/{id}/edit','TableController@edit');
+
+Route::post('/confirm/{id}', 'TableController@update');

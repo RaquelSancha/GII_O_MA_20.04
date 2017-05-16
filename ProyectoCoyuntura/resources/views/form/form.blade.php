@@ -24,6 +24,7 @@
           
       </div>
   </div>
+  
   <div class="form-group">
       <label for="filtrado" class="col-md-4 control-label">Selecciona cómo deseas filtrar los datos</label>
       <div class="col-md-2">

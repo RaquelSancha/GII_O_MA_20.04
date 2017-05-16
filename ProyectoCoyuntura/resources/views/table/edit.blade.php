@@ -3,6 +3,8 @@
 
 @section('main-content')
 <h2><b>Tablas</b> Predefinidas</h1><hr>
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm')}}/{{$id}}" >
+    {{ csrf_field() }}
 <table  class="table table-striped"  align="center" border="5">
  <thead >
       <tr>
@@ -31,8 +33,7 @@
     </thead>
     <tbody>
     
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm')}}/{{$id}}" >
-    {{ csrf_field() }}
+   
   		<div class="form-group">
   		<label for="update"></label>
     	<tr>
@@ -41,21 +42,23 @@
 	        @for ($j = 0; $j < count($years); $j++)
 	          @for ($k = 0; $k < 12; $k++)   
 	            @if(empty($values[($i * count($years))+$j][$k][0]->Valor))
-	            <td><input type="text" class="form-control input-sm" placeholder="-" name="update[]"></td>
+	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
 	            @else
-	            <td><input type="text" class="form-control input-sm" placeholder="{{$values[($i * count($years))+$j][$k][0]->Valor}}" name="update[]"></td>
+	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[($i * count($years))+$j][$k][0]->Valor}}" name="update[]"></td>
 	            @endif
 	          @endfor
 	        @endfor
       	</tr>  
       	@endfor
-     	</div>
-     	<div class="form-group">
-         		<input class="btn btn-success" name="enviar" type="submit" value="Enviar" />
-		</div>
-	</form>
+
+	
+
     </tbody>
 </table>
+<div>
+    <input class="btn btn-success"  type="submit" value="Enviar" />
+</div>
+</form>
 
 		
 @endsection
