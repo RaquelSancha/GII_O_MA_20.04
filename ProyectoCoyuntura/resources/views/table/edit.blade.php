@@ -32,27 +32,30 @@
       </tr>
     </thead>
     <tbody>
-    
-   
   		<div class="form-group">
   		<label for="update"></label>
     	<tr>
+      @for ($l = 0; $l < count($ambitos); $l++)
+        <tr>
+          <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l]->Nombre }}
+              <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
+          </th>
+        </tr>
+        <tr>
       	@for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]->Nombre}}</th> 
 	        @for ($j = 0; $j < count($years); $j++)
 	          @for ($k = 0; $k < 12; $k++)   
-	            @if(empty($values[($i * count($years))+$j][$k][0]->Valor))
+	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
 	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
 	            @else
-	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[($i * count($years))+$j][$k][0]->Valor}}" name="update[]"></td>
+	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
 	            @endif
 	          @endfor
 	        @endfor
       	</tr>  
       	@endfor
-
-	
-
+      @endfor
     </tbody>
 </table>
 <div>

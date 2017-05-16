@@ -28,19 +28,26 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-      @for ($i = 0; $i < count($categoria); $i++)
-        <th scope="row">{{$categoria[$i]}}</th> 
-        @for ($j = 0; $j < count($years); $j++)
-          @for ($k = 0; $k < 12; $k++)   
-            @if(empty($values[($i * count($years))+$j][$k][0]->Valor))
-            <td>-</td>
-            @else
-            <td>{{$values[($i * count($years))+$j][$k][0]->Valor}}</td>
-            @endif
+      @for ($l = 0; $l < count($ambitos); $l++)
+        <tr>
+          <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l] }}
+              <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
+          </th>
+        </tr>
+        <tr>
+        @for ($i = 0; $i < count($categoria); $i++)
+          <th scope="row">{{ $categoria[$i] }}</th> 
+          @for ($j = 0; $j < count($years); $j++)
+            @for ($k = 0; $k < 12; $k++)   
+              @if(empty( $values[$l][($i*count($years))+$j][$k][0]->valor ))
+              <td>-</td>
+              @else
+              <td>{{ $values[$l][($i*count($years))+$j][$k][0]->valor }}</td>
+              @endif
+            @endfor
           @endfor
+        </tr>  
         @endfor
-      </tr>  
       @endfor
     </tbody>
   @elseif($filtrado == "Trimestres")
@@ -62,43 +69,49 @@
       </tr>
     </thead>
     <tbody>
+    @for ($l = 0; $l < count($ambitos); $l++)
+      <tr>
+          <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l] }}
+              <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
+          </th>
+        </tr>
+        <tr>
       <tr>
       @for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]}}</th> 
         @for ($j = 0; $j < count($years); $j++)
           @for ($k = 0; $k < 12; $k=$k+3) 
-
-            @if(empty($values[($i * count($years))+$j][$k][0]->Valor))
-              @if(empty($values[($i * count($years))+$j][$k+1][0]->Valor))
-                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
-                  <td>-</td><?php $asterisco=1?>
+            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
+              @if(empty($values[$l][($i * count($years))+$j][$k+1][0]->valor))
+                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                  <td>-*</td><?php $asterisco=1?>
                 @else
-                  <td>{{$values[($i * count($years))+$j][$k+2][0]->Valor}}*</td><?php $asterisco=1?>
+                  <td>{{$values[$l][($i * count($years))+$j][$k+2][0]->valor}}*</td><?php $asterisco=1?>
                 @endif
               @else
-                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
-                  <td>{{$values[($i * count($years))+$j][$k+1][0]->Valor}}*</td><?php $asterisco=1?>
+                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                  <td>{{$values[$l][($i * count($years))+$j][$k+1][0]->valor}}*</td><?php $asterisco=1?>
                 @else
-                  <td>{{(($values[($i * count($years))+$j][$k+2][0]->Valor)+
-                  ($values[($i * count($years))+$j][$k+1][0]->Valor))/2}}*</td><?php $asterisco=1?>
+                  <td>{{(($values[$l][($i * count($years))+$j][$k+2][0]->valor)+
+                  ($values[$l][($i * count($years))+$j][$k+1][0]->valor))/2}}*</td><?php $asterisco=1?>
                 @endif
               @endif
             @else  
-              @if(empty($values[($i * count($years))+$j][$k+1][0]->Valor))
-                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
-                  <td>{{$values[($i * count($years))+$j][$k][0]->Valor}}*</td><?php $asterisco=1?>
+              @if(empty($values[$l][($i * count($years))+$j][$k+1][0]->valor))
+                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                  <td>{{$values[$l][($i * count($years))+$j][$k][0]->valor}}*</td><?php $asterisco=1?>
                 @else
-                   <td>{{(($values[($i * count($years))+$j][$k+2][0]->Valor)+
-                  ($values[($i * count($years))+$j][$k][0]->Valor))/2}}*</td><?php $asterisco=1?>
+                   <td>{{(($values[$l][($i * count($years))+$j][$k+2][0]->valor)+
+                  ($values[$l][($i * count($years))+$j][$k][0]->valor))/2}}*</td><?php $asterisco=1?>
                 @endif
               @else
-                @if(empty($values[($i * count($years))+$j][$k+2][0]->Valor))
-                  <td>{{(($values[($i * count($years))+$j][$k+1][0]->Valor)+
-                  ($values[($i * count($years))+$j][$k][0]->Valor))/2}}*</td><?php $asterisco=1?> 
+                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                  <td>{{(($values[$l][($i * count($years))+$j][$k+1][0]->valor)+
+                  ($values[$l][($i * count($years))+$j][$k][0]->valor))/2}}*</td><?php $asterisco=1?> 
                 @else 
-                  <td>{{ (($values[($i * count($years))+$j][$k][0]->Valor)+
-                  ($values[($i * count($years))+$j][$k+1][0]->Valor)+
-                  ($values[($i * count($years))+$j][$k+2][0]->Valor))/3 }}</td>
+                  <td>{{ (($values[$l][($i * count($years))+$j][$k][0]->valor)+
+                  ($values[$l][($i * count($years))+$j][$k+1][0]->valor)+
+                  ($values[$l][($i * count($years))+$j][$k+2][0]->valor))/3 }}</td>
                 @endif
               @endif
             @endif
@@ -106,6 +119,7 @@
         @endfor
       </tr>  
       @endfor
+    @endfor
     </tbody>
 
   @else
@@ -118,28 +132,34 @@
       </tr>
     </thead>
      <tbody>
-      <tr>
-      @for ($i = 0; $i < count($categoria); $i++)
+      for ($l = 0; $l < count($ambitos); $l++)
+        <tr>
+          <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l] }}
+              <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
+          </th>
+        </tr>
+        <tr>
+        @for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]}}</th> 
-        @for ($j = 0; $j < count($years); $j++)
+          @for ($j = 0; $j < count($years); $j++)
 
-            <td>{{ 
-              ((($values[($i * count($years))+$j][0][0]->Valor)+
-              ($values[($i * count($years))+$j][1][0]->Valor)+
-              ($values[($i * count($years))+$j][2][0]->Valor)+
-              ($values[($i * count($years))+$j][3][0]->Valor)+
-              ($values[($i * count($years))+$j][4][0]->Valor)+
-              ($values[($i * count($years))+$j][5][0]->Valor)+
-              ($values[($i * count($years))+$j][6][0]->Valor)+
-              ($values[($i * count($years))+$j][7][0]->Valor)+
-              ($values[($i * count($years))+$j][8][0]->Valor)+
-              ($values[($i * count($years))+$j][9][0]->Valor)+
-              ($values[($i * count($years))+$j][10][0]->Valor)+
-              ($values[($i * count($years))+$j][11][0]->Valor))/12)
-            }}</td>
+              <td>{{ 
+                ((($values[($i * count($years))+$j][0][0]->Valor)+
+                ($values[($i * count($years))+$j][1][0]->Valor)+
+                ($values[($i * count($years))+$j][2][0]->Valor)+
+                ($values[($i * count($years))+$j][3][0]->Valor)+
+                ($values[($i * count($years))+$j][4][0]->Valor)+
+                ($values[($i * count($years))+$j][5][0]->Valor)+
+                ($values[($i * count($years))+$j][6][0]->Valor)+
+                ($values[($i * count($years))+$j][7][0]->Valor)+
+                ($values[($i * count($years))+$j][8][0]->Valor)+
+                ($values[($i * count($years))+$j][9][0]->Valor)+
+                ($values[($i * count($years))+$j][10][0]->Valor)+
+                ($values[($i * count($years))+$j][11][0]->Valor))/12)
+              }}</td>
+          @endfor
+          </tr>  
         @endfor
-      </tr>  
-      @endfor
     </tbody>
   @endif
 </table>
