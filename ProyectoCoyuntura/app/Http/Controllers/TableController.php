@@ -52,6 +52,7 @@ class TableController extends Controller
         $values=array();
         $valores=array();
 
+        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
@@ -77,18 +78,32 @@ class TableController extends Controller
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.edit',compact('categoria','years','values','id','ambitos'));
+        return view('table.edit',compact('categoria','years','values','id','ambitos','nombreVariable'));
     }
 
     public function update(Request $request, $id){
 
         $update=$request->input("update");
+        $new_Ambito=$request->input("new_Ambito");
+        
+        $meses=0;
+        $n_amb=0;
+
+        $categoria  = DB::select('SELECT DISTINCT idCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+
+
+        if(!(empty($new_Ambito))){
+            if(empty(DB::select('SELECT Nombre FROM ambito where Nombre= ?',[$new_Ambito]))){
+                DB::insert('INSERT INTO ambito (idAmbito, Nombre) VALUES (NULL, ? );',[$new_Ambito]);
+            }
+            $idAmb=DB::select('SELECT idAmbito FROM ambito where Nombre= ?',[$new_Ambito]);
+            DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$categoria[0]->idCategoria,$idAmb[0]->idAmbito,1,$years[0]->Year]);
+        }
+
         $categoria  = DB::select('SELECT DISTINCT idCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
         $ambito = DB::select('SELECT DISTINCT idAmbito FROM ambito natural join variableambitocategoria where idVariable=?',[$id]);
-
-        $meses=0;
-        $n_amb=0;
 
         foreach ($ambito as $amb ) {
             foreach ($categoria as $cat) {
@@ -113,6 +128,40 @@ class TableController extends Controller
         }
        
 
-        return view('confirm.update',compact('update','valor'));
+        return view('confirm.update',compact('update','valor','new_Ambito'));
+    }
+    public function insertAmbito($id){
+
+        $valYear=array();
+        $values=array();
+        $valores=array();
+
+        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+
+        foreach ($ambitos as $ambito) {
+            foreach ($categoria as $cat) {
+                foreach ($years as $year) {
+                    for ($j=1; $j < 13 ; $j++) { 
+                        
+                        $valor=DB::select('SELECT valor FROM variableambitocategoria
+                                            INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
+                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito->Nombre,$year->Year,$j,$cat->Nombre,$year->Year,$j]);
+                        if(empty($valor)){
+                            array_push($valYear,"NaN");
+                        }else{
+                            array_push($valYear, $valor);
+                        }
+                    }
+                    array_push($valores,$valYear);
+                    $valYear=array();
+                }
+            }   
+            array_push($values,$valores);
+            $valores=array();
+        }
+        return view('table.insertAmbito',compact('categoria','years','values','id','ambitos','nombreVariable'));
     }
 }

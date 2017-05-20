@@ -38,3 +38,5 @@ Route::get('/tables/create', 'TableController@create');
 Route::get('tables/{id}/edit','TableController@edit');
 
 Route::post('/confirm/{id}', 'TableController@update');
+
+Route::get('/tables/{id}/insertAmbito','TableController@insertAmbito');

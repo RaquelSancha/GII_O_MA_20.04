@@ -4,10 +4,11 @@
 @section('main-content')
 
 <h1> La tabla se ha actualizado correctamente.</h1>
-@for($i=0;$i<144;$i++)
-	{{$update[$i]}}
+@foreach($update as $upd)
+	{{$upd}}
 	,
-@endfor
+@endforeach
+
 <div>
 <a class="btn btn-success  " href="/tables" role="button">Volver al inicio</a>
 </div>

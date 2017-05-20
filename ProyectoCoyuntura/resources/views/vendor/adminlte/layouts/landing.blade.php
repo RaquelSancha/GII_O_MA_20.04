@@ -33,14 +33,14 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 
 </head>
 
-<body data-spy="scroll" data-target="#navigation" data-offset="50">
+<body data-spy="scroll" data-target="#navigation" data-offset="50" background="img/f2.jpg">
 
-<div id="app" v-cloak>
+<div id="app" v-cloak >
     <!-- Fixed navbar -->
     <div id="navigation" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" background="f2.jpg">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -61,18 +61,17 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div>
 
 
-    <section id="home" name="home">
-        <div id="headerwrap">
-            <div class="container">
-                <div class="row centered">
+    
+    
+            <div class="container " >
+                <div class="row centered"  >
                     <div class="col-lg-12">
-                  
+                        <br><br><br><br><br><br><br><br><br><br><br>
                         <h3><a href="{{ url('/register') }}" class="btn btn-lg btn-success">{{ trans('adminlte_lang::message.gedstarted') }}</a></h3>
                     </div>
-                   
                 </div>
-            </div> <!--/ .container -->
-        </div><!--/ #headerwrap -->
-    </section>
+            </div>
+
 </body>
+
 </html>

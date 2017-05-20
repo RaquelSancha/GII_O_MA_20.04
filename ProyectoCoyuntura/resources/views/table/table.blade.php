@@ -1,6 +1,6 @@
 <?php $asterisco=0;?>
 
-<table  class="table table-striped"  align="center" border="5">
+<table  class="table"  align="center" border="5">
   @if($filtrado == "Meses")
     <thead >
       <tr>
