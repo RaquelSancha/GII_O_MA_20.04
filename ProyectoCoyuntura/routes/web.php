@@ -39,4 +39,8 @@ Route::get('tables/{id}/edit','TableController@edit');
 
 Route::post('/confirm/{id}', 'TableController@update');
 
-Route::get('/tables/{id}/insertAmbito','TableController@insertAmbito');
+Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito');
+
+Route::get('/tables/{id}/insertYear','TableController@showInsertYear');
+
+Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito');

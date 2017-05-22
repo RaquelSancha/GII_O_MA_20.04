@@ -9,7 +9,7 @@
 @endforeach
 </h1>
 <div align= "right"><a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a></div>
- <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm')}}/{{$id}}" >
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/insertAmbito')}}/{{$id}}" >
     {{ csrf_field() }}
 <table  class="table table-striped"  align="center" border="5">
  <thead >
@@ -53,9 +53,9 @@
 	        @for ($j = 0; $j < count($years); $j++)
 	          @for ($k = 0; $k < 12; $k++)   
 	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
-	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
+	            	<td>-</td>
 	            @else
-	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
+	            	<td>{{$values[$l][($i * count($years))+$j][$k][0]->valor}}</td>
 	            @endif
 	          @endfor
 	        @endfor
