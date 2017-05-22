@@ -54,7 +54,7 @@ class TableController extends Controller
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
 
         foreach ($ambitos as $ambito) {
@@ -85,14 +85,14 @@ class TableController extends Controller
  
         $update=$request->input("update");
         $categoria  = DB::select('SELECT DISTINCT idCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambito = DB::select('SELECT DISTINCT idAmbito FROM variableambitocategoria where idVariable=?',[$id]);
         $meses=0;
         foreach ($ambito as $amb ) {
             foreach ($categoria as $cat) {
                 foreach ($years as $year) {
                     for ($j=1; $j < 13 ; $j++) {   
-                        $valor=DB::select('SELECT Valor FROM variableambitocategoria  WHERE idCategoria= ? AND Year=? AND Mes=? ORDER BY Mes ASC',[$cat->idCategoria,$year->Year,$j]);
+                        $valor=DB::select('SELECT Valor FROM variableambitocategoria  WHERE idAmbito=? and idCategoria= ? AND Year=? AND Mes=? ORDER BY Mes ASC',[$amb->idAmbito,$cat->idCategoria,$year->Year,$j]);
                         if(empty($valor)){
                             if(!(is_null($update[($j-1)+$meses]))) {
                                 DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$id,$cat->idCategoria,$amb->idAmbito,$j,$year->Year,$update[($j-1)+$meses]]);
@@ -120,7 +120,7 @@ class TableController extends Controller
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
 
         foreach ($ambitos as $ambito) {
@@ -152,22 +152,19 @@ class TableController extends Controller
         $new_Ambito=$request->input("new_Ambito");
         
         $meses=0;
-        $n_amb=0;
 
         $categoria  = DB::select('SELECT DISTINCT idCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
 
 
-        if(!(empty($new_Ambito))){
-            if(empty(DB::select('SELECT Nombre FROM ambito where Nombre= ?',[$new_Ambito]))){
-                DB::insert('INSERT INTO ambito (idAmbito, Nombre) VALUES (NULL, ? );',[$new_Ambito]);
-            }
-            $idAmb=DB::select('SELECT idAmbito FROM ambito where Nombre= ?',[$new_Ambito]);
-            DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$categoria[0]->idCategoria,$idAmb[0]->idAmbito,1,$years[0]->Year]);
+        if(empty(DB::select('SELECT Nombre FROM ambito where Nombre= ?',[$new_Ambito]))){
+            DB::insert('INSERT INTO ambito (idAmbito, Nombre) VALUES (NULL, ? );',[$new_Ambito]);
         }
+        $idAmb=DB::select('SELECT idAmbito FROM ambito where Nombre= ?',[$new_Ambito]);
+        DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$categoria[0]->idCategoria,$idAmb[0]->idAmbito,1,$years[0]->Year]);
 
         $categoria  = DB::select('SELECT DISTINCT idCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambito = DB::select('SELECT DISTINCT idAmbito FROM ambito natural join variableambitocategoria where idVariable=?',[$id]);
 
         foreach ($categoria as $cat) {
@@ -203,7 +200,7 @@ class TableController extends Controller
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
 
         foreach ($ambitos as $ambito) {
@@ -228,5 +225,39 @@ class TableController extends Controller
             $valores=array();
         }
         return view('table.insertYear',compact('categoria','years','values','id','ambitos','nombreVariable'));
+    }
+     public function updateInsertYear (Request $request, $id){
+
+        $update=$request->input("update");
+        $new_Year=$request->input("new_Year");
+        
+        $meses=0;
+
+        $categoria  = DB::select('SELECT DISTINCT idCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $ambito = DB::select('SELECT DISTINCT idAmbito FROM ambito natural join variableambitocategoria where idVariable=?',[$id]);
+
+        DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$categoria[0]->idCategoria,$ambito[0]->idAmbito,1,$new_Year]);
+       
+        foreach ($ambito as $amb) {
+            foreach ($categoria as $cat) {
+                
+                    for ($j=1; $j < 13 ; $j++) {   
+                        $valor=DB::select('SELECT Valor FROM variableambitocategoria  WHERE idAmbito=? and idCategoria= ? AND Year=? AND Mes=? ORDER BY Mes ASC',[$amb->idAmbito,$cat->idCategoria, $new_Year,$j]);
+                         if(empty($valor)){
+                            if(!(is_null($update[($j-1)+$meses]))) {
+                                DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$id,$cat->idCategoria,$amb->idAmbito,$j, $new_Year,$update[($j-1)+$meses]]);
+                            }
+                         }else{
+                            if(!(is_null($update[($j-1)+$meses]))) {
+                                $consulta=DB::update('UPDATE variableambitocategoria SET Valor= ? WHERE idAmbito=? AND idVariable=? AND idCategoria=? AND Year=? AND Mes =?', [$update[($j-1)+$meses],$amb->idAmbito,$id,$cat->idCategoria, $new_Year,$j]);
+                            }
+                         }
+
+                    }
+                    $meses=$meses+12;
+                
+            }
+        }
+        return view('confirm.update');
     }
 }

@@ -11,7 +11,7 @@
 
 
 <div align= "right"><a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a></div>
- <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm')}}/{{$id}}" >
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/insertYear')}}/{{$id}}" >
     {{ csrf_field() }}
 <table  class="table table-striped"  align="center" border="5">
  <thead >
@@ -20,7 +20,7 @@
         @foreach($years as $year)
         <th colspan="12" align="center" bgcolor= "#60B664" style="color:White;">{{ $year->Year}}</th>
         @endforeach
-        <th colspan="12" align="center" bgcolor= "#60B664" style="color:White;">{{ ($years[count($years)-1]->Year)+1}}</th>
+        <th colspan="12" align="center" bgcolor= "#60B664" style="color:White;"><input type="number" class="form-control input-sm"  name="new_Year"></th>
       </tr>
 
       <tr  bgcolor= "#01A556" style="color:White;">
@@ -66,12 +66,16 @@
       	@for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]->Nombre}}</th> 
 	        @for ($j = 0; $j < count($years)+1; $j++)
-	          @for ($k = 0; $k < 12; $k++)   
-	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
-	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
-	            @else
-	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
-	            @endif
+	          @for ($k = 0; $k < 12; $k++)
+                @if($j == count($years))
+    	            	<td><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
+                @else
+                  @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
+                    <td>-</td>
+                  @else
+                    <td>{{$values[$l][($i * count($years))+$j][$k][0]->valor}}</td>
+                  @endif
+                @endif
 	          @endfor
 	        @endfor
       	</tr>  
