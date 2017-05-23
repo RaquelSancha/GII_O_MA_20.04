@@ -40,9 +40,9 @@
       </tr>
     </thead>
     <tbody>
-  		<div class="form-group">
-  		<label for="update"></label>
-    	<tr>
+      <div class="form-group">
+      <label for="update"></label>
+      <tr>
       @for ($l = 0; $l < count($ambitos); $l++)
         <tr>
           <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l]->Nombre }}
@@ -50,28 +50,22 @@
           </th>
         </tr>
         <tr>
-      	@for ($i = 0; $i < count($categoria); $i++)
+        @for ($i = 0; $i < count($categoria); $i++)
         <th scope="row">{{$categoria[$i]->Nombre}}</th> 
-	        @for ($j = 0; $j < count($years); $j++)
-	          @for ($k = 0; $k < 12; $k++)   
-	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
-	            	<td ><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
-	            @else
-	            	<td ><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
-	            @endif
-	          @endfor
-	        @endfor
-      	</tr>  
-      	@endfor
+          @for ($j = 0; $j < count($years); $j++)
+            @for ($k = 0; $k < 12; $k++)   
+              @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
+                <td ><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
+              @else
+                <td ><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
+              @endif
+            @endfor
+          @endfor
+        </tr>  
+        @endfor
       @endfor
     </tbody>
 </table>
-<div>
-    <a align="right" class= "btn btn-info" href="/tables/{{$id}}/insertAmbito" role="button" id="ambito">Añadir Ámbito Geográfico</a>
-    <a align="right" class= "btn btn-info" href="/tables/{{$id}}/insertYear" role="button" id="ambito">Añadir Año</a>
-    <a align="right" class= "btn btn-info" href="/tables/{{$id}}/insertCategoria" role="button" id="ambito">Añadir Categoría</a>
-    <input class="btn btn-success"  type="submit" value="Enviar" />
-</div>
 </form>
-		
+    
 @endsection

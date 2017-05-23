@@ -260,4 +260,39 @@ class TableController extends Controller
         }
         return view('confirm.update');
     }
+    public function showInsertCategoria($id){
+
+        $valYear=array();
+        $values=array();
+        $valores=array();
+
+        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
+        $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+
+        foreach ($ambitos as $ambito) {
+            foreach ($categoria as $cat) {
+                foreach ($years as $year) {
+                    for ($j=1; $j < 13 ; $j++) { 
+                        
+                        $valor=DB::select('SELECT valor FROM variableambitocategoria
+                                            INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
+                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito->Nombre,$year->Year,$j,$cat->Nombre,$year->Year,$j]);
+                        if(empty($valor)){
+                            array_push($valYear,"NaN");
+                        }else{
+                            array_push($valYear, $valor);
+                        }
+                    }
+                    array_push($valores,$valYear);
+                    $valYear=array();
+                }
+            }   
+            array_push($values,$valores);
+            $valores=array();
+        }
+        return view('table.insertCategoria',compact('categoria','years','values','id','ambitos','nombreVariable'));
+    }
+    
 }
