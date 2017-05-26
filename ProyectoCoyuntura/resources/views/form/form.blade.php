@@ -1,18 +1,20 @@
 
-<form class="form-horizontal" role="form" method="POST" action="{{ url('tables')}}/{{$id}}">
-  {{ csrf_field() }}
   <div class="form-group">
       <label for="categoria" class="col-md-4 control-label">Selecciona las categorías a mostrar</label>
-
       <div class="col-md-2">
-          <select multiple class="selectpicker show-tick" name="categoria[]">
-            @foreach($categorias as $categoria)
-            <option>{{$categoria->Nombre}}</option>
-            @endforeach
+          <select multiple class="selectpicker show-tick" name="categoria[]" >
+            @for($i=0, $j=0 ;$i<count($categorias);$i++)
+            @if(!(empty($supercategorias[$j])))
+              @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)
+                 <optgroup label="{{$supercategorias[$j]->Name}}" >
+                 <?php  $j++; ?>
+              @endif
+            @endif
+            <option>{{$categorias[$i]->Nombre}}</option>
+            @endfor
           </select>
       </div>
   </div>
-
   <div class="form-group">
       <label for="years" class="col-md-4 control-label">Selecciona los años</label>
       <div class="col-md-2">
@@ -53,4 +55,3 @@
          <input type="submit" value="Enviar datos!" class="btn btn-primary"  > 
       </div>
   </div>
-</form>

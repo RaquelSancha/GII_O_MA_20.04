@@ -17,6 +17,7 @@ class TableController extends Controller
     	$categoria = $request->input("categoria");
     	$filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
+       
 
         foreach ($ambitos as $ambito) {
         	foreach ($categoria as $cat) {
@@ -35,17 +36,14 @@ class TableController extends Controller
         			array_push($valores,$valYear);
         			$valYear=array();
         		}
+               
             }	
             array_push($values,$valores);
             $valores=array();
     	}
-        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos'));
+        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias'));
     }
-    public function create(){
 
-        $categorias  = DB::select('SELECT DISTINCT Nombre FROM categoria ');
-        return view('table.create',compact('$categorias'));
-    }
     public function edit($id)
     {
         $valYear=array();
@@ -226,7 +224,8 @@ class TableController extends Controller
         }
         return view('table.insertYear',compact('categoria','years','values','id','ambitos','nombreVariable'));
     }
-     public function updateInsertYear (Request $request, $id){
+
+    public function updateInsertYear (Request $request, $id){
 
         $update=$request->input("update");
         $new_Year=$request->input("new_Year");
@@ -260,16 +259,18 @@ class TableController extends Controller
         }
         return view('confirm.update');
     }
-    public function showInsertCategoria($id){
-
+    public function create(Request $request)
+    {
         $valYear=array();
         $values=array();
         $valores=array();
 
-        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
-        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
-        $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $years = $request->input("years");
+        $categoria = $request->input("categoria");
+        $filtrado = $request->input("filtrado");
+        $ambitos = $request->input("ambitos");
+        $variable = $request->input("nombre_variable");
+
 
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
@@ -278,7 +279,7 @@ class TableController extends Controller
                         
                         $valor=DB::select('SELECT valor FROM variableambitocategoria
                                             INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
-                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito->Nombre,$year->Year,$j,$cat->Nombre,$year->Year,$j]);
+                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito,$year,$j,$cat,$year,$j]);
                         if(empty($valor)){
                             array_push($valYear,"NaN");
                         }else{
@@ -288,11 +289,25 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
+               
             }   
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.insertCategoria',compact('categoria','years','values','id','ambitos','nombreVariable'));
+        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable'));
     }
+    public function save(Request $request)
+    {
     
+
+        $years = $request->input("years");
+        $categoria = $request->input("categoria");
+        $filtrado = $request->input("filtrado");
+        $ambitos = $request->input("ambitos");
+        $variable = $request->input("nombre_variable");
+        $values = $request->input("values"); 
+
+    
+        return view('confirm.save',compact('categoria','years','values','filtrado','ambitos','variable'));
+    }
 }

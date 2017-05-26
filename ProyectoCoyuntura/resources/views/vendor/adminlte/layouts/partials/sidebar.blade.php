@@ -40,7 +40,7 @@
                 <ul class="treeview-menu">
                     
                     <li><a href="{{ url('/tables') }}"><i class='fa fa-list'></i>{{ trans('adminlte_lang::message.predefinedTables') }}</a></li>
-                    <li><a href="{{ url('/tables/create') }}"><i class='fa fa-plus'></i>{{ trans('adminlte_lang::message.createTable') }}</span></a></li>
+                    <li><a href="{{ url('/form/create') }}"><i class='fa fa-plus'></i>{{ trans('adminlte_lang::message.createTable') }}</span></a></li>
                 </ul>
             </li>
 

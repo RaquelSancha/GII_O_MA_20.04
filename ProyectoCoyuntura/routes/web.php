@@ -27,23 +27,32 @@ Route::group(['middleware' => 'auth'], function () {
     
 });
 
+
+
+
+Route::get('/form/create', 'FormController@create');
+
+Route::get('/form/{id}', 'FormController@show');
+
+
+Route::post('/tables/create','TableController@create');
+
 Route::get('/tables', 'VariableController@index');
 
 Route::post('/tables/{id}', 'TableController@show');
 
-Route::get('/form/{id}', 'FormController@show');
-
-Route::get('/tables/create', 'TableController@create');
-
-Route::get('tables/{id}/edit','TableController@edit');
-
-Route::post('/confirm/{id}', 'TableController@update');
+Route::get('/tables/{id}/edit','TableController@edit');
 
 Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito');
 
 Route::get('/tables/{id}/insertYear','TableController@showInsertYear');
 
 Route::get('/tables/{id}/insertCategoria','TableController@showInsertCategoria');
+
+
+Route::post('/confirm/save', 'TableController@save');
+
+Route::post('/confirm/{id}', 'TableController@update');
 
 Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito');
 
