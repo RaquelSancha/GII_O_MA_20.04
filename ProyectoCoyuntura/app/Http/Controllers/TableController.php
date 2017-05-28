@@ -298,16 +298,12 @@ class TableController extends Controller
     }
     public function save(Request $request)
     {
-    
 
-        $years = $request->input("years");
-        $categoria = $request->input("categoria");
-        $filtrado = $request->input("filtrado");
-        $ambitos = $request->input("ambitos");
-        $variable = $request->input("nombre_variable");
-        $values = $request->input("values"); 
-
+        $cat = Save::find(Request::input($categoria));
+        if(empty($cat)){
+            $cat='vacio';
+        }
     
-        return view('confirm.save',compact('categoria','years','values','filtrado','ambitos','variable'));
+        return view('confirm.save',compact('cat'));
     }
 }

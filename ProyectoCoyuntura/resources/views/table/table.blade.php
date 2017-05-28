@@ -36,8 +36,6 @@
         </tr>
         <tr>
         @for ($i = 0, $j = 0; $i < count($categoria); $i++)
-        
-
           <th scope="row">{{ $categoria[$i] }}</th> 
           @for ($j = 0; $j < count($years); $j++)
             @for ($k = 0; $k < 12; $k++)   
