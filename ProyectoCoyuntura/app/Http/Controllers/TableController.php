@@ -298,12 +298,18 @@ class TableController extends Controller
     }
     public function save(Request $request)
     {
-
-        $cat = Save::find(Request::input($categoria));
-        if(empty($cat)){
-            $cat='vacio';
-        }
+          if(Request::ajax()) {
+                  $cat = Input::all();
+                if(empty($cat)){
+                    $cat='vacio';
+                }
+            }
+        
     
         return view('confirm.save',compact('cat'));
+    }
+    public function delete($id)
+    {
+        return view('confirm.delete',compact('id'));
     }
 }

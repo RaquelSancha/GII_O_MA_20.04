@@ -19,9 +19,11 @@
       <td >{{ $variable->idVariable }}</td>
       <td style="cursor:pointer"><a href="{{ url('form')}}/{{$variable->idVariable}}">{{ $variable->Nombre }}</a></td>
       <td></td>
-      <td class="col-xs-3"><a href="{{ url('tables')}}/{{$variable->idVariable}}/{{'edit'}}" class="btn btn-warning" role="button">Modificar</a>  <a href="{{ url('tables')}}/{{$variable->idVariable}}/{{'edit'}}" class="btn btn-danger" role="button">Borrar</a></td>
+      <td class="col-xs-3"><a href="{{ url('tables')}}/{{$variable->idVariable}}/{{'edit'}}" class="btn btn-warning" role="button">Modificar</a>  <a href="{{ url('tables')}}/{{$variable->idVariable}}/{{'delete'}}" onclick="return confirm('Al borrar la tabla, se perderan los datos de la Base de Datos, ¿Estás seguro de querer borrarla?')" class="btn btn-danger"> Borrar</a></td>
     </tr>
   @endforeach
 </table>
+
+
  
 @endsection
