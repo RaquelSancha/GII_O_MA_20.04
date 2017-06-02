@@ -12,13 +12,17 @@ class TableController extends Controller
     	$valYear=array();
     	$values=array();
         $valores=array();
+        $idsCategoria=array();
+        $idsCategoriaAux=array();
 
     	$years = $request->input("years");
     	$categoria = $request->input("categoria");
     	$filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
-       
-
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
+                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
+                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
+        $nombre_variable=DB::select('SELECT  Nombre FROM variable where idVariable=?',[$id]);
         foreach ($ambitos as $ambito) {
         	foreach ($categoria as $cat) {
         		foreach ($years as $year) {
@@ -36,12 +40,14 @@ class TableController extends Controller
         			array_push($valores,$valYear);
         			$valYear=array();
         		}
-               
+            $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat]);
+            array_push($idsCategoria,$idsCategoriaAux);
             }	
             array_push($values,$valores);
             $valores=array();
     	}
-        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias'));
+       
+        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable'));
     }
 
     public function edit($id)
@@ -49,11 +55,16 @@ class TableController extends Controller
         $valYear=array();
         $values=array();
         $valores=array();
+        $idsCategoria=array();
+        $idsCategoriaAux=array();
+        $supercategorias=array();
+        $scategorias=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+
 
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
@@ -72,11 +83,17 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
+                $scategorias=DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria NATURAL join categoria where categoria.Nombre=?',[$cat->Nombre]);
+                array_push($supercategorias,$scategorias);
+
+                $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat->Nombre]);
+                array_push($idsCategoria,$idsCategoriaAux);   
             }   
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.edit',compact('categoria','years','values','id','ambitos','nombreVariable'));
+
+        return view('table.edit',compact('categoria','years','values','id','ambitos','nombreVariable','idsCategoria','supercategorias'));
     }
 
     public function update(Request $request, $id){
@@ -115,12 +132,16 @@ class TableController extends Controller
         $valYear=array();
         $values=array();
         $valores=array();
+        $idsCategoria=array();
+        $idsCategoriaAux=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
-
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
+                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
+                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
                 foreach ($years as $year) {
@@ -138,11 +159,13 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
+                 $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat->Nombre]);
+                 array_push($idsCategoria,$idsCategoriaAux);
             }   
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.insertAmbito',compact('categoria','years','values','id','ambitos','nombreVariable'));
+        return view('table.insertAmbito',compact('categoria','years','values','id','ambitos','nombreVariable','idsCategoria','supercategorias'));
     }
  public function updateInsertAmbito (Request $request, $id){
 
@@ -195,12 +218,16 @@ class TableController extends Controller
         $valYear=array();
         $values=array();
         $valores=array();
+        $idsCategoria=array();
+        $idsCategoriaAux=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
-
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
+                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
+                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
                 foreach ($years as $year) {
@@ -218,11 +245,14 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
+                 $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat->Nombre]);
+                 array_push($idsCategoria,$idsCategoriaAux);
+
             }   
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.insertYear',compact('categoria','years','values','id','ambitos','nombreVariable'));
+        return view('table.insertYear',compact('categoria','years','values','id','ambitos','nombreVariable','idsCategoria','supercategorias'));
     }
 
     public function updateInsertYear (Request $request, $id){
@@ -264,14 +294,17 @@ class TableController extends Controller
         $valYear=array();
         $values=array();
         $valores=array();
+        $idsCategoria=array();
+        $idsCategoriaAux=array();
+        $supercategorias=array();
+        $scategorias=array();
 
         $years = $request->input("years");
         $categoria = $request->input("categoria");
         $filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
         $variable = $request->input("nombre_variable");
-
-
+        
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
                 foreach ($years as $year) {
@@ -289,27 +322,36 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
-               
+                $scategorias=DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria NATURAL join categoria where categoria.Nombre=?',[$cat]);
+                array_push($supercategorias,$scategorias);
+                $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat]);
+                array_push($idsCategoria,$idsCategoriaAux);   
             }   
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable'));
+        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable','supercategorias','idsCategoria'));
     }
     public function save(Request $request)
     {
-          if(Request::ajax()) {
-                  $cat = Input::all();
-                if(empty($cat)){
-                    $cat='vacio';
-                }
-            }
+       
         
     
-        return view('confirm.save',compact('cat'));
+        return view('confirm.save');
     }
-    public function delete($id)
+    public function new(Request $request)
     {
-        return view('confirm.delete',compact('id'));
+        $categorias = $request->input("categorias");
+        $variable = $request->input("nombre_variable");
+        $years = $request->input("years");
+        $ambitos = $request->input("ambitos");
+        $values=array();
+
+        return view('table.new',compact('categorias','variable','ambitos','years','values'));
+    }
+
+    public function delete($id){
+
+    return view('confirm.delete',compact('id'));
     }
 }

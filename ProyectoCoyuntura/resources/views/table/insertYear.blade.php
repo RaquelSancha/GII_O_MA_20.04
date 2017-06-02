@@ -63,7 +63,18 @@
           </th>
         </tr>
         <tr>
-      	@for ($i = 0; $i < count($categoria); $i++)
+      	@for ($i = 0, $aux = 0; $i < count($categoria); $i++)
+         @if(!(empty($supercategorias[$aux])))
+            @if($idsCategoria[$i][0]->idSuperCategoria == $supercategorias[$aux]->idSuperCategoria)
+              <tr>
+                <th scope="row" bgcolor="#FFFFFF" style="color:Black;" >{{$supercategorias[$aux]->Name }}
+                <?php  $aux++; ?>
+                    <td colspan="{{12*(count($years)+1)}}" bgcolor="#FFFFFF" style="color:Black;" ></td>
+                </th>
+              </tr>
+              
+            @endif
+          @endif
         <th scope="row">{{$categoria[$i]->Nombre}}</th> 
 	        @for ($j = 0; $j < count($years)+1; $j++)
 	          @for ($k = 0; $k < 12; $k++)

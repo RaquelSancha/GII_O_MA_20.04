@@ -26,14 +26,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     
 });
+Route::get('/form/new', function () {
+    return view('/form/new');
+});
 
-
-
+Route::get('/form/choose', function(){
+	return view('/form/choose');
+});
 
 Route::get('/form/create', 'FormController@create');
 
 Route::get('/form/{id}', 'FormController@show');
 
+
+
+Route::post('/tables/new','TableController@new');
 
 Route::post('/tables/create','TableController@create');
 

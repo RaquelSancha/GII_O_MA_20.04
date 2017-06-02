@@ -3,8 +3,12 @@
 
 @section('main-content')
 
-<h2>Crear Tabla</h1><hr>
-
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">	Rellena el formulario</h3>
+	</div>
+	<div class="box-body">			
+		
 <form class="form-horizontal" role="form" method="POST" action="{{ url('/tables/create')}}">
   {{ csrf_field() }}
 
@@ -17,5 +21,6 @@
   </div>
 
 @include('form.form')
-
+	</div>
+</div>
 @endsection

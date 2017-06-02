@@ -2,40 +2,46 @@
 
 
 @section('main-content')
-<h2><b>Tablas</b> Predefinidas</h1><hr>
+
+<h2><b>Tablas</b> Predefinidas: 
+@foreach($nombre_variable as $nom)
+{{$nom->Nombre}}
+@endforeach</h1><hr>
+		
 @include('table.table')
+
 <div align="right">
 <a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a>
-</div>
-<div class="box">
-	<div class="box-header with-border">
-		<h3 class="box-title">Bienvenido!</h3>
+			</div>
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Bienvenido!</h3>
 
-		<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-				<i class="fa fa-times"></i></button>
-		</div>
-	</div>
-	<div class="box-body">
-		   <canvas id="myChart" height="40vh" width="80vw"></canvas>
-		 </div>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+								<i class="fa fa-minus"></i></button>
+							<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+								<i class="fa fa-times"></i></button>
+						</div>
+					</div>
+					<div class="box-body">
+         			   <canvas id="myChart" height="40vh" width="80vw"></canvas>
+       				 </div>
 
-	<!-- /.box-body -->
-</div>
+					<!-- /.box-body -->
+				</div>
 		
 
 
 <script>
 
-  $(document).ready(function($categoria) {
+  $(document).ready(function() {
   
     var ctx = document.getElementById("myChart");
             var myChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: {
-                    labels: [],
+                    labels: $categoria,
                     datasets: [{
                         label: '# of Votes',
                         data: [12, 19, 3, 5, 2, 3],

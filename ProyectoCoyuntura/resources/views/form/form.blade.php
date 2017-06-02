@@ -44,7 +44,7 @@
       <div class="col-md-2">
           <select class="selectpicker" name="filtrado">
             <option>Meses</option>
-            <option disabled>Años</option>
+            <option>Años</option>
             <option>Trimestres</option>
           </select>
       </div>
