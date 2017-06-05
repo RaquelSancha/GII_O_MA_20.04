@@ -66,6 +66,6 @@ Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito');
 
 Route::post('/confirm/insertYear/{id}', 'TableController@updateInsertYear');
 
-Route::post('/confirm/insertCategoria/{id}', 'TableController@updateInsertCategoría');
+Route::post('/confirm/insertCategoria/{id}', 'TableController@updateInsertCategoria');
 
 Route::post('/confirm/{id}', 'TableController@update');

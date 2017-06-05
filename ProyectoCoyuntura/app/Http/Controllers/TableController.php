@@ -61,7 +61,7 @@ class TableController extends Controller
         $scategorias=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
 
@@ -136,7 +136,7 @@ class TableController extends Controller
         $idsCategoriaAux=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
@@ -222,7 +222,7 @@ class TableController extends Controller
         $idsCategoriaAux=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
@@ -289,6 +289,57 @@ class TableController extends Controller
         }
         return view('confirm.update');
     }
+    public function showInsertCategoria ($id){
+
+        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
+        $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria order by Name ASC');
+
+
+        return view('table.insertCategoria',compact('ambitos','years','supercategorias','nombreVariable','id'));
+    }
+    public function updateInsertCategoria (Request $request, $id){
+
+        $update=$request->input("update");
+        $new_categoria=$request->input("new_categoria");
+        $new_supercategoria=$request->input("new_supercategoria");
+        $supercategoria=$request->input("supercategoria");
+
+
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
+        $ambitos  = DB::select('SELECT DISTINCT Nombre,idAmbito FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+
+        $meses=0;
+
+        
+        // si se ha escogido una supercategoria ya existente
+        if(empty($new_supercategoria)){
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$supercategoria]);
+            DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
+        }
+         //si se ha introducido una supercategoria nueva
+        if(empty($supercategoria)){
+            DB::insert('INSERT INTO supercategoria(idSuperCategoria, Name) VALUES (NULL,?)',[$new_supercategoria]);
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$new_supercategoria]);
+              DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
+        }
+        if(empty($supercategoria)){
+             if(empty($new_supercategoria)){
+                $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name="Sin categoria" ');
+                DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
+            }
+        }
+         //si no se ha introducido nada
+
+
+         $id_new_categoria=DB::select('SELECT Nombre,idCategoria FROM Categoria where Nombre=?',[$new_categoria]);
+
+         DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$id_new_categoria[0]->idCategoria,$ambitos[0]->idAmbito,1,$years[0]->Year]);
+
+        return view('confirm.update',compact('new_categoria','new_supercategoria','supercategoria','update'));
+    }
+
     public function create(Request $request)
     {
         $valYear=array();

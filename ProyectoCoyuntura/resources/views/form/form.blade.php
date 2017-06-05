@@ -2,7 +2,7 @@
   <div class="form-group">
       <label for="categoria" class="col-md-4 control-label">Selecciona las categorías a mostrar</label>
       <div class="col-md-2">
-          <select multiple data-actions-box="true" data-width="auto" class="selectpicker show-tick"  name="categoria[]" >
+          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="categoria[]" >
             @for($i=0, $j=0 ;$i<count($categorias);$i++)
             @if(!(empty($supercategorias[$j])))
               @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)
@@ -18,7 +18,7 @@
   <div class="form-group">
       <label for="years" data-width="auto" class="col-md-4 control-label">Selecciona los años</label>
       <div class="col-md-2">
-          <select class="selectpicker"  multiple data-actions-box="true" name="years[]">
+          <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="years[]">
             @foreach($years as $year)
             <option>{{$year->Year}}</option>
             @endforeach
@@ -30,7 +30,7 @@
  <div class="form-group">
       <label for="ambitos" data-width="auto" class="col-md-4 control-label">Selecciona los ámbitos geográficos</label>
       <div class="col-md-2">
-          <select class="selectpicker"   multiple data-actions-box="true" name="ambitos[]">
+          <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="ambitos[]">
             @foreach($ambitos as $ambito)
             <option>{{$ambito->Nombre}}</option>
             @endforeach

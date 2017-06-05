@@ -95,8 +95,8 @@
     </tbody>
 </table>
 <div>
-    
-    <input class="btn btn-success"  type="submit" value="Enviar" />
+    <div align= "right"><a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
+    <input class="btn btn-success"  type="submit" value="Enviar" onclick="return confirm('Se modificarán los valores de la Base de datos,¿Estás seguro?')" />
 </div>
 </form>
 		
