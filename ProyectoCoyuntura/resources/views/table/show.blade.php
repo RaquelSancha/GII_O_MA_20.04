@@ -4,14 +4,17 @@
 @section('main-content')
 
 <h2><b>Tablas</b> Predefinidas: 
-@foreach($nombre_variable as $nom)
-{{$nom->Nombre}}
-@endforeach</h1><hr>
-		
-@include('table.table')
-
+@for($aux=0; $aux<count($nombre_variable);$aux++)
+    {{$nombre_variable[$aux]->Nombre}}({{$nombre_variable[$aux]->Tipo}})
+    </h1><hr>
+    {{$nombre_variable[$aux]->Descripcion}}
+    		
+    <br><br>
+    @include('table.table')
+    <div align="left">Fuente: "{{$fuentes[$aux]->Name}}"<div>
+@endfor
 <div align="right">
-<a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a>
+<a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a><br><br><br><br><br><br>
 			</div>
 				<div class="box">
 					<div class="box-header with-border">
