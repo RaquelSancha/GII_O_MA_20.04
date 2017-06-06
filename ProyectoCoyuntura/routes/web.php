@@ -36,8 +36,13 @@ Route::get('/form/choose', function(){
 
 Route::get('/form/create', 'FormController@create');
 
-Route::get('/form/{id}', 'FormController@show');
+Route::get('/form/{id}/deleteAmbito','TableController@showDeleteAmbito');
 
+Route::get('/form/{id}/deleteYear','TableController@showDeleteYear');
+		
+Route::get('/form/{id}/deleteCategoria','TableController@showDeleteCategoria');
+
+Route::get('/form/{id}', 'FormController@show');
 
 
 Route::post('/tables/new','TableController@new');
@@ -67,5 +72,11 @@ Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito');
 Route::post('/confirm/insertYear/{id}', 'TableController@updateInsertYear');
 
 Route::post('/confirm/insertCategoria/{id}', 'TableController@updateInsertCategoria');
+
+Route::post('/confirm/deleteAmbito/{id}', 'TableController@updateDeleteAmbito');
+
+Route::post('/confirm/deleteYear/{id}', 'TableController@updateDeleteYear');
+
+Route::post('/confirm/deleteCategoria/{id}', 'TableController@updateDeleteCategoria');
 
 Route::post('/confirm/{id}', 'TableController@update');

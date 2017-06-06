@@ -125,8 +125,26 @@ class TableController extends Controller
         }
         
  
-        return view('confirm.update',compact('update','valor'));
+        return view('confirm.update');
     }
+
+    public function showDeleteAmbito($id){
+
+        $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]); 
+        return view('form.deleteAmbito',compact('ambitos','id'));
+    }
+
+    public function updateDeleteAmbito(Request $request,$id){
+
+        $ambitos = $request->input("ambitos");
+
+        foreach ($ambitos as $ambito) {
+            $idAmb=DB::select('SELECT idAmbito FROM ambito where Nombre=?',[$ambito]);
+            DB::delete('DELETE FROM variableambitocategoria WHERE idAmbito=?',[$idAmb[0]->idAmbito]);
+        }
+        return view('confirm.update');
+    }
+
     public function showInsertAmbito($id){
 
         $valYear=array();
@@ -213,6 +231,21 @@ class TableController extends Controller
         return view('confirm.update',compact('update','valor','new_Ambito'));
     }
 
+    public function showDeleteYear($id){
+
+        $years  = DB::select('SELECT DISTINCT Year FROM variableambitocategoria WHERE idVariable=?',[$id]); 
+        return view('form.deleteYear',compact('years','id'));
+    }
+
+    public function updateDeleteYear(Request $request,$id){
+
+        $years = $request->input("years");
+
+        foreach ($years as $year) {
+            DB::delete('DELETE FROM variableambitocategoria WHERE Year=?',[$year]);
+        }
+        return view('confirm.update');
+    }
     public function showInsertYear($id){
 
         $valYear=array();
@@ -350,14 +383,10 @@ class TableController extends Controller
                                 $consulta=DB::update('UPDATE variableambitocategoria SET Valor= ? WHERE idAmbito=? AND idVariable=? AND idCategoria=? AND Year=? AND Mes =?', [$update[($j-1)+$meses],$amb->idAmbito,$id,$id_new_categoria[0]->idCategoria,$year->Year,$j]);
                             }
                         }
- 
                     }
                     $meses=$meses+12;
-                }
-            
+                }     
         }
-        
-
 
         return view('confirm.update',compact('new_categoria','new_supercategoria','supercategoria','update'));
     }
