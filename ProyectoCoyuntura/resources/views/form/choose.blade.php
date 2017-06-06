@@ -18,8 +18,8 @@
     <div class="col-md-3 col-sm-6 col-xs-12 cut_box2">
       <div class="cut_box2a"><i class="fa fa-pencil-square-o fa-5x " aria-hidden="true"></i>
       <p></p>
-      <a class="rouded_text" href="{{ url('/form/new') }}" >Crear tabla<br>
-          desde cero</a>    
+      <a class="rouded_text" href="{{ url('/form/new') }}" >Insertar tabla<br>
+          con valores nuevos</a>    
       </div>
     </div>
     <!-- /.col-lg-4 -->

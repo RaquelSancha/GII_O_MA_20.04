@@ -19,10 +19,11 @@ class TableController extends Controller
     	$categoria = $request->input("categoria");
     	$filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
+        $fuentes = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.idVariable=?',[$id]);
         $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
                                         INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
                                         INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
-        $nombre_variable=DB::select('SELECT  Nombre FROM variable where idVariable=?',[$id]);
+        $nombre_variable=DB::select('SELECT * FROM variable where idVariable=?',[$id]);
         foreach ($ambitos as $ambito) {
         	foreach ($categoria as $cat) {
         		foreach ($years as $year) {
@@ -47,7 +48,7 @@ class TableController extends Controller
             $valores=array();
     	}
        
-        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable'));
+        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable','fuentes'));
     }
 
     public function edit($id)

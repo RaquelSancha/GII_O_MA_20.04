@@ -20,6 +20,22 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="nombre_variable" class="col-md-4 control-label"> Introduce la fuente</label>
+			<div class="row">
+		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
+		    			<input type="textarea" name="nombre_variable" class="form-control">
+		    	</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="descripcion" class="col-md-4 control-label"> Introduce una descripción</label>
+			<div class="row">
+		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
+		    			 <textarea class="form-control" rows="5" name="descripcion"></textarea>
+		    	</div>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-md-4 control-label"> Introduce los Ámbitos Geograficos</label>
 			<div class="row">
 		        <div class="form-group form-group-options col-md-4 col-md-offset-5">

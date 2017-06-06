@@ -52,6 +52,8 @@
                     <li><a href="{{ url('/admin/users') }}"><i class='fa fa-user-o'></i>{{ trans('adminlte_lang::message.users') }}</span></a></li>
                 </ul>
             </li>
+          <li class="active"><a href="{{ url('data/choose') }}"><i class='fa fa-database'></i> <span>Gestión Datos</span></a></li>
+
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
