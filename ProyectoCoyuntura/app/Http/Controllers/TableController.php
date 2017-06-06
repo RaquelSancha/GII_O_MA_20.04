@@ -308,34 +308,56 @@ class TableController extends Controller
 
 
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
-        $ambitos  = DB::select('SELECT DISTINCT Nombre,idAmbito FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $ambito  = DB::select('SELECT DISTINCT Nombre,idAmbito FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
 
         $meses=0;
 
-        
-        // si se ha escogido una supercategoria ya existente
-        if(empty($new_supercategoria)){
-            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$supercategoria]);
-            DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
-        }
-         //si se ha introducido una supercategoria nueva
-        if(empty($supercategoria)){
-            DB::insert('INSERT INTO supercategoria(idSuperCategoria, Name) VALUES (NULL,?)',[$new_supercategoria]);
-            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$new_supercategoria]);
-              DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
-        }
-        if(empty($supercategoria)){
-             if(empty($new_supercategoria)){
+        //si no se ha introducido nada
+        if( (empty($supercategoria)) and (empty($new_supercategoria)) ){
                 $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name="Sin categoria" ');
                 DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
-            }
+        
+        }elseif ((!(empty($supercategoria))) and (!(empty($new_supercategoria))) ) {
+            //si se han escogido las dos, doy preferencia a lo que el usuario a escrito.
+                DB::insert('INSERT INTO supercategoria(idSuperCategoria, Name) VALUES (NULL,?)',[$new_supercategoria]);
+                $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$new_supercategoria]);
+                DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);   
+        }elseif(empty($new_supercategoria)){
+            // si se ha escogido una supercategoria ya existente
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$supercategoria]);
+            DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
+        }elseif(empty($supercategoria)){
+              //si se ha introducido una supercategoria nueva
+            DB::insert('INSERT INTO supercategoria(idSuperCategoria, Name) VALUES (NULL,?)',[$new_supercategoria]);
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$new_supercategoria]);
+            DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$new_categoria]);  
         }
-         //si no se ha introducido nada
-
 
          $id_new_categoria=DB::select('SELECT Nombre,idCategoria FROM Categoria where Nombre=?',[$new_categoria]);
 
-         DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$id_new_categoria[0]->idCategoria,$ambitos[0]->idAmbito,1,$years[0]->Year]);
+         DB::insert('INSERT INTO variableambitocategoria(idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,NULL);',[$id,$id_new_categoria[0]->idCategoria,$ambito[0]->idAmbito,1,$years[0]->Year]);
+
+        foreach ($ambito as $amb ) {
+                foreach ($years as $year) {
+                    for ($j=1; $j < 13 ; $j++) {   
+                        $valor=DB::select('SELECT Valor FROM variableambitocategoria  WHERE idAmbito=? and idCategoria= ? AND Year=? AND Mes=? ORDER BY Mes ASC',[$amb->idAmbito,$id_new_categoria[0]->idCategoria,$year->Year,$j]);
+                        if(empty($valor)){
+                            if(!(is_null($update[($j-1)+$meses]))) {
+                                DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$id,$id_new_categoria[0]->idCategoria,$amb->idAmbito,$j,$year->Year,$update[($j-1)+$meses]]);
+                            }
+                        }else{
+                            if(!(is_null($update[($j-1)+$meses]))) {
+                                $consulta=DB::update('UPDATE variableambitocategoria SET Valor= ? WHERE idAmbito=? AND idVariable=? AND idCategoria=? AND Year=? AND Mes =?', [$update[($j-1)+$meses],$amb->idAmbito,$id,$id_new_categoria[0]->idCategoria,$year->Year,$j]);
+                            }
+                        }
+ 
+                    }
+                    $meses=$meses+12;
+                }
+            
+        }
+        
+
 
         return view('confirm.update',compact('new_categoria','new_supercategoria','supercategoria','update'));
     }
