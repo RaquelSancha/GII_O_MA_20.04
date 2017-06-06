@@ -21,9 +21,9 @@
                 <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertCategoria">Categoría</a></li>
                 <li role="presentation" class="divider"></li>
                  <li role="presentation" class="dropdown-header">Borrar</li>
-                <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertAmbito">Ámbito Geográfico</a></li>
-                <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertYear">Año</a></li>
-                <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertCategoria">Categoría</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteAmbito">Ámbito Geográfico</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteYear">Año</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteCategoria">Categoría</a></li>
 
                 </u1>
               </ul>
