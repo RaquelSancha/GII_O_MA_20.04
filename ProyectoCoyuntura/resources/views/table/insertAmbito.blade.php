@@ -8,7 +8,6 @@
 {{$nom->Nombre}}
 @endforeach
 </h1>
-<div align= "right"><a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a></div>
  <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/insertAmbito')}}/{{$id}}" >
     {{ csrf_field() }}
 <table  class="table table-striped"  align="center" border="5">

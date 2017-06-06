@@ -322,6 +322,29 @@ class TableController extends Controller
         }
         return view('confirm.update');
     }
+
+    public function showDeleteCategoria($id){
+
+
+        $categorias  = DB::select('SELECT DISTINCT Nombre,idSuperCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
+                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
+                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
+       
+        return view('form.deleteCategoria',compact('categorias','id','supercategorias'));
+    }
+
+    public function updateDeleteCategoria(Request $request,$id){
+
+        $categoria = $request->input("categoria");
+
+        foreach ($categoria as $cat) {
+            $idCat=DB::select('SELECT idCategoria FROM categoria where Nombre=?',[$cat]);
+            DB::delete('DELETE FROM variableambitocategoria WHERE idCategoria=?',[$idCat[0]->idCategoria]);
+        }
+        return view('confirm.update');
+    }
+
     public function showInsertCategoria ($id){
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
