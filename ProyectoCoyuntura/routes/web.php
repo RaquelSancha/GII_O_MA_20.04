@@ -38,8 +38,8 @@ Route::get('/data/choose', function(){
 	return view('/data/choose');
 });
 
-Route::get('/data/create/supercategorias/', function () {
-    return view('/data/create/supercategorias');
+Route::get('/data/create/ambito/', function(){
+	return view('/data/create/ambito');
 });
 
 
@@ -97,6 +97,8 @@ Route::post('/confirm/data/edit/supercategoria/{id}', 'DataController@updateSupe
 
 Route::post('/confirm/data/edit/categoria/{id}', 'DataController@updateCategoria');
 
+Route::post('/confirm/data/edit/ambito/{id}', 'DataController@updateAmbito');
+
 
 Route::get('/data/index/variables', 'DataController@indexVariable');
 
@@ -104,7 +106,7 @@ Route::get('/data/index/supercategoria', 'DataController@indexSuperCategoria');
 
 Route::get('/data/index/categoria', 'DataController@indexCategoria');
 
-Route::get('/data/index/cambito', 'DataController@indexAmbito');
+Route::get('/data/index/ambito', 'DataController@indexAmbito');
 
 
 
@@ -114,6 +116,8 @@ Route::get('/data/edit/supercategorias/{id}', 'DataController@editSuperCategoria
 
 Route::get('/data/edit/categorias/{id}', 'DataController@editCategoria');
 
+Route::get('/data/edit/ambito/{id}', 'DataController@editAmbito');
+
 
 
 Route::get('/data/create/supercategorias/', 'DataController@createSuperCategoria');
@@ -121,9 +125,14 @@ Route::get('/data/create/supercategorias/', 'DataController@createSuperCategoria
 Route::get('/data/create/categorias/', 'DataController@createCategoria');
 
 
+
+
+
 Route::post('confirm/data/new/supercategoria', 'DataController@newSuperCategoria');
 
 Route::post('confirm/data/new/categoria', 'DataController@newCategoria');
+
+Route::post('confirm/data/new/ambito', 'DataController@newAmbito');
 
 
 Route::get('data/delete/supercategorias/{id}', 'DataController@deleteSuperCategoria');

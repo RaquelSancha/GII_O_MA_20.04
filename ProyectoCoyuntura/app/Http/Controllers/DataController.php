@@ -10,7 +10,7 @@ class DataController extends Controller
     {
     	$fuentes=array();
     	$fuentesAux=array();
-        $variables = DB::select('SELECT * FROM variable');
+        $variables = DB::select('SELECT * FROM variable order by Nombre ASC');
         foreach ($variables as $variable) {
         	$fuentesAux = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.Nombre=?',[$variable->Nombre]);
         	array_push($fuentes,$fuentesAux);
@@ -56,7 +56,7 @@ class DataController extends Controller
     {
         $categorias=array();
         $categoriasAux=array();
-        $supercategorias = DB::select('SELECT * FROM supercategoria');
+        $supercategorias = DB::select('SELECT * FROM supercategoria order by Name ASC');
 
         foreach ($supercategorias as $supercat) {
             $categoriasAux = DB::select('SELECT DISTINCT Nombre FROM categoria natural join supercategoria where supercategoria.idSuperCategoria=?',[$supercat->idSuperCategoria]);
@@ -130,7 +130,7 @@ class DataController extends Controller
     {
         $supercategorias=array();
         $supercategoriasAux=array();
-        $categorias = DB::select('SELECT * FROM categoria');
+        $categorias = DB::select('SELECT * FROM categoria order by Nombre ASC');
 
         foreach ($categorias as $cat) {
             $supercategoriasAux = DB::select('SELECT DISTINCT Name FROM supercategoria natural join categoria where categoria.idCategoria=?',[$cat->idCategoria]);
@@ -186,14 +186,35 @@ class DataController extends Controller
     }
     public function deleteCategoria($id)
     {
+        $delete=DB::delete('DELETE FROM variableambitocategoria WHERE idCategoria=?',[$id]);
         $delete=DB::delete('DELETE FROM categoria WHERE idCategoria=?',[$id]);
+
         return view('data/confirm/delete');
     }
     public function indexAmbito()
     {
-        $ambito = DB::select('SELECT * FROM ambito');
+        $ambitos = DB::select('SELECT * FROM ambito order by Nombre ASC');
+        return view('data/index/ambito',compact('ambitos'));
+    }
+    public function editAmbito($id)
+    {
+        $ambitos = DB::select('SELECT * FROM ambito where idAmbito=?',[$id]);
+        return view('data/edit/ambito',compact('ambitos','id'));
+    }
+     public function updateAmbito(Request $request, $id)
+    {
+        $nombre_ambito=$request->input("nombre_ambito");
+        if(!(empty($nombre_ambito))){
+             $consulta=DB::update('UPDATE ambito SET Nombre=? WHERE idAmbito=?',[$nombre_ambito,$id]);
+        }
+        return view('data/confirm/update');
+    }
+    public function newAmbito(Request $request)
+    {
+        $nombre_ambito=$request->input("nombre_ambito");
 
+        DB::insert('INSERT INTO ambito(idAmbito, Nombre) VALUES (NULL,?)',[$nombre_ambito]);
         
-        return view('data/index/ambito',compact('ambito'));
+        return view('data/confirm/create');
     }
 }

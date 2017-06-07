@@ -33,7 +33,7 @@
         <div class="col-md-3 col-sm-6 col-xs-12 cut_box3">
       <div class="cut_box3a"><i class="fa fa-globe fa-5x " aria-hidden="true"></i>
       <p></p>
-        <a class="rouded_text" href="{{ url('/data/index/ambitos') }}">Mostrar<br>
+        <a class="rouded_text" href="{{ url('/data/index/ambito') }}">Mostrar<br>
      	ámbitos geográficos</a>
       </div>
     </div>

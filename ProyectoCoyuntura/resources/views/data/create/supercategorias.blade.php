@@ -35,13 +35,11 @@
     
     <div class="form-group">
           <div class="col-md-8 col-md-offset-4">
-              <input type="submit" value="Modificar" onclick="return confirm('Se modificarán los valores de la Base de datos,¿Estás seguro?')" class="btn btn-primary"  > 
+              <input type="submit" value="Crear" onclick="return confirm('Se modificarán los valores de la Base de datos,¿Estás seguro?')" class="btn btn-primary"  > 
           </div>
       </div>
   </div>
 </div>
 
-<script type="text/javascript">
-$(".js-example-basic-multiple").select2();
-</script>
+
 @endsection
