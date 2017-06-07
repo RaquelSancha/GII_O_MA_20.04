@@ -126,6 +126,7 @@ class DataController extends Controller
 
         return view('data/confirm/delete');
     }
+
      public function indexCategoria()
     {
         $supercategorias=array();
@@ -191,6 +192,30 @@ class DataController extends Controller
 
         return view('data/confirm/delete');
     }
+     public function deleteCategoriaVariable(Request $request, $id)
+    {
+
+        $variables=$request->input("variables");
+
+        foreach ($variables as $var) {
+            $idVariable=DB::select('SELECT idVariable FROM variable WHERE Nombre=? ',[$var]);
+            $delete=DB::delete('DELETE FROM variableambitocategoria WHERE idCategoria=? and idVariable ',[$id,$idVariable[0]->idVariable]);
+        }
+            
+        return view('data/confirm/delete');
+    }
+    public function chooseDeleteCategoria($id)
+    {
+        return view('data/delete/categorias',compact('id'));
+    }
+    public function chooseVariableDeleteCategoria($id)
+    {
+        $categorias=DB::select('SELECT Nombre FROM categoria WHERE idCategoria=? ',[$id]);
+        $variables=DB::select('SELECT DISTINCT Nombre FROM variable natural join variableambitocategoria WHERE idCategoria=? ',[$id]);
+        return view('data/delete/variables/categorias',compact('id','variables','categorias'));
+    }
+
+
     public function indexAmbito()
     {
         $ambitos = DB::select('SELECT * FROM ambito order by Nombre ASC');
@@ -216,5 +241,34 @@ class DataController extends Controller
         DB::insert('INSERT INTO ambito(idAmbito, Nombre) VALUES (NULL,?)',[$nombre_ambito]);
         
         return view('data/confirm/create');
+    }
+     public function chooseDeleteAmbito($id)
+    {
+        return view('data/delete/ambito',compact('id'));
+    }
+     public function deleteAmbito($id)
+    {
+        $delete=DB::delete('DELETE FROM variableambitocategoria WHERE idAmbito=?',[$id]);
+        $delete=DB::delete('DELETE FROM ambito WHERE idAmbito=?',[$id]);
+
+        return view('data/confirm/delete');
+    }
+    public function chooseVariableDeleteAmbito($id)
+    {
+        $ambitos=DB::select('SELECT Nombre FROM ambito WHERE idAmbito=? ',[$id]);
+        $variables=DB::select('SELECT DISTINCT Nombre FROM variable natural join variableambitocategoria WHERE idAmbito=? ',[$id]);
+        return view('data/delete/variables/ambito',compact('id','variables','ambitos'));
+    }
+     public function deleteAmbitoVariable(Request $request, $id)
+    {
+
+        $variables=$request->input("variables");
+
+        foreach ($variables as $var) {
+            $idVariable=DB::select('SELECT idVariable FROM variable WHERE Nombre=? ',[$var]);
+            $delete=DB::delete('DELETE FROM variableambitocategoria WHERE idAmbito=? and idVariable ',[$id,$idVariable[0]->idVariable]);
+        }
+            
+        return view('data/confirm/delete');
     }
 }

@@ -135,7 +135,23 @@ Route::post('confirm/data/new/categoria', 'DataController@newCategoria');
 Route::post('confirm/data/new/ambito', 'DataController@newAmbito');
 
 
+
 Route::get('data/delete/supercategorias/{id}', 'DataController@deleteSuperCategoria');
 
-Route::get('data/delete/categorias/{id}', 'DataController@deleteCategoria');
 
+Route::get('data/delete/categorias/{id}', 'DataController@chooseDeleteCategoria');
+
+Route::get('data/delete/categorias/full/{id}', 'DataController@DeleteCategoria');
+
+Route::get('data/delete/categorias/variable/{id}', 'DataController@chooseVariableDeleteCategoria');
+
+Route::post('/data/delete/variables/categoria/{id}', 'DataController@DeleteCategoriaVariable');
+
+
+Route::get('data/delete/ambito/{id}', 'DataController@chooseDeleteAmbito');
+
+Route::get('data/delete/ambito/full/{id}', 'DataController@DeleteAmbito');
+
+Route::get('data/delete/ambito/variable/{id}', 'DataController@chooseVariableDeleteAmbito');
+
+Route::post('/data/delete/variables/ambito/{id}', 'DataController@DeleteAmbitoVariable');

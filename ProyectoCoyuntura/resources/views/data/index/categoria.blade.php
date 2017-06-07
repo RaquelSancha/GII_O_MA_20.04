@@ -17,7 +17,7 @@
       <td>{{ $categorias[$i]->Nombre }}</td>
       <td>{{ $supercategorias[$i][0]->Name }}</td>
       <td class="col-xs-3"><a href="{{ url('data/edit/categorias/')}}/{{$categorias[$i]->idCategoria}}" class="btn btn-warning" role="button">Modificar</a> 
-                           <a href="{{ url('data/delete/categorias/')}}/{{$categorias[$i]->idCategoria}}" onclick="return confirm('Al borrar la tabla, se perderan los datos de la Base de Datos, ¿Estás seguro de querer borrarla?')" class="btn btn-danger"> Borrar</a>
+                           <a href="{{ url('data/delete/categorias/')}}/{{$categorias[$i]->idCategoria}}" class="btn btn-danger"> Borrar</a>
       </td>
     </tr>
   @endfor
