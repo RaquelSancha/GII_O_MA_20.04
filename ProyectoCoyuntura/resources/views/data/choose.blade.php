@@ -26,14 +26,14 @@
     <div class="col-md-3 col-sm-6 col-xs-12 cut_box4">
       <div class="cut_box3a"><i class="fa fa-bookmark-o fa-5x " aria-hidden="true"></i>
       <p></p>
-        <a class="rouded_text" href="{{ url('/data/ambitos') }}">Mostrar<br>
+        <a class="rouded_text" href="{{ url('/data/index/categoria') }}">Mostrar<br>
       categorías</a>
       </div>
     </div>
         <div class="col-md-3 col-sm-6 col-xs-12 cut_box3">
       <div class="cut_box3a"><i class="fa fa-globe fa-5x " aria-hidden="true"></i>
       <p></p>
-        <a class="rouded_text" href="{{ url('/data/ambitos') }}">Mostrar<br>
+        <a class="rouded_text" href="{{ url('/data/index/ambitos') }}">Mostrar<br>
      	ámbitos geográficos</a>
       </div>
     </div>

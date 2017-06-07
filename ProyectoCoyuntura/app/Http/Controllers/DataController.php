@@ -95,9 +95,9 @@ class DataController extends Controller
             }
         }
 
-        return view('data/confirm/update',compact('fuente','descripcion','tipo','nombre_variable'));
+        return view('data/confirm/update');
     }
-     public function createSuperCategoria()
+    public function createSuperCategoria()
     {
        
         $categorias = DB::select('SELECT DISTINCT Nombre FROM categoria natural join supercategoria where supercategoria.Name="Sin categoria"');
@@ -126,6 +126,74 @@ class DataController extends Controller
 
         return view('data/confirm/delete');
     }
-  
-    
+     public function indexCategoria()
+    {
+        $supercategorias=array();
+        $supercategoriasAux=array();
+        $categorias = DB::select('SELECT * FROM categoria');
+
+        foreach ($categorias as $cat) {
+            $supercategoriasAux = DB::select('SELECT DISTINCT Name FROM supercategoria natural join categoria where categoria.idCategoria=?',[$cat->idCategoria]);
+            array_push($supercategorias,$supercategoriasAux);
+        }
+        return view('data/index/categoria',compact('categorias','supercategorias'));
+    }
+     public function editCategoria($id)
+    {
+        $categorias = DB::select('SELECT * FROM categoria where idCategoria=?',[$id]);
+        $supercategorias = DB::select('SELECT DISTINCT Name FROM supercategoria natural join categoria where categoria.idSuperCategoria != ?',[$categorias[0]->idSuperCategoria]);
+        $categoria_supercategoria = DB::select('SELECT DISTINCT Name FROM supercategoria where idSuperCategoria = ?',[$categorias[0]->idSuperCategoria]);
+
+
+        return view('data/edit/categorias',compact('categorias','supercategorias','id','categoria_supercategoria'));
+    }
+    public function updateCategoria(Request $request, $id)
+    {
+        $nombre_categoria=$request->input("nombre_categoria");
+        $supercategorias=$request->input("supercategorias");
+
+
+        if(!(empty($nombre_categoria))){
+             $consulta=DB::update('UPDATE categoria SET Nombre=? WHERE idCategoria=?',[$nombre_categoria,$id]);
+        }
+        if(!(empty($supercategorias))){
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$supercategorias]);
+            $consulta=DB::update('UPDATE categoria SET idSuperCategoria=? WHERE idCategoria=?',[$idSuperCat[0]->idSuperCategoria,$id]);
+        }
+        
+
+        return view('data/confirm/update');
+    }
+    public function createCategoria()
+    {
+       
+        $supercategorias = DB::select('SELECT DISTINCT Name FROM supercategoria where supercategoria.Name!="Sin categoria"');
+        return view('data/create/categorias',compact('supercategorias'));
+    }
+    public function newCategoria(Request $request)
+    {
+        $supercategorias=$request->input("supercategorias");
+        $nombre_categoria=$request->input("nombre_categoria");
+
+        if(empty($supercategorias)){
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name="Sin categoria" ');
+        }else{
+            $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name=? ',[$supercategorias]);
+        }
+        DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria,$nombre_categoria]);
+        
+        return view('data/confirm/create');
+    }
+    public function deleteCategoria($id)
+    {
+        $delete=DB::delete('DELETE FROM categoria WHERE idCategoria=?',[$id]);
+        return view('data/confirm/delete');
+    }
+    public function indexAmbito()
+    {
+        $ambito = DB::select('SELECT * FROM ambito');
+
+        
+        return view('data/index/ambito',compact('ambito'));
+    }
 }

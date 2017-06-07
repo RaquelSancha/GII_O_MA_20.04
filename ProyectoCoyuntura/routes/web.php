@@ -90,22 +90,43 @@ Route::post('/confirm/deleteCategoria/{id}', 'TableController@updateDeleteCatego
 
 Route::post('/confirm/{id}', 'TableController@update');
 
+
 Route::post('/confirm/data/edit/variable/{id}', 'DataController@updateVariable');
 
 Route::post('/confirm/data/edit/supercategoria/{id}', 'DataController@updateSuperCategoria');
+
+Route::post('/confirm/data/edit/categoria/{id}', 'DataController@updateCategoria');
 
 
 Route::get('/data/index/variables', 'DataController@indexVariable');
 
 Route::get('/data/index/supercategoria', 'DataController@indexSuperCategoria');
 
+Route::get('/data/index/categoria', 'DataController@indexCategoria');
+
+Route::get('/data/index/cambito', 'DataController@indexAmbito');
+
+
+
 Route::get('/data/edit/variables/{id}', 'DataController@editVariable');
 
 Route::get('/data/edit/supercategorias/{id}', 'DataController@editSuperCategoria');
 
+Route::get('/data/edit/categorias/{id}', 'DataController@editCategoria');
+
+
+
 Route::get('/data/create/supercategorias/', 'DataController@createSuperCategoria');
+
+Route::get('/data/create/categorias/', 'DataController@createCategoria');
+
 
 Route::post('confirm/data/new/supercategoria', 'DataController@newSuperCategoria');
 
+Route::post('confirm/data/new/categoria', 'DataController@newCategoria');
+
+
 Route::get('data/delete/supercategorias/{id}', 'DataController@deleteSuperCategoria');
+
+Route::get('data/delete/categorias/{id}', 'DataController@deleteCategoria');
 
