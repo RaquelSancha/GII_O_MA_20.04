@@ -19,7 +19,7 @@
     <div class="col-md-3 col-sm-6 col-xs-12 cut_box2">
       <div class="cut_box2a"><i class="fa fa-list-alt fa-5x " aria-hidden="true"></i>
       <p></p>
-      <a class="rouded_text" href="{{ url('/data/variables') }}" >Mostrar<br>
+      <a class="rouded_text" href="{{ url('/data/index/supercategoria') }}" >Mostrar<br>
           super categorías</a>    
       </div>
     </div>

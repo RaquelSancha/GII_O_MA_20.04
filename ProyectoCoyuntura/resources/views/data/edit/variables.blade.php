@@ -9,7 +9,7 @@
   </div>
   <div class="box-body">      
     
-<form class="form-horizontal" role="form" method="POST" action="{{ url('/confirm/data/edit')}}/{{$id}}">
+<form class="form-horizontal" role="form" method="POST" action="{{ url('/confirm/data/edit/variable')}}/{{$id}}">
   {{ csrf_field() }}
 
   @for ($i = 0; $i < count($variables); $i++)

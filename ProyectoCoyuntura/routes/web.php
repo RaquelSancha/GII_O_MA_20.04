@@ -38,6 +38,11 @@ Route::get('/data/choose', function(){
 	return view('/data/choose');
 });
 
+Route::get('/data/create/supercategorias/', function () {
+    return view('/data/create/supercategorias');
+});
+
+
 Route::get('/form/create', 'FormController@create');
 
 Route::get('/form/{id}/deleteAmbito','TableController@showDeleteAmbito');
@@ -85,10 +90,22 @@ Route::post('/confirm/deleteCategoria/{id}', 'TableController@updateDeleteCatego
 
 Route::post('/confirm/{id}', 'TableController@update');
 
-Route::post('/confirm/data/edit/{id}', 'DataController@updateVariable');
+Route::post('/confirm/data/edit/variable/{id}', 'DataController@updateVariable');
 
+Route::post('/confirm/data/edit/supercategoria/{id}', 'DataController@updateSuperCategoria');
 
 
 Route::get('/data/index/variables', 'DataController@indexVariable');
 
-Route::get('/data/edit/{id}', 'DataController@editVariable');
+Route::get('/data/index/supercategoria', 'DataController@indexSuperCategoria');
+
+Route::get('/data/edit/variables/{id}', 'DataController@editVariable');
+
+Route::get('/data/edit/supercategorias/{id}', 'DataController@editSuperCategoria');
+
+Route::get('/data/create/supercategorias/', 'DataController@createSuperCategoria');
+
+Route::post('confirm/data/new/supercategoria', 'DataController@newSuperCategoria');
+
+Route::get('data/delete/supercategorias/{id}', 'DataController@deleteSuperCategoria');
+
