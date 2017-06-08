@@ -2,6 +2,8 @@
 
 
 @section('main-content')
+<link rel="stylesheet" href="css/flechas.css" type="text/css" media="all"> 
+
 <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">

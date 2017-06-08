@@ -1,6 +1,10 @@
+
 <?php $asterisco=0;?>
 
-<table  class="table"  align="center" border="5">
+<table  class="table"  id="example" align="center" border="5" class="display nowrap" cellspacing="0" width="100%">
+<div class="scrollbar" id="style-1">
+      <div class="force-overflow"></div>
+
   @if($filtrado == "Meses")
     <thead >
       <tr>
@@ -252,6 +256,14 @@
       @endfor
     </tbody>
   @endif
+    </div>
 </table>
+<div id="wrapper">
+    <div class="scrollbar" id="style-default">
+      <div class="force-overflow"></div>
+    </div>
+
+    
+
 <?php if($asterisco==1){echo "* Existen campos por rellenar";}?>
  
