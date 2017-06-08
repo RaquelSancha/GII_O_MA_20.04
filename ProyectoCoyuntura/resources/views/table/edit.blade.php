@@ -40,6 +40,7 @@
 
  <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm')}}/{{$id}}" >
     {{ csrf_field() }}
+<div class="table-responsive">
 <table  class="table table-striped"  align="center" border="5">
  <thead >
       <tr>
@@ -98,14 +99,18 @@
             @endif
           @endif
         <th scope="row">{{$categoria[$i]->Nombre}}</th> 
-
+       
 	        @for ($j = 0; $j < count($years); $j++)
 	          @for ($k = 0; $k < 12; $k++)   
+               
 	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
-	            	<td ><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
+               
+	            	  <td ><input style="width:80px;" type="number" step="0.01" placeholder="-" name="update[]"></td>
+
 	            @else
-	            	<td ><input type="number" step="0.01" class="form-control input-sm" placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
+	            	<td ><input style="width:80px;" type="number" step="0.01"  placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
 	            @endif
+           
 	          @endfor
 	        @endfor
       	</tr>  
@@ -113,10 +118,11 @@
       @endfor
     </tbody>
 </table>
-<div>
+</div>
+<br>
+<div align="right">
     <a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
     <input class="btn btn-success"  type="submit" value="Enviar" onclick="return confirm('Se modificarán los valores de la Base de datos,¿Estás seguro?')"/>
 </div>
 </form>
-		
 @endsection

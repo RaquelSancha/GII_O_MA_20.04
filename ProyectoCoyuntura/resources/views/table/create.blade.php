@@ -4,8 +4,8 @@
 @section('main-content')
 <h2>Crear Tablas:  <b>{{$variable}}</b></h1><hr>
 @include('table.table')
-
-<div>
+<br>
+<div align="right">
     <a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
     <a class="btn btn-success"  id="btn-guardar" role="button" />Guardar </a>
 </div>

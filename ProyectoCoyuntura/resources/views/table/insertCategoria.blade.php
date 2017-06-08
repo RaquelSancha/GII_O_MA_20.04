@@ -40,6 +40,7 @@
     </div>
   </div>
 </div> 
+<div class="table-responsive">
 <table  class="table table-striped"  align="center" border="5">
  <thead >
       <tr>
@@ -73,7 +74,7 @@
       @for ($l = 0; $l < count($ambitos); $l++)
         <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l]->Nombre }} </th>
             @for ($k = 0; $k < (12*count($years)); $k++)   
-              <td ><input type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
+              <td ><input style="width:80px;" type="number" step="0.01" class="form-control input-sm" placeholder="-" name="update[]"></td>
             @endfor
           </tr>  
         @endfor
@@ -81,6 +82,8 @@
       </div>
     </tbody> 
 </table>
+</div>
+<br>
 <div>
     <div align= "right"><a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
     <input class="btn btn-success"  type="submit" value="Enviar" onclick="return confirm('Se modificarán los valores de la Base de datos,¿Estás seguro?')" />

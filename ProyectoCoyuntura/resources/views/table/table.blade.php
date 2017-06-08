@@ -1,10 +1,7 @@
 
 <?php $asterisco=0;?>
-
-<table  class="table"  id="example" align="center" border="5" class="display nowrap" cellspacing="0" width="100%">
-<div class="scrollbar" id="style-1">
-      <div class="force-overflow"></div>
-
+<div class="table-responsive">
+<table  class="table table-striped header-fixed"  id="example" align="center" border="5" class="display nowrap" cellspacing="0" width="100%">
   @if($filtrado == "Meses")
     <thead >
       <tr>
@@ -104,7 +101,7 @@
     @for ($l = 0; $l < count($ambitos); $l++)
       <tr>
           <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l] }}
-              <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
+              <td colspan="{{4*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
           </th>
         </tr>
         <tr>
@@ -193,7 +190,7 @@
       @for ($l = 0; $l < count($ambitos); $l++)
       <tr>
           <th scope="row" bgcolor="#000000" style="color:White;" >{{$ambitos[$l] }}
-              <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
+              <td colspan="{{count($years)}}" bgcolor="#000000" style="color:White;" ></td>
           </th>
         </tr>
         <tr>
@@ -256,14 +253,7 @@
       @endfor
     </tbody>
   @endif
-    </div>
 </table>
-<div id="wrapper">
-    <div class="scrollbar" id="style-default">
-      <div class="force-overflow"></div>
-    </div>
-
-    
-
+</div>
 <?php if($asterisco==1){echo "* Existen campos por rellenar";}?>
  
