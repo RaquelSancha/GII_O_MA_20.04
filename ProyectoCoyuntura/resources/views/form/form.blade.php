@@ -1,13 +1,18 @@
-
   <div class="form-group">
       <label for="categoria" class="col-md-4 control-label">Selecciona las categorías a mostrar</label>
+
       <div class="col-md-2">
           <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="categoria[]" >
             @for($i=0, $j=0 ;$i<count($categorias);$i++)
-            @if(!(empty($supercategorias[$j])))
-              @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)
+              @if(!(empty($supercategorias[$j])))
+                
+                @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)
                  <optgroup label="{{$supercategorias[$j]->Name}}" >
-                 <?php  $j++; ?>
+                 <?php
+                  if ($categorias[(count($categorias)-1)]->idSuperCategoria != $supercategorias[$j]->idSuperCategoria) {
+                       $j++;
+                  }
+                    ?>
               @endif
             @endif
             <option>{{$categorias[$i]->Nombre}}</option>

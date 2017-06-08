@@ -24,7 +24,7 @@ class FormController extends Controller
 
     public function create()
     {
-    	$supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria ');
+    	$supercategorias = DB::select('SELECT DISTINCT Name,idSuperCategoria FROM supercategoria natural JOIN categoria WHERE supercategoria.idSuperCategoria=categoria.idSuperCategoria ORDER BY idSuperCategoria ');
     	$years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria ORDER BY Year ASC');
     	$ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito ');
         $categorias  = DB::select('SELECT DISTINCT Nombre,idSuperCategoria FROM categoria order by idSuperCategoria,Nombre ');
