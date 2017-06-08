@@ -460,10 +460,63 @@ class TableController extends Controller
     }
     public function save(Request $request)
     {
-       
-        
+        $categorias = $request->input("categorias");
+        $variable = $request->input("variable");
+        $years = $request->input("years");
+        $ambitos = $request->input("ambitos");
+        $tipo = $request->input("tipo");
+        $descripcion = $request->input("descripcion");
+        $fuente = $request->input("fuente");
+        $update = $request->input("update");
+
+        $meses=0;
     
+        $idFuente=DB::select('SELECT idFuente from fuente where Name=?',[$fuente]);
+        if(empty($idFuente)){
+            DB::insert('INSERT INTO fuente(idFuente,Name) VALUES (NULL,?)',[$fuente]);
+            $idFuente=DB::select('SELECT idFuente from fuente where Name=?',[$fuente]);
+        }
+            
+        DB::insert('INSERT INTO variable (idVariable, idFuente, Nombre,Descripcion, Tipo) VALUES (NULL,?,?,?,?)',[$idFuente[0]->idFuente,$variable,$descripcion,$tipo]);
+        $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name="Sin categoria" ');
+        
+        foreach ($categorias as $cat) {
+            $idCategoria=DB::select('SELECT idCategoria FROM categoria WHERE Nombre=?',[$cat]);
+            if(empty($idCategoria)){
+                DB::insert('INSERT INTO categoria(idCategoria, idSuperCategoria, Nombre) VALUES (NULL,?,?)',[$idSuperCat[0]->idSuperCategoria , $cat]);
+            }
+        }
+        foreach ($ambitos as $amb) {
+            $idAmbito=DB::select('SELECT idAmbito FROM ambito WHERE Nombre=?',[$amb]);
+            if(empty($idAmbito)){
+                DB::insert('INSERT INTO ambito(idAmbito, Nombre) VALUES (NULL,?)',[$amb]);
+            }
+        }
+        
+        $idVariable=DB::select('SELECT idVariable FROM variable WHERE Nombre=?',[$variable]);
+       
+        foreach ($ambitos as $amb ) {
+            $idAmbito=DB::select('SELECT idAmbito FROM ambito WHERE Nombre=?',[$amb]);
+            foreach ($categorias as $cat) {
+                 $idCategoria=DB::select('SELECT idCategoria FROM categoria WHERE Nombre=?',[$cat]);
+                foreach ($years as $year) {
+                    for ($j=1; $j < 13 ; $j++) { 
+                                DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$j,$year,$update[($j-1)+$meses]]);
+ 
+                    }
+                    $meses=$meses+12;
+                }
+            }
+        }
+
         return view('confirm.save');
+    }
+    public function formNew(Request $request)
+    {
+        $supercategorias = DB::select('SELECT DISTINCT Name FROM supercategoria where supercategoria.Name!="Sin categoria"');
+        return view('/form/new',compact('supercategorias'));
+
+        
     }
     public function new(Request $request)
     {
@@ -471,9 +524,12 @@ class TableController extends Controller
         $variable = $request->input("nombre_variable");
         $years = $request->input("years");
         $ambitos = $request->input("ambitos");
+        $tipo = $request->input("tipo");
+        $descripcion = $request->input("descripcion");
+        $fuente = $request->input("fuente");
         $values=array();
 
-        return view('table.new',compact('categorias','variable','ambitos','years','values'));
+        return view('table.new',compact('categorias','variable','ambitos','years','values','fuente','tipo','descripcion'));
     }
 
     public function delete($id){

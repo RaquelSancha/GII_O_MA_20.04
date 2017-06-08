@@ -3,20 +3,28 @@
 
       <div class="col-md-2">
           <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="categoria[]" >
-            @for($i=0, $j=0 ;$i<count($categorias);$i++)
-              @if(!(empty($supercategorias[$j])))
-                
-                @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)
-                 <optgroup label="{{$supercategorias[$j]->Name}}" >
-                 <?php
-                  if ($categorias[(count($categorias)-1)]->idSuperCategoria != $supercategorias[$j]->idSuperCategoria) {
-                       $j++;
-                  }
-                    ?>
-              @endif
+            
+            @if((count($supercategorias))>1)
+              @for($i=0, $j=0 ;$i<count($categorias);$i++) 
+                  @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)
+                   <optgroup label="{{$supercategorias[$j]->Name}}" >
+                   <?php
+                    if ($categorias[(count($categorias)-1)]->idSuperCategoria != $supercategorias[$j]->idSuperCategoria) {
+                         $j++;
+                    }else{
+                        $j=0;
+                    }
+                      ?>
+                    
+                  @endif
+                  <option>{{$categorias[$i]->Nombre}}</option>
+              @endfor
+            @else
+               <optgroup label="{{$supercategorias[0]->Name}}" >
+               @for($i=0;$i<count($categorias);$i++) 
+                  <option>{{$categorias[$i]->Nombre}}</option>
+               @endfor
             @endif
-            <option>{{$categorias[$i]->Nombre}}</option>
-            @endfor
           </select>
       </div>
   </div>

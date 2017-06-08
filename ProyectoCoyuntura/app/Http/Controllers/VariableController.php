@@ -10,7 +10,7 @@ class VariableController extends Controller
     {
        $fuentes=array();
     	$fuentesAux=array();
-        $variables = DB::select('SELECT * FROM variable');
+        $variables = DB::select('SELECT * FROM variable order by Nombre');
         foreach ($variables as $variable) {
         	$fuentesAux = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.Nombre=?',[$variable->Nombre]);
         	array_push($fuentes,$fuentesAux);

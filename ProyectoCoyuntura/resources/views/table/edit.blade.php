@@ -2,7 +2,6 @@
 
 
 @section('main-content')
-<link rel="stylesheet" href="css/flechas.css" type="text/css" media="all"> 
 
 <nav class="navbar navbar-default">
       <div class="container">
@@ -79,42 +78,66 @@
           </th>
         </tr>
         <tr>
-      	@for ($i = 0, $aux = 0; $i < count($categoria); $i++)
-          @if(!(empty($supercategorias[$aux][0])))
-            @if($idsCategoria[$i][0]->idSuperCategoria == $supercategorias[$aux][0]->idSuperCategoria)
-              <tr>
-                <th scope="row" bgcolor="#FFFFFF" style="color:Black;" >{{$supercategorias[$aux][0]->Name }}
-                  <?php
-                    $aux++;
-                    while ($supercategorias[$aux][0]->idSuperCategoria == $supercategorias[$aux-1][0]->idSuperCategoria) {
-                      $aux++;
-                    } 
-
+        @if((count($supercategorias))>1)
+        	@for ($i = 0, $aux = 0; $i < count($categoria); $i++)
+            @if(!(empty($supercategorias[$aux][0])))
+              @if($idsCategoria[$i][0]->idSuperCategoria == $supercategorias[$aux][0]->idSuperCategoria)
+                <tr>
+                  <th scope="row" bgcolor="#FFFFFF" style="color:Black;" >{{$supercategorias[$aux][0]->Name }}
+                    <?php
+                    if ($idsCategoria[(count($idsCategoria)-1)][0]->idSuperCategoria != $supercategorias[$aux][0]->idSuperCategoria) {
+                         $aux++;
+                    }else{
+                        $aux=0;
+                    }
+                      ?>
+                      <td colspan="{{12*count($years)}}" bgcolor="#FFFFFF" style="color:Black;" ></td>
+                  </th>
+                </tr>
                 
-                  ?>
-                    <td colspan="{{12*count($years)}}" bgcolor="#FFFFFF" style="color:Black;" ></td>
-                </th>
-              </tr>
-              
+              @endif
             @endif
-          @endif
-        <th scope="row">{{$categoria[$i]->Nombre}}</th> 
-       
-	        @for ($j = 0; $j < count($years); $j++)
-	          @for ($k = 0; $k < 12; $k++)   
-               
-	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
-               
-	            	  <td ><input style="width:80px;" type="number" step="0.01" placeholder="-" name="update[]"></td>
+          <th scope="row">{{$categoria[$i]->Nombre}}</th> 
+         
+  	        @for ($j = 0; $j < count($years); $j++)
+  	          @for ($k = 0; $k < 12; $k++)   
+                 
+  	            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
+                 
+  	            	  <td ><input style="width:80px;" type="number" step="0.01" placeholder="-" name="update[]"></td>
 
-	            @else
-	            	<td ><input style="width:80px;" type="number" step="0.01"  placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
-	            @endif
-           
-	          @endfor
-	        @endfor
-      	</tr>  
-      	@endfor
+  	            @else
+  	            	<td ><input style="width:80px;" type="number" step="0.01"  placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
+  	            @endif
+             
+  	          @endfor
+  	        @endfor        
+        	</tr>  
+        	@endfor
+        @else
+          <tr>
+            <th scope="row" bgcolor="#FFFFFF" style="color:Black;" >{{$supercategorias[0][0]->Name }}
+                <td colspan="{{12*count($years)}}" bgcolor="#FFFFFF" style="color:Black;" ></td>
+            </th>
+          </tr>
+          @for ($i = 0, $aux = 0; $i < count($categoria); $i++)
+          <th scope="row">{{$categoria[$i]->Nombre}}</th> 
+              @for ($j = 0; $j < count($years); $j++)
+                @for ($k = 0; $k < 12; $k++)   
+                   
+                  @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
+                   
+                      <td ><input style="width:80px;" type="number" step="0.01" placeholder="-" name="update[]"></td>
+
+                  @else
+                    <td ><input style="width:80px;" type="number" step="0.01"  placeholder="{{$values[$l][($i * count($years))+$j][$k][0]->valor}}" name="update[]"></td>
+                  @endif
+               
+                @endfor
+              @endfor        
+            </tr>  
+          @endfor  
+        @endif
       @endfor
     </tbody>
 </table>

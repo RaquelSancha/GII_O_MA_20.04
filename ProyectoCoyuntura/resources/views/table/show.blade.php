@@ -11,7 +11,7 @@
     		
     <br><br>
     @include('table.table')
-    <div align="left">Fuente: "{{$fuentes[$aux]->Name}}"<div>
+    <div align="left"><b>Fuente:</b> "{{$fuentes[$aux]->Name}}"<div>
 @endfor
 <div align="right">
 <a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a><br><br><br><br><br><br>

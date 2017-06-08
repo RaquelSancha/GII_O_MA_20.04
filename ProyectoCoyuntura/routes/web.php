@@ -26,9 +26,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     
 });
-Route::get('/form/new', function () {
-    return view('/form/new');
-});
 
 Route::get('/form/choose', function(){
 	return view('/form/choose');
@@ -42,6 +39,7 @@ Route::get('/data/create/ambito/', function(){
 	return view('/data/create/ambito');
 });
 
+Route::get('/form/new', 'TableController@formNew');
 
 Route::get('/form/create', 'FormController@create');
 
