@@ -473,7 +473,7 @@ class TableController extends Controller
     
         $idFuente=DB::select('SELECT idFuente from fuente where Name=?',[$fuente]);
         if(empty($idFuente)){
-            DB::insert('INSERT INTO fuente(idFuente,Name) VALUES (NULL,?)',[$fuente]);
+            DB::insert('INSERT INTO fuente (idFuente,Name) VALUES (NULL,?)',[$fuente]);
             $idFuente=DB::select('SELECT idFuente from fuente where Name=?',[$fuente]);
         }
             
@@ -533,6 +533,8 @@ class TableController extends Controller
     }
 
     public function delete($id){
+         DB::delete('DELETE FROM variableambitocategoria WHERE idVariable=?',[$id]);
+         DB::delete('DELETE FROM variable WHERE idVariable=?',[$id]);
 
     return view('confirm.delete',compact('id'));
     }

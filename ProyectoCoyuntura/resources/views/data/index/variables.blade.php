@@ -16,7 +16,7 @@
   @for ($i = 0; $i < count($variables); $i++)
     <tr>
       <td>{{ $variables[$i]->Nombre }}</td>
-      <td>{{ $variables[$i]->Descripcion }}</td>
+      <td style="width:600px;">{{ $variables[$i]->Descripcion }}</td>
       <td>{{ $variables[$i]->Tipo }}</td>
       <td>{{ $fuentes[$i][0]->Name}}</td>
       <td class="col-xs-3"><a href="{{ url('data/edit/variables/')}}/{{$variables[$i]->idVariable}}" class="btn btn-warning" role="button">Modificar</a> 
