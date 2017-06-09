@@ -14,15 +14,15 @@ class TableController extends Controller
         $valores=array();
         $idsCategoria=array();
         $idsCategoriaAux=array();
+        $supercategoriasAux=array();
+        $supercategorias=array();
 
     	$years = $request->input("years");
     	$categoria = $request->input("categoria");
     	$filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
         $fuentes = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.idVariable=?',[$id]);
-        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
-                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
-                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
+       
         $nombre_variable=DB::select('SELECT * FROM variable where idVariable=?',[$id]);
         foreach ($ambitos as $ambito) {
         	foreach ($categoria as $cat) {
@@ -41,6 +41,10 @@ class TableController extends Controller
         			array_push($valores,$valYear);
         			$valYear=array();
         		}
+            $supercategoriasAux = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria natural join categoria where categoria.Nombre=?',[$cat]);
+            if(!(in_array($supercategoriasAux, $supercategorias))){
+                array_push($supercategorias,$supercategoriasAux);   
+            } 
             $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat]);
             array_push($idsCategoria,$idsCategoriaAux);
             }	
@@ -58,9 +62,10 @@ class TableController extends Controller
         $valores=array();
         $idsCategoria=array();
         $idsCategoriaAux=array();
-        $supercategorias=array();
-        $scategorias=array();
 
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
+                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
+                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
         $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
@@ -84,9 +89,6 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
-                $scategorias=DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria NATURAL join categoria where categoria.Nombre=?',[$cat->Nombre]);
-                array_push($supercategorias,$scategorias);
-
                 $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat->Nombre]);
                 array_push($idsCategoria,$idsCategoriaAux);   
             }   
@@ -423,14 +425,17 @@ class TableController extends Controller
         $idsCategoria=array();
         $idsCategoriaAux=array();
         $supercategorias=array();
-        $scategorias=array();
+        $supercategoriasAux=array();
 
         $years = $request->input("years");
         $categoria = $request->input("categoria");
         $filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
         $variable = $request->input("nombre_variable");
-        
+        $descripcion = $request->input("descripcion");
+        $tipo = $request->input("tipo");
+        $fuente = $request->input("fuente");
+
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
                 foreach ($years as $year) {
@@ -448,17 +453,19 @@ class TableController extends Controller
                     array_push($valores,$valYear);
                     $valYear=array();
                 }
-                $scategorias=DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria NATURAL join categoria where categoria.Nombre=?',[$cat]);
-                array_push($supercategorias,$scategorias);
+                $supercategoriasAux = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria natural join categoria where categoria.Nombre=?',[$cat]);
+                if(!(in_array($supercategoriasAux, $supercategorias))){
+                    array_push($supercategorias,$supercategoriasAux);   
+                } 
                 $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat]);
                 array_push($idsCategoria,$idsCategoriaAux);   
             }   
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable','supercategorias','idsCategoria'));
+        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable','supercategorias','idsCategoria','fuente','descripcion','tipo'));
     }
-    public function save(Request $request)
+    public function insert(Request $request)
     {
         $categorias = $request->input("categorias");
         $variable = $request->input("variable");
@@ -494,15 +501,58 @@ class TableController extends Controller
         }
         
         $idVariable=DB::select('SELECT idVariable FROM variable WHERE Nombre=?',[$variable]);
-       
+            foreach ($ambitos as $amb ) {
+                $idAmbito=DB::select('SELECT idAmbito FROM ambito WHERE Nombre=?',[$amb]);
+                foreach ($categorias as $cat) {
+                     $idCategoria=DB::select('SELECT idCategoria FROM categoria WHERE Nombre=?',[$cat]);
+                    foreach ($years as $year) {
+                        for ($j=1; $j < 13 ; $j++) { 
+                                    DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$j,$year,$update[($j-1)+$meses]]);
+
+                        }
+                        $meses=$meses+12;
+                    }
+                }
+            }
+
+        return view('confirm.save');
+    }
+     public function save(Request $request)
+    {
+        $categorias = $request->input("categorias");
+        $variable = $request->input("variable");
+        $years = $request->input("years");
+        $ambitos = $request->input("ambitos");
+        $tipo = $request->input("tipo");
+        $descripcion = $request->input("descripcion");
+        $fuente = $request->input("fuente");
+        $update = $request->input("update");
+
+        $meses=0;
+    
+        $idFuente=DB::select('SELECT idFuente from fuente where Name=?',[$fuente]);
+        if(empty($idFuente)){
+            DB::insert('INSERT INTO fuente (idFuente,Name) VALUES (NULL,?)',[$fuente]);
+            $idFuente=DB::select('SELECT idFuente from fuente where Name=?',[$fuente]);
+        }
+            
+        DB::insert('INSERT INTO variable (idVariable, idFuente, Nombre,Descripcion, Tipo) VALUES (NULL,?,?,?,?)',[$idFuente[0]->idFuente,$variable,$descripcion,$tipo]);
+        $idSuperCat=DB::select('SELECT idSuperCategoria FROM supercategoria WHERE Name="Sin categoria" ');
+        
+        
+        $idVariable=DB::select('SELECT idVariable FROM variable WHERE Nombre=?',[$variable]);
         foreach ($ambitos as $amb ) {
             $idAmbito=DB::select('SELECT idAmbito FROM ambito WHERE Nombre=?',[$amb]);
             foreach ($categorias as $cat) {
                  $idCategoria=DB::select('SELECT idCategoria FROM categoria WHERE Nombre=?',[$cat]);
                 foreach ($years as $year) {
-                    for ($j=1; $j < 13 ; $j++) { 
-                                DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$j,$year,$update[($j-1)+$meses]]);
- 
+                    for ($j=1; $j < 13 ; $j++) {   
+                        $valor=DB::select('SELECT Valor FROM variableambitocategoria  WHERE idAmbito=? and idCategoria= ? AND Year=? AND Mes=? ORDER BY Mes ASC',[$idAmbito[0]->idAmbito,$idCategoria[0]->idCategoria,$year,$j]);
+                        if(empty($valor)){
+                            DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,NULL)',[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$j,$year]);
+                        }else{
+                            DB::insert('INSERT INTO variableambitocategoria ( idVariable, idCategoria, idAmbito, Mes, Year, Valor ) VALUES(?,?,?,?,?,?)',[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$j,$year,$valor]);
+                        }
                     }
                     $meses=$meses+12;
                 }

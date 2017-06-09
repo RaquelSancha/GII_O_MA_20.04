@@ -71,8 +71,9 @@ Route::get('/tables/{id}/insertCategoria','TableController@showInsertCategoria')
 Route::get('/tables/{id}/delete','TableController@delete');
 
 
-
 Route::post('/confirm/save', 'TableController@save');
+
+Route::post('/confirm/insert', 'TableController@insert');
 
 Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito');
 

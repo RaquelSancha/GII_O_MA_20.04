@@ -3,7 +3,7 @@
 
 @section('main-content')
 
-<h2><b>Tablas</b> Predefinidas: 
+<h2><b>Tablas Predefinidas: </b>
 @for($aux=0; $aux<count($nombre_variable);$aux++)
     {{$nombre_variable[$aux]->Nombre}}({{$nombre_variable[$aux]->Tipo}})
     </h1><hr>

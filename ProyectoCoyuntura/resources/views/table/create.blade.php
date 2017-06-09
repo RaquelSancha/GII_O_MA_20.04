@@ -2,31 +2,35 @@
 
 
 @section('main-content')
-<h2>Crear Tablas:  <b>{{$variable}}</b></h1><hr>
+<h2>Crear Tabla:  <b>{{$variable}} ({{$tipo}})</b></h1><hr>
+{{$descripcion}}<br>
 @include('table.table')
 <br>
-<div align="right">
-    <a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
-    <a class="btn btn-success"  id="btn-guardar" role="button" />Guardar </a>
-</div>
+<form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/save') }}" >
+ {{ csrf_field() }}
+    <div class="form-group">
+      @foreach($categoria as $aux)
+        <input type="hidden" name="categorias[]" value="{{$aux}}" />
+      @endforeach
 
-<script type="text/javascript">
- $(document).on('ready',function(){
+      @foreach($years as $aux)
+        <input type="hidden" name="years[]" value="{{$aux}}" />
+      @endforeach
 
-      $('#btn-iguardar').click(function(){
-        var url = "confirm/save";                                      
+      @foreach($ambitos as $aux)
+        <input type="hidden" name="ambitos[]" value="{{$aux}}" />
+      @endforeach
 
-        $.ajax({                        
-           type: "POST",                 
-           url: url,                    
-           data: $("#formulario").serialize(),
-           success: function(data)            
-           {
-             $('#resp').html(data);           
-           }
-         });
-      });
-  });
-</script>
+      <input type="hidden" name="fuente" value="{{$fuente}}" />
+      <input type="hidden" name="descripcion" value="{{$descripcion}}" />
+      <input type="hidden" name="tipo" value="{{$tipo}}" />
+      <input type="hidden" name="variable" value="{{$variable}}" />
+    </div>
+    <b>Fuente:</b> "{{$fuente}}" 
+    <div align="right">
+        <a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
+        <input class="btn btn-success"  type="submit" value="Guardar" />
+    </div>
+</form>
 
 @endsection

@@ -5,7 +5,7 @@
 <h2>Insertar Tabla:  <b>{{$variable}} ({{$tipo}})</b></h1><hr>
 {{$descripcion}}
   
- <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/save') }}" >
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/insert') }}" >
     {{ csrf_field() }}
 <div class="table-responsive">
 <table  class="table table-striped"  align="center" border="5">

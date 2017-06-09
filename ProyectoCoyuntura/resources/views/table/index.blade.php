@@ -6,7 +6,7 @@
 
 
 
-<h2><b>Tablas</b> Predefinidas</h1><hr>
+<h2><b>Tablas Predefinidas</b></h1><hr>
 <div class="table-responsive">
 <table class="table table-striped">
   <tr>
