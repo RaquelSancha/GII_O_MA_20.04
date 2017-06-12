@@ -12,6 +12,9 @@ class TableController extends Controller
     	$valYear=array();
     	$values=array();
         $valores=array();
+        $valYearForm=array();
+        $valuesForm=array();
+        $valoresForm=array();
         $idsCategoria=array();
         $idsCategoriaAux=array();
         $supercategoriasAux=array();
@@ -21,14 +24,21 @@ class TableController extends Controller
     	$categoria = $request->input("categoria");
     	$filtrado = $request->input("filtrado");
         $ambitos = $request->input("ambitos");
+
+        $ambitosForm = $request->input("ambitosForm");
+        $yearsForm = $request->input("yearsForm");
+        $categoriasForm = $request->input("categoriasForm");
+        $tipoGrafico = $request->input("tipoGrafico");
+
         $fuentes = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.idVariable=?',[$id]);
-       
         $nombre_variable=DB::select('SELECT * FROM variable where idVariable=?',[$id]);
+
         foreach ($ambitos as $ambito) {
         	foreach ($categoria as $cat) {
         		foreach ($years as $year) {
         			for ($j=1; $j < 13 ; $j++) { 
                         
+
         				$valor=DB::select('SELECT valor FROM variableambitocategoria
                                             INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
                                             INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito,$year,$j,$cat,$year,$j]);
@@ -51,8 +61,43 @@ class TableController extends Controller
             array_push($values,$valores);
             $valores=array();
     	}
+
+        if(empty($ambitosForm)){
+            $ambitosForm[0] = $ambitos[0];
+        }
+        if(empty($categoriasForm)){
+            $categoriasForm[0] = $categoria[0];
+        }
+        if(empty($yearsForm)){
+            $yearsForm[0] = $years[0];
+        }
+        if(empty($tipoGrafico)){
+            $tipoGrafico = "Barras";
+        }
+
+
+        foreach ($ambitosForm as $ambF) {
+            foreach ($categoriasForm as $catF) {
+                foreach ($yearsForm as $yearF) {
+                    for ($j=1; $j < 13 ; $j++) { 
+                        $valor=DB::select('SELECT valor FROM variableambitocategoria
+                                            INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
+                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambF,$yearF,$j,$catF,$yearF,$j]);
+                        if(empty($valor)){
+                            array_push($valYearForm,"NULL");
+                        }else{
+                            array_push($valYearForm, $valoresForm);
+                        }
+                    }
+                    array_push($valoresForm,$valYearForm);
+                    $valYearForm=array();
+                }
+            }
+            array_push($valuesForm,$valoresForm);
+            $valoresForm=array();
+        }
        
-        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable','fuentes'));
+        return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable','fuentes','ambitosForm','yearsForm','categoriasForm','tipoGrafico','valuesForm'));
     }
 
     public function edit($id)
