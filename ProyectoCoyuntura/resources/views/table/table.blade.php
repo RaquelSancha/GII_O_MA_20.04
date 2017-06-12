@@ -221,45 +221,45 @@
           </tr>
           @for ($i = 0, $aux = 0; $i < count($categoria); $i++)
                   <th scope="row">{{$categoria[$i]}}</th> 
-        @for ($j = 0; $j < count($years); $j++)
-          @for ($k = 0; $k < 12; $k=$k+3) 
-            @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
-              @if(empty($values[$l][($i * count($years))+$j][$k+1][0]->valor))
-                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
-                  <td>-*</td><?php $asterisco=1?>
-                @else
-                  <td>{{round(($values[$l][($i * count($years))+$j][$k+2][0]->valor)*100)/100}}*</td><?php $asterisco=1?>
+            @for ($j = 0; $j < count($years); $j++)
+              @for ($k = 0; $k < 12; $k=$k+3) 
+                @if(empty($values[$l][($i * count($years))+$j][$k][0]->valor))
+                  @if(empty($values[$l][($i * count($years))+$j][$k+1][0]->valor))
+                    @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                      <td>-*</td><?php $asterisco=1?>
+                    @else
+                      <td>{{round(($values[$l][($i * count($years))+$j][$k+2][0]->valor)*100)/100}}*</td><?php $asterisco=1?>
+                    @endif
+                  @else
+                    @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                      <td>{{round(($values[$l][($i * count($years))+$j][$k+1][0]->valor)*100)/100}}*</td><?php $asterisco=1?>
+                    @else
+                      <td>{{round(((($values[$l][($i * count($years))+$j][$k+2][0]->valor)+
+                      ($values[$l][($i * count($years))+$j][$k+1][0]->valor))/2)*100)/100}}*</td><?php $asterisco=1?>
+                    @endif
+                  @endif
+                @else  
+                  @if(empty($values[$l][($i * count($years))+$j][$k+1][0]->valor))
+                    @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                      <td>{{round(($values[$l][($i * count($years))+$j][$k][0]->valor)*100)/100}}*</td><?php $asterisco=1?>
+                    @else
+                       <td>{{round(((($values[$l][($i * count($years))+$j][$k+2][0]->valor)+
+                      ($values[$l][($i * count($years))+$j][$k][0]->valor))/2)*100)/100}}*</td><?php $asterisco=1?>
+                    @endif
+                  @else
+                    @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
+                      <td>{{round(((($values[$l][($i * count($years))+$j][$k+1][0]->valor)+
+                      ($values[$l][($i * count($years))+$j][$k][0]->valor))/2)*100)/100}}*</td><?php $asterisco=1?> 
+                    @else 
+                      <td>{{ round(((($values[$l][($i * count($years))+$j][$k][0]->valor)+
+                      ($values[$l][($i * count($years))+$j][$k+1][0]->valor)+
+                      ($values[$l][($i * count($years))+$j][$k+2][0]->valor))/3)*100)/100 }}</td>
+                    @endif
+                  @endif
                 @endif
-              @else
-                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
-                  <td>{{round(($values[$l][($i * count($years))+$j][$k+1][0]->valor)*100)/100}}*</td><?php $asterisco=1?>
-                @else
-                  <td>{{round(((($values[$l][($i * count($years))+$j][$k+2][0]->valor)+
-                  ($values[$l][($i * count($years))+$j][$k+1][0]->valor))/2)*100)/100}}*</td><?php $asterisco=1?>
-                @endif
-              @endif
-            @else  
-              @if(empty($values[$l][($i * count($years))+$j][$k+1][0]->valor))
-                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
-                  <td>{{round(($values[$l][($i * count($years))+$j][$k][0]->valor)*100)/100}}*</td><?php $asterisco=1?>
-                @else
-                   <td>{{round(((($values[$l][($i * count($years))+$j][$k+2][0]->valor)+
-                  ($values[$l][($i * count($years))+$j][$k][0]->valor))/2)*100)/100}}*</td><?php $asterisco=1?>
-                @endif
-              @else
-                @if(empty($values[$l][($i * count($years))+$j][$k+2][0]->valor))
-                  <td>{{round(((($values[$l][($i * count($years))+$j][$k+1][0]->valor)+
-                  ($values[$l][($i * count($years))+$j][$k][0]->valor))/2)*100)/100}}*</td><?php $asterisco=1?> 
-                @else 
-                  <td>{{ round(((($values[$l][($i * count($years))+$j][$k][0]->valor)+
-                  ($values[$l][($i * count($years))+$j][$k+1][0]->valor)+
-                  ($values[$l][($i * count($years))+$j][$k+2][0]->valor))/3)*100)/100 }}</td>
-                @endif
-              @endif
-            @endif
-          @endfor
-        @endfor
-      </tr>  
+              @endfor
+            @endfor
+        </tr>  
       @endfor
     @endif
     @endfor

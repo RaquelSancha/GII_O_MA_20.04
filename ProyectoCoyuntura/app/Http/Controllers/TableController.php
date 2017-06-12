@@ -72,7 +72,7 @@ class TableController extends Controller
             $yearsForm[0] = $years[0];
         }
         if(empty($tipoGrafico)){
-            $tipoGrafico = "Barras";
+            $tipoGrafico = "bar";
         }
 
 
@@ -84,9 +84,9 @@ class TableController extends Controller
                                             INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
                                             INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambF,$yearF,$j,$catF,$yearF,$j]);
                         if(empty($valor)){
-                            array_push($valYearForm,"NULL");
+                            array_push($valYearForm,'NULL');
                         }else{
-                            array_push($valYearForm, $valoresForm);
+                            array_push($valYearForm, $valor);
                         }
                     }
                     array_push($valoresForm,$valYearForm);
