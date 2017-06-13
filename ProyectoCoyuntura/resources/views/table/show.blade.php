@@ -132,11 +132,15 @@
 
 <script  type="text/javascript">
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
+    $(document).ready(function() {
+        $('#surveyForm').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        } );
+    } );
+    
     $(document).ready(function($categoriasForm,$yearsForm,$ambitosForm,$tipoGrafico,$valuesForm,$filtrado) {
 
     var ctx = document.getElementById("myChart");

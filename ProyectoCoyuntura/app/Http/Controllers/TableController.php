@@ -72,7 +72,7 @@ class TableController extends Controller
             $yearsForm[0] = $years[0];
         }
         if(empty($tipoGrafico)){
-            $tipoGrafico = "bar";
+            $tipoGrafico = "Barras";
         }
 
 
@@ -467,6 +467,9 @@ class TableController extends Controller
         $valYear=array();
         $values=array();
         $valores=array();
+        $valYearForm=array();
+        $valuesForm=array();
+        $valoresForm=array();
         $idsCategoria=array();
         $idsCategoriaAux=array();
         $supercategorias=array();
@@ -480,6 +483,12 @@ class TableController extends Controller
         $descripcion = $request->input("descripcion");
         $tipo = $request->input("tipo");
         $fuente = $request->input("fuente");
+
+        $ambitosForm = $request->input("ambitosForm");
+        $yearsForm = $request->input("yearsForm");
+        $categoriasForm = $request->input("categoriasForm");
+        $tipoGrafico = $request->input("tipoGrafico");
+
 
         foreach ($ambitos as $ambito) {
             foreach ($categoria as $cat) {
@@ -508,7 +517,42 @@ class TableController extends Controller
             array_push($values,$valores);
             $valores=array();
         }
-        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable','supercategorias','idsCategoria','fuente','descripcion','tipo'));
+
+        if(empty($ambitosForm)){
+            $ambitosForm[0] = $ambitos[0];
+        }
+        if(empty($categoriasForm)){
+            $categoriasForm[0] = $categoria[0];
+        }
+        if(empty($yearsForm)){
+            $yearsForm[0] = $years[0];
+        }
+        if(empty($tipoGrafico)){
+            $tipoGrafico = "Barras";
+        }
+
+
+        foreach ($ambitosForm as $ambF) {
+            foreach ($categoriasForm as $catF) {
+                foreach ($yearsForm as $yearF) {
+                    for ($j=1; $j < 13 ; $j++) { 
+                        $valor=DB::select('SELECT valor FROM variableambitocategoria
+                                            INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
+                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambF,$yearF,$j,$catF,$yearF,$j]);
+                        if(empty($valor)){
+                            array_push($valYearForm,'NULL');
+                        }else{
+                            array_push($valYearForm, $valor);
+                        }
+                    }
+                    array_push($valoresForm,$valYearForm);
+                    $valYearForm=array();
+                }
+            }
+            array_push($valuesForm,$valoresForm);
+            $valoresForm=array();
+        }
+        return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable','supercategorias','idsCategoria','fuente','descripcion','tipo','ambitosForm','yearsForm','categoriasForm','tipoGrafico','valuesForm'));
     }
     public function insert(Request $request)
     {

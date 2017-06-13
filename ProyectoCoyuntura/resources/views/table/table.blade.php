@@ -215,7 +215,7 @@
     @else
       
        <tr>
-            <th scope="row" bgcolor="#FFFFFF" style="color:Black;" >{{$supercategorias[0]->Name }}
+            <th scope="row" bgcolor="#FFFFFF" style="color:Black;" >{{$supercategorias[0][0]->Name }}
                 <td colspan="{{4*count($years)}}" bgcolor="#FFFFFF" style="color:Black;" ></td>
             </th>
           </tr>
@@ -259,7 +259,7 @@
                 @endif
               @endfor
             @endfor
-        </tr>  
+      </tr>  
       @endfor
     @endif
     @endfor
