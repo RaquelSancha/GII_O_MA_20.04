@@ -1,6 +1,6 @@
 <?php $asterisco=0;?>
 <div class="table-responsive">
-<table  class="table table-striped header-fixed"  id="example" align="center" border="5" class="display nowrap" cellspacing="0" width="100%">
+<table  class="table table-striped header-fixed"  id="Exportar_a_Excel" align="center" border="5" class="display nowrap" cellspacing="0" width="100%">
   @if($filtrado == "Meses")
     <thead >
       <tr>

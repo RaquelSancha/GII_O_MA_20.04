@@ -4,7 +4,10 @@
 @section('main-content')
 <h2>Crear Tabla:  <b>{{$variable}} ({{$tipo}})</b></h1><hr>
 {{$descripcion}}<br>
-@include('table.table')
+ <div id="table_wrapper">
+    @include('table.table')
+</div>
+
 <br>
 <form class="form-horizontal" role="form" method="POST" action="{{ url('confirm/save') }}" >
  {{ csrf_field() }}
@@ -30,7 +33,9 @@
     <div align="right">
         <a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>
         <input class="btn btn-success"  type="submit" value="Guardar" />
+        <button class="btn btn-primary " id="btnExport">Exportar a xls</button>
     </div>
+    <br><br>
 </form>
 
 <div class="box">
@@ -148,6 +153,24 @@
   <!-- /.box-body -->
 </div>
     
+<script type="text/javascript">
+    
+$(document).ready(function() {
+    $("#btnExport").click(function(e) {
+    e.preventDefault();
+
+    //getting data from our table
+    var data_type = 'data:application/vnd.ms-excel';
+    var table_div = document.getElementById('table_wrapper');
+    var table_html = table_div.outerHTML.replace(/ /g, '%20');
+
+    var a = document.createElement('a');
+    a.href = data_type + ', ' + table_html;
+    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+    a.click();
+  });
+});
+</script>
 
 <script  type="text/javascript">
 

@@ -8,10 +8,13 @@
     {{$nombre_variable[$i]->Descripcion}}
     		
     <br><br>
+    <div id="table_wrapper">
     @include('table.table')
+    </div>
     <div align="left"><b>Fuente:</b> "{{$fuentes[$i]->Name}}"<div>
 @endfor
 <div align="right">
+<button class="btn btn-primary btn-lg active" id="btnExport">Exportar a xls</button>
 <a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a><br><br><br><br><br><br>
 </div>
 
@@ -129,18 +132,27 @@
 	<!-- /.box-body -->
 </div>
 		
+<script type="text/javascript">
+    
+$(document).ready(function() {
+    $("#btnExport").click(function(e) {
+    e.preventDefault();
+
+    //getting data from our table
+    var data_type = 'data:application/vnd.ms-excel';
+    var table_div = document.getElementById('table_wrapper');
+    var table_html = table_div.outerHTML.replace(/ /g, '%20');
+
+    var a = document.createElement('a');
+    a.href = data_type + ', ' + table_html;
+    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+    a.click();
+  });
+});
+</script>
 
 <script  type="text/javascript">
-
-    $(document).ready(function() {
-        $('#surveyForm').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        } );
-    } );
-    
+   
     $(document).ready(function($categoriasForm,$yearsForm,$ambitosForm,$tipoGrafico,$valuesForm,$filtrado) {
 
     var ctx = document.getElementById("myChart");
