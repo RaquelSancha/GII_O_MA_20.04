@@ -86,7 +86,7 @@
 
 		<div class="form-group">
 	        <div class="col-md-8 col-md-offset-4">
-	            <input type="submit" value="Enviar datos!" class="btn btn-primary"  > 
+	            <input type="submit" value="Enviar datos" class="btn btn-primary"  > 
 	        </div>
   		</div>
 	</form>

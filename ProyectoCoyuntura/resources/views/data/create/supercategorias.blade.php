@@ -24,7 +24,7 @@
       <label for="nombre_supercategoria" class="col-md-4 control-label"> Añade categorías sin super categoría</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="categoriasPoner[]">
+              <select class="selectpicker dropup" data-live-search="true"  multiple data-actions-box="true" name="categoriasPoner[] " title="">
                 @foreach($categorias as $all)
                   <option>{{$all->Nombre}}</option>
                 @endforeach

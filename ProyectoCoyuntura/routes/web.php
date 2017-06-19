@@ -15,17 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/help', function(){
+	return view('/help');
+});
+
 Route::group(['middleware' => 'auth'], function () {
-    //    Route::get('/link1', function ()    {
-//        // Uses Auth Middleware
-//    });
-
-    //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
-    #adminlte_routes
-
-
     
 });
+
+Route::get('/form/new', 'TableController@formNew');
+
+Route::get('/form/create', 'FormController@create');
 
 Route::get('/form/choose', function(){
 	return view('/form/choose');
@@ -38,10 +38,6 @@ Route::get('/data/choose', function(){
 Route::get('/data/create/ambito/', function(){
 	return view('/data/create/ambito');
 });
-
-Route::get('/form/new', 'TableController@formNew');
-
-Route::get('/form/create', 'FormController@create');
 
 Route::get('/form/{id}/deleteAmbito','TableController@showDeleteAmbito');
 
@@ -154,3 +150,4 @@ Route::get('data/delete/ambito/full/{id}', 'DataController@DeleteAmbito');
 Route::get('data/delete/ambito/variable/{id}', 'DataController@chooseVariableDeleteAmbito');
 
 Route::post('/data/delete/variables/ambito/{id}', 'DataController@DeleteAmbitoVariable');
+

@@ -56,6 +56,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-         'entrust-gui.admin' => \Acoustep\EntrustGui\Http\Middleware\AdminAuth::class,
+        'entrust-gui.admin' => \Acoustep\EntrustGui\Http\Middleware\AdminAuth::class,
+        'usuario' =>\App\Http\Middleware\usuario::class,
+
     ];
 }

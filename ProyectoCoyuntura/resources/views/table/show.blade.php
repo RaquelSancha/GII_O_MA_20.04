@@ -30,7 +30,7 @@
               <label for="yearsForm" class="col-md-4 control-label"> Selecciona los años</label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="yearsForm[]" > 
+                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="yearsForm[]" title=""> 
                         @foreach($years as $year)
                         <option>{{$year}}</option>
                         @endforeach
@@ -42,7 +42,7 @@
               <label for="ambitosForm" class="col-md-4 control-label"> Selecciona los ámbitos geográficos</label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="ambitosForm[]"> 
+                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="ambitosForm[]" title=""> 
                         @foreach($ambitos as $ambito)
                           <option>{{$ambito}}</option>
                         @endforeach
@@ -54,7 +54,7 @@
               <label for="ambitosForm" class="col-md-4 control-label"> Selecciona la categorías</label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                     <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="categoriasForm[]" > 
+                     <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="categoriasForm[]" title=""> 
                       @if((count($supercategorias))>1)
                         @for($i=0, $j=0 ;$i<count($categoria);$i++) 
                             @if($idsCategoria[$i][0]->idSuperCategoria == $supercategorias[$j][0]->idSuperCategoria)
@@ -83,7 +83,7 @@
               <label for="yearsForm" class="col-md-4 control-label"> Selecciona el tipo de gráfico </label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                      <select data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="tipoGrafico" > 
+                      <select data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="tipoGrafico" > 
                    
                         <option value="bar">Barras</option>
                         <option value="line">Lineas</option>
@@ -118,12 +118,7 @@
                
             </div>
         </form>
-		<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-				<i class="fa fa-times"></i></button>
-		</div>
+		
 	</div>
 	<div class="box-body">
 		   <canvas id="myChart" height="40vh" width="80vw"></canvas>

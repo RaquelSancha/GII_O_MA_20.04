@@ -63,16 +63,22 @@ class TableController extends Controller
     	}
 
         if(empty($ambitosForm)){
-            $ambitosForm[0] = $ambitos[0];
+            for ($j=0; $j < count($ambitos) ; $j++) { 
+                $ambitosForm[$j] = $ambitos[$j];
+            }
         }
         if(empty($categoriasForm)){
-            $categoriasForm[0] = $categoria[0];
+            for ($j=0; $j < count($categoria) ; $j++) {
+                $categoriasForm[$j] = $categoria[$j];
+            }
         }
         if(empty($yearsForm)){
-            $yearsForm[0] = $years[0];
+            for ($j=0; $j < count($years) ; $j++) {
+                $yearsForm[$j] = $years[$j];
+            }
         }
         if(empty($tipoGrafico)){
-            $tipoGrafico = "Barras";
+            $tipoGrafico = "bar";
         }
 
 

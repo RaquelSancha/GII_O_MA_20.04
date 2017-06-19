@@ -67,7 +67,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <div class="row centered"  >
                     <div class="col-lg-12">
                         <br><br><br><br><br><br><br><br><br><br><br>
-                        <h3><a href="{{ url('/register') }}" class="btn btn-lg btn-success">{{ trans('adminlte_lang::message.gedstarted') }}</a></h3>
+                        <h3><a href="{{ url('/home') }}" class="btn btn-lg btn-success">Comienza</a></h3>
                     </div>
                 </div>
             </div>
