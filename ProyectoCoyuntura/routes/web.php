@@ -18,9 +18,12 @@ Route::get('/', function () {
 Route::get('/help', function(){
 	return view('/help');
 });
+Route::get('/helpGuest', function(){
+	return view('/helpGuest');
+});
 
-Route::group(['middleware' => 'auth'], function () {
-    
+Route::get('/homeGuest', function(){
+	return view('/homeGuest');
 });
 
 Route::get('/form/new', 'TableController@formNew');
@@ -33,17 +36,17 @@ Route::get('/form/choose', function(){
 
 Route::get('/data/choose', function(){
 	return view('/data/choose');
-});
+})->middleware('auth');
 
 Route::get('/data/create/ambito/', function(){
 	return view('/data/create/ambito');
-});
+})->middleware('auth');
 
-Route::get('/form/{id}/deleteAmbito','TableController@showDeleteAmbito');
+Route::get('/form/{id}/deleteAmbito','TableController@showDeleteAmbito')->middleware('auth');
 
-Route::get('/form/{id}/deleteYear','TableController@showDeleteYear');
+Route::get('/form/{id}/deleteYear','TableController@showDeleteYear')->middleware('auth');
 		
-Route::get('/form/{id}/deleteCategoria','TableController@showDeleteCategoria');
+Route::get('/form/{id}/deleteCategoria','TableController@showDeleteCategoria')->middleware('auth');
 
 Route::get('/form/{id}', 'FormController@show');
 
@@ -56,98 +59,98 @@ Route::get('/tables', 'VariableController@index');
 
 Route::post('/tables/{id}', 'TableController@show');
 
-Route::get('/tables/{id}/edit','TableController@edit');
+Route::get('/tables/{id}/edit','TableController@edit')->middleware('auth');
 
-Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito');
+Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito')->middleware('auth');
 
-Route::get('/tables/{id}/insertYear','TableController@showInsertYear');
+Route::get('/tables/{id}/insertYear','TableController@showInsertYear')->middleware('auth');
 
-Route::get('/tables/{id}/insertCategoria','TableController@showInsertCategoria');
+Route::get('/tables/{id}/insertCategoria','TableController@showInsertCategoria')->middleware('auth');
 
-Route::get('/tables/{id}/delete','TableController@delete');
-
-
-Route::post('/confirm/save', 'TableController@save');
-
-Route::post('/confirm/insert', 'TableController@insert');
-
-Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito');
-
-Route::post('/confirm/insertYear/{id}', 'TableController@updateInsertYear');
-
-Route::post('/confirm/insertCategoria/{id}', 'TableController@updateInsertCategoria');
-
-Route::post('/confirm/deleteAmbito/{id}', 'TableController@updateDeleteAmbito');
-
-Route::post('/confirm/deleteYear/{id}', 'TableController@updateDeleteYear');
-
-Route::post('/confirm/deleteCategoria/{id}', 'TableController@updateDeleteCategoria');
-
-Route::post('/confirm/{id}', 'TableController@update');
+Route::get('/tables/{id}/delete','TableController@delete')->middleware('auth');
 
 
-Route::post('/confirm/data/edit/variable/{id}', 'DataController@updateVariable');
+Route::post('/confirm/save', 'TableController@save')->middleware('auth');
 
-Route::post('/confirm/data/edit/supercategoria/{id}', 'DataController@updateSuperCategoria');
+Route::post('/confirm/insert', 'TableController@insert')->middleware('auth');
 
-Route::post('/confirm/data/edit/categoria/{id}', 'DataController@updateCategoria');
+Route::post('/confirm/insertAmbito/{id}', 'TableController@updateInsertAmbito')->middleware('auth');
 
-Route::post('/confirm/data/edit/ambito/{id}', 'DataController@updateAmbito');
+Route::post('/confirm/insertYear/{id}', 'TableController@updateInsertYear')->middleware('auth');
+
+Route::post('/confirm/insertCategoria/{id}', 'TableController@updateInsertCategoria')->middleware('auth');
+
+Route::post('/confirm/deleteAmbito/{id}', 'TableController@updateDeleteAmbito')->middleware('auth');
+
+Route::post('/confirm/deleteYear/{id}', 'TableController@updateDeleteYear')->middleware('auth');
+
+Route::post('/confirm/deleteCategoria/{id}', 'TableController@updateDeleteCategoria')->middleware('auth');
+
+Route::post('/confirm/{id}', 'TableController@update')->middleware('auth');
 
 
-Route::get('/data/index/variables', 'DataController@indexVariable');
+Route::post('/confirm/data/edit/variable/{id}', 'DataController@updateVariable')->middleware('auth');
 
-Route::get('/data/index/supercategoria', 'DataController@indexSuperCategoria');
+Route::post('/confirm/data/edit/supercategoria/{id}', 'DataController@updateSuperCategoria')->middleware('auth');
 
-Route::get('/data/index/categoria', 'DataController@indexCategoria');
+Route::post('/confirm/data/edit/categoria/{id}', 'DataController@updateCategoria')->middleware('auth');
 
-Route::get('/data/index/ambito', 'DataController@indexAmbito');
+Route::post('/confirm/data/edit/ambito/{id}', 'DataController@updateAmbito')->middleware('auth');
 
 
+Route::get('/data/index/variables', 'DataController@indexVariable')->middleware('auth');
 
-Route::get('/data/edit/variables/{id}', 'DataController@editVariable');
+Route::get('/data/index/supercategoria', 'DataController@indexSuperCategoria')->middleware('auth')->middleware('auth');
 
-Route::get('/data/edit/supercategorias/{id}', 'DataController@editSuperCategoria');
+Route::get('/data/index/categoria', 'DataController@indexCategoria')->middleware('auth');
 
-Route::get('/data/edit/categorias/{id}', 'DataController@editCategoria');
-
-Route::get('/data/edit/ambito/{id}', 'DataController@editAmbito');
+Route::get('/data/index/ambito', 'DataController@indexAmbito')->middleware('auth');
 
 
 
-Route::get('/data/create/supercategorias/', 'DataController@createSuperCategoria');
+Route::get('/data/edit/variables/{id}', 'DataController@editVariable')->middleware('auth');
 
-Route::get('/data/create/categorias/', 'DataController@createCategoria');
+Route::get('/data/edit/supercategorias/{id}', 'DataController@editSuperCategoria')->middleware('auth');
 
+Route::get('/data/edit/categorias/{id}', 'DataController@editCategoria')->middleware('auth');
 
-
-
-
-Route::post('confirm/data/new/supercategoria', 'DataController@newSuperCategoria');
-
-Route::post('confirm/data/new/categoria', 'DataController@newCategoria');
-
-Route::post('confirm/data/new/ambito', 'DataController@newAmbito');
+Route::get('/data/edit/ambito/{id}', 'DataController@editAmbito')->middleware('auth');
 
 
 
-Route::get('data/delete/supercategorias/{id}', 'DataController@deleteSuperCategoria');
+Route::get('/data/create/supercategorias/', 'DataController@createSuperCategoria')->middleware('auth');
+
+Route::get('/data/create/categorias/', 'DataController@createCategoria')->middleware('auth');
 
 
-Route::get('data/delete/categorias/{id}', 'DataController@chooseDeleteCategoria');
-
-Route::get('data/delete/categorias/full/{id}', 'DataController@DeleteCategoria');
-
-Route::get('data/delete/categorias/variable/{id}', 'DataController@chooseVariableDeleteCategoria');
-
-Route::post('/data/delete/variables/categoria/{id}', 'DataController@DeleteCategoriaVariable');
 
 
-Route::get('data/delete/ambito/{id}', 'DataController@chooseDeleteAmbito');
 
-Route::get('data/delete/ambito/full/{id}', 'DataController@DeleteAmbito');
+Route::post('confirm/data/new/supercategoria', 'DataController@newSuperCategoria')->middleware('auth');
 
-Route::get('data/delete/ambito/variable/{id}', 'DataController@chooseVariableDeleteAmbito');
+Route::post('confirm/data/new/categoria', 'DataController@newCategoria')->middleware('auth');
 
-Route::post('/data/delete/variables/ambito/{id}', 'DataController@DeleteAmbitoVariable');
+Route::post('confirm/data/new/ambito', 'DataController@newAmbito')->middleware('auth');
+
+
+
+Route::get('data/delete/supercategorias/{id}', 'DataController@deleteSuperCategoria')->middleware('auth');
+
+
+Route::get('data/delete/categorias/{id}', 'DataController@chooseDeleteCategoria')->middleware('auth');
+
+Route::get('data/delete/categorias/full/{id}', 'DataController@DeleteCategoria')->middleware('auth');
+
+Route::get('data/delete/categorias/variable/{id}', 'DataController@chooseVariableDeleteCategoria')->middleware('auth');
+
+Route::post('/data/delete/variables/categoria/{id}', 'DataController@DeleteCategoriaVariable')->middleware('auth');
+
+
+Route::get('data/delete/ambito/{id}', 'DataController@chooseDeleteAmbito')->middleware('auth');
+
+Route::get('data/delete/ambito/full/{id}', 'DataController@DeleteAmbito')->middleware('auth');
+
+Route::get('data/delete/ambito/variable/{id}', 'DataController@chooseVariableDeleteAmbito')->middleware('auth');
+
+Route::post('/data/delete/variables/ambito/{id}', 'DataController@DeleteAmbitoVariable')->middleware('auth');
 

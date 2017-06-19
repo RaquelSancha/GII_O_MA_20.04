@@ -51,7 +51,6 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
-                        <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     @else
                         <li><a href="/home">{{ Auth::user()->name }}</a></li>
                     @endif
@@ -67,7 +66,12 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <div class="row centered"  >
                     <div class="col-lg-12">
                         <br><br><br><br><br><br><br><br><br><br><br>
+                        @if (Auth::guest())
+                        <h3><a href="{{ url('/homeGuest') }}" class="btn btn-lg btn-success">Comienza</a></h3>
+                        @else
                         <h3><a href="{{ url('/home') }}" class="btn btn-lg btn-success">Comienza</a></h3>
+                        @endif
+                        
                     </div>
                 </div>
             </div>

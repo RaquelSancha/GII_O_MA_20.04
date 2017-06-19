@@ -98,7 +98,7 @@ Desde la gestión de datos, se podrán <b>crear</b>, <b>modificar</b> y <b>borra
 	                <img src="img/verTabla.jpg"  title="Tabla predefinida" style="border-width:1px;">
 	            </div>
 		    </div>
-		Existe la posibilidad de exportar la tabla creada a forato <b>".xls"</b>.
+		Existe la posibilidad de exportar la tabla creada a formato <b>".xls"</b>.
 		Por defecto, se mostrará un gráfico de barras con todos los datos introducidos, pero se puede modificar el gráfico rellenando el formulario.
 		Se podrán mostrar gráficos de <b>barras</b>, <b>lineas</b> y <b>radios</b>.
 		<br><br>

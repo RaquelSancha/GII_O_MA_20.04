@@ -2,7 +2,12 @@
 <header class="main-header">
 
     <!-- Logo -->
+
+     @if (Auth::guest())
+    <a href="{{ url('/homeGuest') }}" class="logo">
+    @else
     <a href="{{ url('/home') }}" class="logo">
+    @endif
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>P</b>C</span>
         <!-- logo for regular state and mobile devices -->
@@ -20,7 +25,6 @@
             <ul class="nav navbar-nav">
                 
                 @if (Auth::guest())
-                    <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
                 @else
                     <!-- User Account Menu -->
