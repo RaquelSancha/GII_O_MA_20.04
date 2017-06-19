@@ -15,7 +15,7 @@
    <div class="form-group">
       <label for="categoria" class="col-md-4 control-label">Selecciona las categorías</label>
       <div class="col-md-2">
-          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick"  name="categoria[]" >
+          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="categoria[]" title="" >
             @for($i=0, $j=0 ;$i<count($categorias);$i++)
             @if(!(empty($supercategorias[$j]->Name)))
               @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)

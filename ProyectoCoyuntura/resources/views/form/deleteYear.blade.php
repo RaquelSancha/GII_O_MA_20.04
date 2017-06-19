@@ -15,7 +15,7 @@
   <div class="form-group">
       <label for="years" data-width="auto" class="col-md-4 control-label">Selecciona los años</label>
       <div class="col-md-2">
-          <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="years[]">
+          <select class="selectpicker dropup" data-live-search="true"  multiple data-actions-box="true" name="years[]" title="">
             @foreach($years as $year)
             <option>{{$year->Year}}</option>
             @endforeach

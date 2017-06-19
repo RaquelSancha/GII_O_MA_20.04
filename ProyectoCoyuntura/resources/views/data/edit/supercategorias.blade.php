@@ -24,7 +24,7 @@
       <label for="nombre_supercategoria" class="col-md-4 control-label"> Categorias asignadas que deseas quitar</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="categoriasQuitar[]">
+              <select class="selectpicker dropup" data-live-search="true"  multiple data-actions-box="true" name="categoriasQuitar[]" title="">
                 @foreach($categorias as $cat)
                   <option>{{$cat->Nombre}}</option>
                 @endforeach
@@ -36,7 +36,7 @@
       <label for="nombre_supercategoria" class="col-md-4 control-label"> Categorias que deseas añadir</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="categoriasPoner[]">
+              <select class="selectpicker dropup" data-live-search="true"  multiple data-actions-box="true" name="categoriasPoner[]" title="" >
                 @foreach($AllCategorias as $all)
                   <option>{{$all->Nombre}}</option>
                 @endforeach

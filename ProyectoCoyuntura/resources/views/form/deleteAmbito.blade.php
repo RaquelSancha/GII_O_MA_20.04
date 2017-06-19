@@ -15,7 +15,7 @@
   <div class="form-group">
       <label for="ambitos" data-width="auto" class="col-md-4 control-label">Selecciona los ámbitos geográficos</label>
       <div class="col-md-2">
-          <select class="selectpicker" data-live-search="true"  multiple data-actions-box="true" name="ambitos[]">
+          <select class="selectpicker dropup" data-live-search="true"  multiple data-actions-box="true" name="ambitos[] " title="">
             @foreach($ambitos as $ambito)
             <option>{{$ambito->Nombre}}</option>
             @endforeach
