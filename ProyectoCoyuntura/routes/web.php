@@ -22,11 +22,20 @@ Route::get('/helpGuest', function(){
 	return view('/helpGuest');
 });
 
+Route::post('/register/solicitud', 'RegisterController@register');
+
+Route::get('/register/aceptar/{id}', 'RegisterController@aceptar');
+
+Route::get('/register/declinar/{id}', 'RegisterController@declinar');
+
+
 Route::get('/homeGuest', function(){
 	return view('/homeGuest');
 });
 
 Route::get('/form/new', 'TableController@formNew');
+
+Route::get('/register/solicitud', 'Register@register');
 
 Route::get('/form/create', 'FormController@create');
 
