@@ -16,10 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('/help', function(){
-	return view('/help');
+	return view('/help/help');
 });
 Route::get('/helpGuest', function(){
-	return view('/helpGuest');
+	return view('/help/helpGuest');
+});
+
+Route::get('/equipo', function(){
+	return view('/equipo');
 });
 
 Route::post('/register/solicitud', 'RegisterController@register');
