@@ -20,10 +20,19 @@
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
         </a>
+        <a href="http://fundacioncajaruralburgos.es/" target="_blank">
+            <img src="{{url('img/cajavivaicon.png')}}"  width="14">
+        </a>
+        &nbsp;
+        <a href="http://www.ubu.es/" target="_blank">
+            <img src="{{url('img/ubu.png')}}"  width="27">
+        </a> 
+
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                
+               
+                       
                 @if (Auth::guest())
                     <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
