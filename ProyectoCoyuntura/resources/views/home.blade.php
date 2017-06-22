@@ -26,8 +26,13 @@
 
                         <br><br>
                         <div align="center">
-                        <img src="img/cajaviva.png" width="270">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="img/ubu.jpg" width="270">
+                            <a href="http://fundacioncajaruralburgos.es/" target="_blank">
+                                <img src="img/cajaviva.png"  width="270">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="http://www.ubu.es/" target="_blank">
+                                <img src="img/ubu.jpg"  width="270">
+                            </a>
                         </div>
                         <br>
                     </div>
