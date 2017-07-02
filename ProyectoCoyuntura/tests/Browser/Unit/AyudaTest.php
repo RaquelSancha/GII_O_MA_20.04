@@ -40,7 +40,7 @@ class AyudaTest extends DuskTestCase
                     ->clickLink('Comienza')
                     ->waitForText('Bienvenido')
                     ->clickLink('Ayuda')
-                    ->waitForText('Ayuda de la Aplicación')
+                    ->waitForText('Ayuda de la aplicación')
                     ->assertPathIs('/helpGuest');
         });
     }

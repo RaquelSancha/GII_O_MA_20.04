@@ -8,21 +8,37 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class invitadoTest extends DuskTestCase
+class AdministradorTest extends DuskTestCase
 {
+    /**
+     * Login del Admin
+     *
+     * @return void
+     */
+    public function testLoginAdmin()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                    ->type( 'email','Admin@admin.es')
+                    ->type( 'password', 'admin1')
+                    ->press('Inicio Sesión')
+                    ->waitForText('Bienvenido')
+                    ->assertPathIs('/home');
+        });
+    }
     /**
      * 
      *
      * @return void
      */
-    public function testRestriccionModificarTabla()
+    public function testModificarTabla()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tables')
                     ->waitForText('Modificar Valores') 
-                    ->clickLink('Modificar Valores') 	
-                    ->waitForText('Inicia sesión')
-                    ->assertPathIs('/login');
+                    ->clickLink('Modificar Valores')    
+                    ->pause(2000)
+                    ->assertPathIs('/tables/5/edit');
         });
     }
 
@@ -35,24 +51,23 @@ class invitadoTest extends DuskTestCase
                     ->clickLink('Comienza')
                     ->waitForText('Bienvenido')
                     ->clickLink('Gestión Datos')
-                    ->waitForText('Inicia sesión')
-                    ->assertPathIs('/login');
+                    ->waitForText('Mostrar')
+                    ->assertPathIs('/data/choose');
         });
     }
 
     public function testAdministraciónUsuarios()
     {
         $this->browse(function (Browser $browser) {
-           $browser->visit('/')
+           $browser ->visit('/')
                     ->clickLink('Comienza')
                     ->waitForText('Bienvenido')
                     ->clickLink('Administración')
                     ->waitForText('Usuarios')
                     ->clickLink('Usuarios')
-                    ->waitForText('Inicia sesión')
-                    ->assertPathIs('/login');
+                    ->waitForText('No tienes permiso')
+                    ->assertSee('No tienes permiso');
         });
     }
 
-   
 }

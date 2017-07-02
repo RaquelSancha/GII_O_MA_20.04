@@ -8,26 +8,34 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class invitadoTest extends DuskTestCase
+class SuperAdministradorTest extends DuskTestCase
 {
     /**
-     * 
+     * Login del Super Admin
      *
      * @return void
      */
-    public function testRestriccionModificarTabla()
+    public function testLoginSuperAdmin()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                    ->type( 'email','SuperAdmin@superadmin.es')
+                    ->type( 'password', 'superadmin')
+                    ->press('Inicio Sesión')
+                    ->waitForText('Bienvenido')
+                    ->assertPathIs('/home');        
+        });
+    }
+    public function testModificarTabla()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tables')
                     ->waitForText('Modificar Valores') 
-                    ->clickLink('Modificar Valores') 	
-                    ->waitForText('Inicia sesión')
-                    ->assertPathIs('/login');
+                    ->clickLink('Modificar Valores')    
+                    ->pause(2000)
+                    ->assertPathIs('/tables/5/edit');
         });
     }
-
-
-
     public function testGestionDatos()
     {
         $this->browse(function (Browser $browser) {
@@ -35,24 +43,22 @@ class invitadoTest extends DuskTestCase
                     ->clickLink('Comienza')
                     ->waitForText('Bienvenido')
                     ->clickLink('Gestión Datos')
-                    ->waitForText('Inicia sesión')
-                    ->assertPathIs('/login');
+                    ->waitForText('Mostrar')
+                    ->assertPathIs('/data/choose');
         });
     }
-
     public function testAdministraciónUsuarios()
     {
         $this->browse(function (Browser $browser) {
-           $browser->visit('/')
+           $browser ->visit('/')
                     ->clickLink('Comienza')
                     ->waitForText('Bienvenido')
                     ->clickLink('Administración')
                     ->waitForText('Usuarios')
                     ->clickLink('Usuarios')
-                    ->waitForText('Inicia sesión')
-                    ->assertPathIs('/login');
+                    ->waitForText('SuperAdmin')
+                    ->assertPathIs('/admin/users');
         });
     }
 
-   
 }
