@@ -1,5 +1,12 @@
 <?php
-
+/** -- -------------------------------------------------------------
+*   -- Nombre:      Proyecto Coyuntura
+*   -- Organización:Escuela Politécnica Superior
+*   -- Autor:       Nelson Páramo Valdivielso
+*   -- Fecha:       julio del 2016
+*   -- Versión:     1.0
+*   -- -------------------------------------------------------------
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

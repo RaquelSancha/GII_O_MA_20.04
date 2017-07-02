@@ -1,9 +1,5 @@
 @extends('adminlte::layouts.app')
-
-
 @section('main-content')
-
-
 <table class="table table-striped">
   <tr>
     <th>Nombre</th>

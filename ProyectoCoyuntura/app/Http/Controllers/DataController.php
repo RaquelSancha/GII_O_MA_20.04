@@ -1,11 +1,26 @@
 <?php
-
+/** -- -------------------------------------------------------------
+*   -- Nombre:      Proyecto Coyuntura
+*   -- Organización:Escuela Politécnica Superior
+*   -- Autor:       Nelson Páramo Valdivielso
+*   -- Fecha:       julio del 2016
+*   -- Versión:     1.0
+*   -- -------------------------------------------------------------
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+/**
+* Clase que se encarga de las operaciones con los datos de la aplicación.
+*/
 class DataController extends Controller
 {
+    /**
+    * Función que se encarga de mostrar las variables de la BD
+    *
+    *@return \Illuminate\Http\Response
+    */ 
     public function indexVariable()
     {
     	$fuentes=array();
@@ -17,6 +32,13 @@ class DataController extends Controller
         }
         return view('data/index/variables',compact('fuentes','variables'));
     }
+
+    /**
+    * Función que se encarga de editar el tipo, la fuente, la descripcion y el nombre de la variabla pasada por parametro.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function editVariable($id)
     {
         $variables = DB::select('SELECT * FROM variable where idVariable=?',[$id]);
@@ -25,6 +47,13 @@ class DataController extends Controller
         return view('data/edit/variables',compact('fuentes','variables','id'));
     }
 
+     /**
+    * Función que se encarga de actualizar en la base de datos el tipo, la fuente, la descripcion y el nombre de la variabla pasada por parametro.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
      public function updateVariable(Request $request, $id)
     {
         $nombre_variable=$request->input("nombre_variable");
@@ -52,6 +81,12 @@ class DataController extends Controller
 
         return view('data/confirm/update');
     }
+
+    /**
+    * Función que se encarga de mostrar las super categorías de la BD
+    *
+    *@return \Illuminate\Http\Response
+    */ 
     public function indexSuperCategoria()
     {
         $categorias=array();
@@ -64,7 +99,12 @@ class DataController extends Controller
         }
         return view('data/index/supercategoria',compact('categorias','supercategorias'));
     }
-
+    /**
+    * Función que se encarga de editar las categorias que forman parte de la supercategoría pasada por parametro.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function editSuperCategoria($id)
     {
         $supercategorias = DB::select('SELECT * FROM supercategoria where idSuperCategoria=?',[$id]);
@@ -73,6 +113,13 @@ class DataController extends Controller
 
         return view('data/edit/supercategorias',compact('categorias','supercategorias','id','AllCategorias'));
     }
+    /**
+    * Función que se encarga de actualizar en la base de datos poniendo y quitando categorias de una super categoria pasada por parametro.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
      public function updateSuperCategoria(Request $request, $id)
     {
         $nombre_supercategoria=$request->input("nombre_supercategoria");
@@ -97,12 +144,24 @@ class DataController extends Controller
 
         return view('data/confirm/update');
     }
+
+    /**
+    * Función que se encarga de mostrar las categorias que están sin super categoria para ofrecerlas en el formulario de creacion de una nueva super categoria.
+    * 
+    * @return \Illuminate\Http\Response
+    */
     public function createSuperCategoria()
     {
        
         $categorias = DB::select('SELECT DISTINCT Nombre FROM categoria natural join supercategoria where supercategoria.Name="Sin categoria"');
         return view('data/create/supercategorias',compact('categorias'));
     }
+    /**
+    * Función que se encarga de introducir una super categoria en la BD con las categorias asignadas.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function newSuperCategoria(Request $request)
     {
         $categoriasPoner=$request->input("categoriasPoner");
@@ -117,6 +176,12 @@ class DataController extends Controller
         }
         return view('data/confirm/create');
     }
+    /**
+    * Función que se encarga de quitar de la base de datos una super Categoria.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function deleteSuperCategoria($id)
     {
         
@@ -127,7 +192,12 @@ class DataController extends Controller
         return view('data/confirm/delete');
     }
 
-     public function indexCategoria()
+    /**
+    * Función que se encarga de mostrar las categorías de la BD
+    *
+    * @return \Illuminate\Http\Response
+    */ 
+    public function indexCategoria()
     {
         $supercategorias=array();
         $supercategoriasAux=array();
@@ -139,7 +209,14 @@ class DataController extends Controller
         }
         return view('data/index/categoria',compact('categorias','supercategorias'));
     }
-     public function editCategoria($id)
+
+    /**
+    * Función que se encarga de mostrar la super categoria a la que está asignada una categoria para mostrarla en el formulario y así poder editarla.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */ 
+    public function editCategoria($id)
     {
         $categorias = DB::select('SELECT * FROM categoria where idCategoria=?',[$id]);
         $supercategorias = DB::select('SELECT DISTINCT Name FROM supercategoria natural join categoria where categoria.idSuperCategoria != ?',[$categorias[0]->idSuperCategoria]);
@@ -148,6 +225,14 @@ class DataController extends Controller
 
         return view('data/edit/categorias',compact('categorias','supercategorias','id','categoria_supercategoria'));
     }
+
+     /**
+    * Función que se encarga de actualizar la base de datos modificando el nombre de la categoria pasada por parametro y la super categoria a la que está asignada. 
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function updateCategoria(Request $request, $id)
     {
         $nombre_categoria=$request->input("nombre_categoria");
@@ -165,12 +250,25 @@ class DataController extends Controller
 
         return view('data/confirm/update');
     }
+
+    /**
+    * Función que se encarga de mostrar las super categorias para ofrecerlas en el formulario de creacion de una nueva categoria.
+    * 
+    * @return \Illuminate\Http\Response
+    */
     public function createCategoria()
     {
        
         $supercategorias = DB::select('SELECT DISTINCT Name FROM supercategoria where supercategoria.Name!="Sin categoria"');
         return view('data/create/categorias',compact('supercategorias'));
     }
+
+    /**
+    * Función que se encarga de introducir una categoria en la BD con su super categoria.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function newCategoria(Request $request)
     {
         $supercategorias=$request->input("supercategorias");
@@ -185,6 +283,13 @@ class DataController extends Controller
         
         return view('data/confirm/create');
     }
+
+    /**
+    * Función que se encarga de borrar una categoria pasada por parametro de la base de datos.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */ 
     public function deleteCategoria($id)
     {
         $delete=DB::delete('DELETE FROM variableambitocategoria WHERE idCategoria=?',[$id]);
@@ -192,6 +297,14 @@ class DataController extends Controller
 
         return view('data/confirm/delete');
     }
+
+    /**
+    * Función que se encarga de borrar las variables a las que pertenece una categoría para borrarlas solo de la variable. 
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
      public function deleteCategoriaVariable(Request $request, $id)
     {
 
@@ -204,10 +317,24 @@ class DataController extends Controller
             
         return view('data/confirm/delete');
     }
+
+    /**
+    * Función que nos devuelve una vista para elegir si borrar la categoria de una variable o de la aplicación. 
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function chooseDeleteCategoria($id)
     {
         return view('data/delete/categorias',compact('id'));
     }
+
+    /**
+    * Función que nos muestra las variables a las que pertenece una categoria. 
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function chooseVariableDeleteCategoria($id)
     {
         $categorias=DB::select('SELECT Nombre FROM categoria WHERE idCategoria=? ',[$id]);
@@ -215,17 +342,36 @@ class DataController extends Controller
         return view('data/delete/variables/categorias',compact('id','variables','categorias'));
     }
 
-
+    /**
+    * Función que nos muestra los ambitos geograficos. 
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function indexAmbito()
     {
         $ambitos = DB::select('SELECT * FROM ambito order by Nombre ASC');
         return view('data/index/ambito',compact('ambitos'));
     }
+
+    /**
+    * Función que nos muestra el ambito escogido para editar. 
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function editAmbito($id)
     {
         $ambitos = DB::select('SELECT * FROM ambito where idAmbito=?',[$id]);
         return view('data/edit/ambito',compact('ambitos','id'));
     }
+
+     /**
+    * Función que nos permite cambiar el nombre de nuestro ambito. 
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
      public function updateAmbito(Request $request, $id)
     {
         $nombre_ambito=$request->input("nombre_ambito");
@@ -234,6 +380,13 @@ class DataController extends Controller
         }
         return view('data/confirm/update');
     }
+
+     /**
+    * Función que nos permite agregar un nuevo ambito a la BD. 
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function newAmbito(Request $request)
     {
         $nombre_ambito=$request->input("nombre_ambito");
@@ -242,10 +395,24 @@ class DataController extends Controller
         
         return view('data/confirm/create');
     }
+
+    /**
+    * Función que nos devuelve una vista para elegir si borrar el ambito de una variable o de la aplicación. 
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
      public function chooseDeleteAmbito($id)
     {
         return view('data/delete/ambito',compact('id'));
     }
+
+     /**
+    * Función que borra el ambito de la aplicacion.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
      public function deleteAmbito($id)
     {
         $delete=DB::delete('DELETE FROM variableambitocategoria WHERE idAmbito=?',[$id]);
@@ -253,12 +420,27 @@ class DataController extends Controller
 
         return view('data/confirm/delete');
     }
+
+     /**
+    * Función que muestra las variables que contienen este ambito.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function chooseVariableDeleteAmbito($id)
     {
         $ambitos=DB::select('SELECT Nombre FROM ambito WHERE idAmbito=? ',[$id]);
         $variables=DB::select('SELECT DISTINCT Nombre FROM variable natural join variableambitocategoria WHERE idAmbito=? ',[$id]);
         return view('data/delete/variables/ambito',compact('id','variables','ambitos'));
     }
+
+     /**
+    * Función que borra el ambito de una variable pasada por parametro. 
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
      public function deleteAmbitoVariable(Request $request, $id)
     {
 

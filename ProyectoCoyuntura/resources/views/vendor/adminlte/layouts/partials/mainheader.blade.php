@@ -20,13 +20,15 @@
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
         </a>
+        <div align="center">
         <a href="http://fundacioncajaruralburgos.es/" target="_blank">
             <img src="{{url('img/cajavivaicon.png')}}"  width="14">
         </a>
-        &nbsp;
+        &nbsp; &nbsp; &nbsp;
         <a href="http://www.ubu.es/" target="_blank">
             <img src="{{url('img/ubu.png')}}"  width="27">
         </a> 
+
 
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
@@ -78,6 +80,7 @@
 
                
             </ul>
+        </div>
         </div>
     </nav>
 </header>

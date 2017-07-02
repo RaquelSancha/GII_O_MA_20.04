@@ -9,7 +9,7 @@
     <th>Email</th>
     <th>{{ trans('adminlte_lang::message.actions') }}</th>
   </tr>
-  @foreach($users as $user)
+  @foreach($usuarios as $user)
     <tr>
       <td>{{ $user->email }}</th>
 

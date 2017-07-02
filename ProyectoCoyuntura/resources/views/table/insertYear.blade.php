@@ -20,7 +20,7 @@
         @foreach($years as $year)
         <th colspan="12" align="center" bgcolor= "#60B664" style="color:White;">{{ $year->Year}}</th>
         @endforeach
-        <th colspan="12" align="center" bgcolor= "#60B664" style="color:White;"><input style="width:80px;" type="number" class="form-control input-sm"  name="new_Year"></th>
+        <th colspan="12" align="center" bgcolor= "#60B664" style="color:White;"><input style="width:80px;" type="number" class="form-control input-sm"  name="new_Year" required></th>
       </tr>
 
       <tr  bgcolor= "#01A556" style="color:White;">

@@ -17,7 +17,7 @@
       <label for="nombre_variable" class="col-md-4 control-label"> Introduce un nombre para la tabla</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <input type="text" name="nombre_variable" class="form-control">
+              <input type="text" name="nombre_variable" class="form-control" required>
           </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
       <label for="fuente" class="col-md-4 control-label"> Introduce la fuente</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <input type="textarea" name="fuente" class="form-control">
+              <input type="textarea" name="fuente" class="form-control" required>
           </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
       <label for="tipo" class="col-md-4 control-label"> Introduce el tipo(Tasa de variación, %, etc)</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <input type="text" name="tipo" class="form-control">
+              <input type="text" name="tipo" class="form-control" required>
           </div>
       </div>
     </div>

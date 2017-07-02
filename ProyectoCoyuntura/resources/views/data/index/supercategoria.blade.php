@@ -1,6 +1,4 @@
 @extends('adminlte::layouts.app')
-
-
 @section('main-content')
 <div align="right">
 <a align="right" href="{{ url('data/create/supercategorias/')}}" class="btn btn-success" role="button">Crear super categoria</a><br><br>

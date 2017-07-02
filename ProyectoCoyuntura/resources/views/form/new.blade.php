@@ -15,7 +15,7 @@
 			<label for="nombre_variable" class="col-md-4 control-label"> Introduce un nombre para la tabla</label>
 			<div class="row">
 		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
-		    			<input type="text" name="nombre_variable" class="form-control">
+		    			<input type="text" name="nombre_variable" class="form-control" required>
 		    	</div>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 			<label for="fuente" class="col-md-4 control-label"> Introduce la fuente</label>
 			<div class="row">
 		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
-		    			<input type="textarea" name="fuente" class="form-control">
+		    			<input type="textarea" name="fuente" class="form-control" required>
 		    	</div>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 			<label for="tipo" class="col-md-4 control-label"> Introduce el tipo(Tasa de variación, %, etc)</label>
 			<div class="row">
 		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
-		    			<input type="text" name="tipo" class="form-control">
+		    			<input type="text" name="tipo" class="form-control" required>
 		    	</div>
 			</div>
 		</div>
@@ -48,7 +48,7 @@
 			<div class="row">
 		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
 		    		<div class="input-group input-group-option  col-xs-10">
-		    			<input type="text" name="ambitos[]" class="form-control" placeholder="Pincha para añadir ">
+		    			<input type="text" name="ambitos[]" class="form-control" placeholder="Pincha para añadir " required>
 		    			<span class="input-group-addon input-group-addon-remove">
 		    				<span class="glyphicon glyphicon-remove"></span>
 		    			</span>
@@ -61,7 +61,7 @@
 			<div class="row">
 		        <div class="form-group form-group-options col-md-4 col-md-offset-5">
 		    		<div class="input-group input-group-option  col-xs-10">
-		    			<input type="text" name="categorias[]" class="form-control" placeholder="Pincha para añadir ">
+		    			<input type="text" name="categorias[]" class="form-control" placeholder="Pincha para añadir " required>
 		    			<span class="input-group-addon input-group-addon-remove">
 		    				<span class="glyphicon glyphicon-remove"></span>
 		    			</span>

@@ -81,8 +81,6 @@
 <input type="hidden" name="tipo" value="{{$tipo}}" />
 <input type="hidden" name="variable" value="{{$variable}}" />
 
-
-
 <b>Fuente:</b> "{{$fuente}}" 
 <div align="right">
     <a class= "btn btn-success" href="javascript:history.back(-1);" role="button">Volver</a>

@@ -1,11 +1,6 @@
 
 @extends('adminlte::layouts.app')
-
-
 @section('main-content')
-
-
-
 <h2><b>Tablas Predefinidas</b></h1><hr>
 <div class="table-responsive">
 <table class="table table-striped">
@@ -15,9 +10,7 @@
     <th>Tipo</th>
     <th>Fuente</th>
     <th></th>
-
   </tr>
-
   @for ($i = 0; $i < count($variables); $i++)
     <tr>
 

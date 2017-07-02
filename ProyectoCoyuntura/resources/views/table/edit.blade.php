@@ -24,7 +24,6 @@
                 <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteAmbito">Ámbito Geográfico</a></li>
                 <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteYear">Año</a></li>
                 <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteCategoria">Categoría</a></li>
-
                 </u1>
               </ul>
             </li>

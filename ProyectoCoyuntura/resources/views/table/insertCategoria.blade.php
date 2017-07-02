@@ -20,7 +20,7 @@
       <label for="nombre_categoria" class="col-md-4 control-label"> Introduce el nombre de la categoría</label>
         <div class="row">
           <div class="form-group form-group-options col-md-4 col-md-offset-3">
-            <input type="text" name="new_categoria" class="form-control">
+            <input type="text" name="new_categoria" class="form-control" required>
           </div>
         </div>
     </div>

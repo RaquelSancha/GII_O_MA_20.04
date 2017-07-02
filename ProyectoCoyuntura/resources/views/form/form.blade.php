@@ -3,7 +3,7 @@
   <label for="years" class="col-md-4 control-label"> Selecciona los años</label>
   <div class="row">
         <div class="form-group form-group-options col-md-4 col-md-offset-5">
-          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker dropup show-tick"  name="years[]" title=""> 
+          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker dropup show-tick"  name="years[]" id="years" title="" required> 
             @foreach($years as $year)
         <option>{{$year->Year}}</option>
         @endforeach
@@ -15,7 +15,7 @@
   <label for="ambitos" class="col-md-4 control-label"> Selecciona los ámbitos geográficos</label>
   <div class="row">
         <div class="form-group form-group-options col-md-4 col-md-offset-5">
-          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="ambitos[]" title="" > 
+          <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="ambitos[]" title="" required > 
             @foreach($ambitos as $ambito)
               <option>{{$ambito->Nombre}}</option>
             @endforeach
@@ -27,7 +27,7 @@
 <label for="filtrado" class="col-md-4 control-label">Selecciona cómo deseas filtrar los datos</label>
   <div class="row">
     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-      <select class="selectpicker" name="filtrado">
+      <select class="selectpicker" name="filtrado" required>
         <option>Meses</option>
         <option>Años</option>
         <option>Trimestres</option>
@@ -39,7 +39,7 @@
   <label for="categoria" class="col-md-4 control-label">Selecciona las categorías a mostrar</label>
     <div class="row">
       <div class="form-group form-group-options col-md-4 col-md-offset-5">
-        <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="categoria[]" title="" > 
+        <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="categoria[]" title="" required > 
           @if((count($supercategorias))>1)
             @for($i=0, $j=0 ;$i<count($categorias);$i++) 
                 @if($categorias[$i]->idSuperCategoria == $supercategorias[$j]->idSuperCategoria)

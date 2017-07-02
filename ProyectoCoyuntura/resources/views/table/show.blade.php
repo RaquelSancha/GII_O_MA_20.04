@@ -17,10 +17,6 @@
 <button class="btn btn-primary btn-lg active" id="btnExport">Exportar a xls</button>
 <a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a><br><br><br><br><br><br>
 </div>
-
-
-
-
 <div class="box">
 	<div class="box-header with-border">
 		<h3 class="box-title">Datos del gráfico</h3>
@@ -30,7 +26,7 @@
               <label for="yearsForm" class="col-md-4 control-label"> Selecciona los años</label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="yearsForm[]" title=""> 
+                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto"  class="selectpicker show-tick dropup"  name="yearsForm[]" title="" required> 
                         @foreach($years as $year)
                         <option>{{$year}}</option>
                         @endforeach
@@ -42,7 +38,7 @@
               <label for="ambitosForm" class="col-md-4 control-label"> Selecciona los ámbitos geográficos</label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="ambitosForm[]" title=""> 
+                      <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup" name="ambitosForm[]" title="" required> 
                         @foreach($ambitos as $ambito)
                           <option>{{$ambito}}</option>
                         @endforeach
@@ -54,7 +50,7 @@
               <label for="ambitosForm" class="col-md-4 control-label"> Selecciona la categorías</label>
               <div class="row">
                     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-                     <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup"  name="categoriasForm[]" title=""> 
+                     <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker show-tick dropup" name="categoriasForm[]" title="" required> 
                       @if((count($supercategorias))>1)
                         @for($i=0, $j=0 ;$i<count($categoria);$i++) 
                             @if($idsCategoria[$i][0]->idSuperCategoria == $supercategorias[$j][0]->idSuperCategoria)

@@ -1,12 +1,28 @@
 <?php
-
+/** -- -------------------------------------------------------------
+*   -- Nombre:      Proyecto Coyuntura
+*   -- Organización:Escuela Politécnica Superior
+*   -- Autor:       Nelson Páramo Valdivielso
+*   -- Fecha:       julio del 2016
+*   -- Versión:     1.0
+*   -- -------------------------------------------------------------
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+/**
+* Clase que se encarga de gestionar las tablas de la aplicacion.
+*/
 class TableController extends Controller
 {
-
+     /**
+    * Función que se encarga de mostrar las tablas y los gráficos filtrados a partir de una id .
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function show(Request $request,$id)
     {
     	$valYear=array();
@@ -106,6 +122,12 @@ class TableController extends Controller
         return view('table.show',compact('categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable','fuentes','ambitosForm','yearsForm','categoriasForm','tipoGrafico','valuesForm'));
     }
 
+  /**
+    * Función que se encarga de mostrar las tablas para poder editarlas.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function edit($id)
     {
         $valYear=array();
@@ -150,6 +172,13 @@ class TableController extends Controller
         return view('table.edit',compact('categoria','years','values','id','ambitos','nombreVariable','idsCategoria','supercategorias'));
     }
 
+    /**
+    * Función que se encarga de actualizar los valores de las tablas.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, $id){
  
         $update=$request->input("update");
@@ -182,12 +211,25 @@ class TableController extends Controller
         return view('confirm.update');
     }
 
+    /**
+    * Función que se encarga de mostrar los ámbitos para poder borrar los selecionados.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function showDeleteAmbito($id){
 
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]); 
         return view('form.deleteAmbito',compact('ambitos','id'));
     }
 
+    /**
+    * Función que se encarga borrar los ambitos seleccionados de una tabla.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function updateDeleteAmbito(Request $request,$id){
 
         $ambitos = $request->input("ambitos");
@@ -199,6 +241,12 @@ class TableController extends Controller
         return view('confirm.update');
     }
 
+    /**
+    * Función que se encarga de mostrar la tabla con el formulario para añadir un ámbito.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function showInsertAmbito($id){
 
         $valYear=array();
@@ -239,7 +287,15 @@ class TableController extends Controller
         }
         return view('table.insertAmbito',compact('categoria','years','values','id','ambitos','nombreVariable','idsCategoria','supercategorias'));
     }
- public function updateInsertAmbito (Request $request, $id){
+
+    /**
+    * Función que actualiza los datos cuando se inserta un ambito.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function updateInsertAmbito (Request $request, $id){
 
         $update=$request->input("update");
         $new_Ambito=$request->input("new_Ambito");
@@ -285,12 +341,25 @@ class TableController extends Controller
         return view('confirm.update',compact('update','valor','new_Ambito'));
     }
 
+    /**
+    * Función que muestra los años que se pueden borrar de una tabla.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function showDeleteYear($id){
 
         $years  = DB::select('SELECT DISTINCT Year FROM variableambitocategoria WHERE idVariable=?',[$id]); 
         return view('form.deleteYear',compact('years','id'));
     }
 
+    /**
+    * Función que borra los años seleccionados.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function updateDeleteYear(Request $request,$id){
 
         $years = $request->input("years");
@@ -300,6 +369,13 @@ class TableController extends Controller
         }
         return view('confirm.update');
     }
+
+    /**
+    * Función que muestra la tabla con el formulario para insertar un año.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function showInsertYear($id){
 
         $valYear=array();
@@ -341,7 +417,13 @@ class TableController extends Controller
         }
         return view('table.insertYear',compact('categoria','years','values','id','ambitos','nombreVariable','idsCategoria','supercategorias'));
     }
-
+    /**
+    * Función que actualiza los datos cuando se inserta un año.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function updateInsertYear (Request $request, $id){
 
         $update=$request->input("update");
@@ -376,7 +458,12 @@ class TableController extends Controller
         }
         return view('confirm.update');
     }
-
+    /**
+    * Función que muestra las categorias que se pueden borrar de una tabla.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function showDeleteCategoria($id){
 
 
@@ -388,6 +475,13 @@ class TableController extends Controller
         return view('form.deleteCategoria',compact('categorias','id','supercategorias'));
     }
 
+    /**
+    * Función que borra las categorias seleccionadas
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function updateDeleteCategoria(Request $request,$id){
 
         $categoria = $request->input("categoria");
@@ -399,6 +493,12 @@ class TableController extends Controller
         return view('confirm.update');
     }
 
+    /**
+    * Función que muestra los datos para el formulario para agregar una categoria.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function showInsertCategoria ($id){
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
@@ -409,6 +509,14 @@ class TableController extends Controller
 
         return view('table.insertCategoria',compact('ambitos','years','supercategorias','nombreVariable','id'));
     }
+
+    /**
+    * Función que actualiza los datos cuando se inserta una categoria.
+    *
+    * @param  int  $id
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function updateInsertCategoria (Request $request, $id){
 
         $update=$request->input("update");
@@ -468,6 +576,12 @@ class TableController extends Controller
         return view('confirm.update',compact('new_categoria','new_supercategoria','supercategoria','update'));
     }
 
+    /**
+    * Función que obtiene los datos para el formulario que se utiliza para crear una tabla con categorias de cualquier variable
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function create(Request $request)
     {
         $valYear=array();
@@ -560,6 +674,13 @@ class TableController extends Controller
         }
         return view('table.create',compact('categoria','years','values','filtrado','ambitos','variable','supercategorias','idsCategoria','fuente','descripcion','tipo','ambitosForm','yearsForm','categoriasForm','tipoGrafico','valuesForm'));
     }
+
+    /**
+    * Función que obtiene los datos para el formulario que se utiliza para insertar una tabla nueva
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function insert(Request $request)
     {
         $categorias = $request->input("categorias");
@@ -612,6 +733,13 @@ class TableController extends Controller
 
         return view('confirm.save');
     }
+
+    /**
+    * Función que almacena en la base de datos una tabla creada con categorias de cualquier variable.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
      public function save(Request $request)
     {
         $categorias = $request->input("categorias");
@@ -656,6 +784,13 @@ class TableController extends Controller
 
         return view('confirm.save');
     }
+
+    /**
+    * Función que devuelve todas las categorias menos la supercategoria "sin categoria"
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function formNew(Request $request)
     {
         $supercategorias = DB::select('SELECT DISTINCT Name FROM supercategoria where supercategoria.Name!="Sin categoria"');
@@ -663,6 +798,13 @@ class TableController extends Controller
 
         
     }
+
+    /**
+    * Función que devuelve los parametros para insertar valores en una tabla insertada
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function new(Request $request)
     {
         $categorias = $request->input("categorias");
@@ -676,7 +818,12 @@ class TableController extends Controller
 
         return view('table.new',compact('categorias','variable','ambitos','years','values','fuente','tipo','descripcion'));
     }
-
+    /**
+    * Función que borra una variable
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function delete($id){
          DB::delete('DELETE FROM variableambitocategoria WHERE idVariable=?',[$id]);
          DB::delete('DELETE FROM variable WHERE idVariable=?',[$id]);

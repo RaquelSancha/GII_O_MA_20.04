@@ -1,12 +1,27 @@
 <?php
-
+/** -- -------------------------------------------------------------
+*   -- Nombre:      Proyecto Coyuntura
+*   -- Organización:Escuela Politécnica Superior
+*   -- Autor:       Nelson Páramo Valdivielso
+*   -- Fecha:       julio del 2016
+*   -- Versión:     1.0
+*   -- -------------------------------------------------------------
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+/**
+* Clase que se encarga de gestionar los formularios de la aplicacion.
+*/
 class FormController extends Controller
 {
-
+     /**
+    * Función que se encarga de mostrar las supercategorias, categorias, ambitos y años de una variable pasada por parametro.
+    *
+    * @param  int  $id
+    * @return view
+    */
     public function show($id)
     {
     	$supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
@@ -21,7 +36,11 @@ class FormController extends Controller
 
 		 return view('form.show',compact('categorias','years','id','ambitos','supercategorias'));
     }
-
+        /**
+    * Función que se encarga de mostrar las supercategorias, categorias, ambitos y años de toda la aplicacion, para crear una tabla con cualquier categoria de cualquier variable.
+    *
+    * @return view
+    */
     public function create()
     {
     	$supercategorias = DB::select('SELECT DISTINCT Name,idSuperCategoria FROM supercategoria natural JOIN categoria WHERE supercategoria.idSuperCategoria=categoria.idSuperCategoria ORDER BY idSuperCategoria ');

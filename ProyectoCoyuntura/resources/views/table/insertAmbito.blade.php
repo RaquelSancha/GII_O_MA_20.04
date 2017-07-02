@@ -74,7 +74,7 @@
       	@endfor
       @endfor
       <tr>
-          <th scope="row" bgcolor="#000000" style="color:White;" ><input type="text" class="form-control input-sm"  name="new_Ambito">
+          <th scope="row" bgcolor="#000000" style="color:White;" ><input type="text" class="form-control input-sm"  name="new_Ambito" required>
               <td colspan="{{12*count($years)}}" bgcolor="#000000" style="color:White;" ></td>
           </th>
         </tr>
