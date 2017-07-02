@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class invitadoTest extends DuskTestCase
 {
     /**
-     * 
+     * Test que restringe a un usuario modificar tablas
      *
      * @return void
      */
@@ -27,7 +27,10 @@ class invitadoTest extends DuskTestCase
     }
 
 
-
+    /**
+     * Test que restringe a un usuario entrar a la gestion de datos
+     * @return void
+     */
     public function testGestionDatos()
     {
         $this->browse(function (Browser $browser) {
@@ -39,7 +42,11 @@ class invitadoTest extends DuskTestCase
                     ->assertPathIs('/login');
         });
     }
-
+    /**
+     * Test que restringe a un usuario entrar a la administracion de usuarios
+     *
+     * @return void
+     */
     public function testAdministraciónUsuarios()
     {
         $this->browse(function (Browser $browser) {

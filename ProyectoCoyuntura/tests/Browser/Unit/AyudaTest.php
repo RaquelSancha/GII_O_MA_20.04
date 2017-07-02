@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AyudaTest extends DuskTestCase
 {
     /**
-     * A basic browser test example.
+     * Comprueba que se muestre la ayuda para los administradores
      *
      * @return void
      */
@@ -33,6 +33,11 @@ class AyudaTest extends DuskTestCase
         });
     }
 
+    /**
+     * Comprueba que se muestre la ayuda para los usuarios/invitados
+     *
+     * @return void
+     */
     public function testAyudaInvitados()
     {
         $this->browse(function (Browser $browser) {

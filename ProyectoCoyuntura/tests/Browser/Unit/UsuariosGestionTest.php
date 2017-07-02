@@ -28,6 +28,11 @@ class UsuariosGestionTest extends DuskTestCase
         });
     }
 
+    /**
+     * Test que comprueba si se ha aceptado una petición de registro
+     *
+     * @return void
+     */
     public function testAceptarPeticion()
     {
         $this->browse(function (Browser $browser) {
@@ -38,6 +43,12 @@ class UsuariosGestionTest extends DuskTestCase
         });
     }
 
+
+    /**
+     * Test que comprueba si se ha declinado una petición de registro
+     *
+     * @return void
+     */
     public function testDeclinarPeticion()
     {
         $this->browse(function (Browser $browser) {
@@ -47,6 +58,13 @@ class UsuariosGestionTest extends DuskTestCase
                     ->assertDontSee('2usuarioTest@Test.es');        
         });
     }
+
+
+    /**
+     * Test que comprueba si se ha borrado un usario correctamente.
+     *
+     * @return void
+     */
     public function testBorrarUsuario()
     {
         $this->browse(function (Browser $browser) {

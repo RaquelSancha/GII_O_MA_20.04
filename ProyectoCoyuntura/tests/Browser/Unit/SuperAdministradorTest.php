@@ -26,6 +26,11 @@ class SuperAdministradorTest extends DuskTestCase
                     ->assertPathIs('/home');        
         });
     }
+    /**
+     * Test que comprueba si el super admin tiene permiso para modificar una tabla
+     *
+     * @return void
+     */
     public function testModificarTabla()
     {
         $this->browse(function (Browser $browser) {
@@ -36,6 +41,11 @@ class SuperAdministradorTest extends DuskTestCase
                     ->assertPathIs('/tables/5/edit');
         });
     }
+    /**
+     * Test que comprueba si el super admin tiene permiso para gestionar los datos de una tabla
+     *
+     * @return void
+     */
     public function testGestionDatos()
     {
         $this->browse(function (Browser $browser) {
@@ -47,6 +57,11 @@ class SuperAdministradorTest extends DuskTestCase
                     ->assertPathIs('/data/choose');
         });
     }
+    /**
+     * Test que comprueba si el super admin tiene permiso para gestionar usuarios
+     *
+     * @return void
+     */
     public function testAdministraciónUsuarios()
     {
         $this->browse(function (Browser $browser) {

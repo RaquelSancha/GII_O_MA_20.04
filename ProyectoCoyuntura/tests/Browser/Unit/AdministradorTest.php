@@ -27,7 +27,7 @@ class AdministradorTest extends DuskTestCase
         });
     }
     /**
-     * 
+     * Permiso para modificar la tabla.
      *
      * @return void
      */
@@ -42,8 +42,11 @@ class AdministradorTest extends DuskTestCase
         });
     }
 
-
-
+    /**
+     * Permiso para gestionar los datos
+     *
+     * @return void
+     */
     public function testGestionDatos()
     {
         $this->browse(function (Browser $browser) {
@@ -56,6 +59,11 @@ class AdministradorTest extends DuskTestCase
         });
     }
 
+    /**
+     * Permiso para gestionar los los usuarios
+     *
+     * @return void
+     */
     public function testAdministraciónUsuarios()
     {
         $this->browse(function (Browser $browser) {

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class Conexion extends DuskTestCase
 {
     /**
-     * A basic browser test example.
+     * Test que comprueba que se realiza la conexion a la aplicacion correctamente
      *
      * @return void
      */
