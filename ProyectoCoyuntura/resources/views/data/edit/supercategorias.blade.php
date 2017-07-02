@@ -11,7 +11,7 @@
     
 <form class="form-horizontal" role="form" method="POST" action="{{ url('/confirm/data/edit/supercategoria')}}/{{$id}}">
   {{ csrf_field() }}
-
+    @if($supercategorias[0]->Name !="Sin categoria")
     <div class="form-group">
       <label for="nombre_supercategoria" class="col-md-4 control-label"> Nombre de la supercategoria</label>
       <div class="row">
@@ -20,6 +20,7 @@
           </div>
       </div>
     </div>
+    @endif
     <div class="form-group">
       <label for="nombre_supercategoria" class="col-md-4 control-label"> Categorias asignadas que deseas quitar</label>
       <div class="row">

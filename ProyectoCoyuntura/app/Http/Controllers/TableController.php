@@ -140,7 +140,7 @@ class TableController extends Controller
                                         INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
                                         INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
 
