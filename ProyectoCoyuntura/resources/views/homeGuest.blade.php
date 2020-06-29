@@ -1,5 +1,8 @@
 @extends('adminlte::layouts.app')
 
+<?php
+\Debugbar::enable();
+?>
 @section('htmlheader_title')
 	{{ trans('adminlte_lang::message.home') }}
 @endsection
