@@ -1,6 +1,6 @@
 @extends('adminlte::layouts.app')
 
-@section('heading', 'Users')
+@section('heading', 'Users','Usersconfirm')
 @section('main-content')
 <h2><b>Usuarios</b> del sistema</h1><hr>
 
@@ -9,7 +9,7 @@
     <th>Email</th>
     <th>{{ trans('adminlte_lang::message.actions') }}</th>
   </tr>
-  @foreach($usuarios as $user)
+  @foreach($users as $user)
     <tr>
       <td>{{ $user->email }}</th>
 
@@ -30,10 +30,10 @@
     <th>Email</th>
     <th>{{ trans('adminlte_lang::message.actions') }}</th>
   </tr>
-  @foreach($usersConfirm as $user)
+  @foreach($usersconfirm as $userconf)
     <tr>
-      <td>{{ $user->email }}</th>
-      <?php $id=$user->id ?>
+      <td>{{ $userconf->email }}</th>
+      <?php $id=$userconf->id ?>
       <td class="col-xs-3">
           <a class="btn btn-labeled btn-success" href="/register/aceptar/{{$id}}"><span class="btn-label">Aceptar</a>
           <a class="btn btn-labeled btn-danger" href="/register/declinar/{{$id}}"><span class="btn-label">Declinar</a>
