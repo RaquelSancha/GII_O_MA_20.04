@@ -16,6 +16,37 @@ use DB;
 */
 class DataController extends Controller
 {
+    public function subirDatos(Request $request)
+    {
+        $url = $request->input("url");
+        $urlJson= DataController::crearUrl($url);
+        print_r($urlJson);
+        $datos= json_decode(file_get_contents($urlJson), true);
+        print_r($datos);
+
+    }
+    function multiexplode ($delimiters,$string) {
+        $ready = str_replace($delimiters, $delimiters[0], $string);
+        $launch = explode($delimiters[0], $ready);
+        return  $launch;
+    }
+    
+    public function crearUrl($url)
+    {
+        $tempus3 = 'jaxiT3';
+        $pos = strpos($url, $tempus3);
+        $urlJson= "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA";
+        if ($pos === false) {//la url pertenece a PCAxis
+            $input = DataController::multiexplode(array("=","&"),$url);
+            $urlJson.= $input[1].$input[3];
+        } else { //la url pertenece a tempus3
+            $input = DataController::multiexplode(array("=","&"),$url);
+            $urlJson.= "/".$input[1];
+        }
+        return $urlJson;
+    }
+
+    
     /**
     * Función que se encarga de mostrar las variables de la BD
     *
