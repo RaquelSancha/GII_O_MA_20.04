@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Acoustep\EntrustGui\Contracts\HashMethodInterface;
 use Hash;
-
+use App\Rol_Usuario;
+use DB;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, ValidatingModelInterface, HashMethodInterface
 {
   use Authenticatable, CanResetPassword, ValidatingModelTrait, EntrustUserTrait;
@@ -23,7 +24,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var string
      */
     protected $table = 'users';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -58,5 +58,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->password = Hash::make($this->password);
         $this->save();
     }
-
+    public function hasRol($rol) 
+    {
+        $aux= DB::select('SELECT * FROM role_user where user_id=? and role_id=?',[$this->id,$rol]);
+        if ($aux){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

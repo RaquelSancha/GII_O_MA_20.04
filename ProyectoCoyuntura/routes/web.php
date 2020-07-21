@@ -1,5 +1,5 @@
 <?php
-
+\Debugbar::enable();
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,17 +21,38 @@ Route::get('/help', function(){
 Route::get('/helpGuest', function(){
 	return view('/help/helpGuest');
 });
+Route::get('/datosINE', function(){
+	return view('/datosINE/menu');
+});
+
+Route::get('/datosINE/subirdatos', function(){
+	return view('/datosINE/subirdatos');
+});
+
+Route::post('/datosINE/confirmarsubida', 'DataController@subirdatos');
+
 
 Route::get('/equipo', function(){
 	return view('/equipo');
 });
 
+Route::get('/user/editarPerfil/{id}', 'UserController@edit');
+
+Route::post('/confirm/user/editarPerfil/{id}', 'UserController@update')->middleware('auth');
+
+Route::get('/register/index',  'RegisterController@show');
+//->middleware('AdminUsuarios:1')
 Route::post('/register/solicitud', 'RegisterController@register');
 
 Route::get('/register/aceptar/{id}', 'RegisterController@aceptar');
 
+Route::get('/register/editar/{id}', 'RegisterController@edit');
+
 Route::get('/register/declinar/{id}', 'RegisterController@declinar');
 
+Route::get('/register/borrar/{id}', 'RegisterController@borrar');
+
+Route::post('/confirm/user/edit/{id}', 'RegisterController@update')->middleware('auth');
 
 Route::get('/homeGuest', function(){
 	return view('/homeGuest');
@@ -39,7 +60,6 @@ Route::get('/homeGuest', function(){
 
 Route::get('/form/new', 'TableController@formNew');
 
-Route::get('/register/solicitud', 'Register@register');
 
 Route::get('/form/create', 'FormController@create');
 
@@ -72,7 +92,10 @@ Route::get('/tables', 'VariableController@index');
 
 Route::post('/tables/{id}', 'TableController@show');
 
+
 Route::get('/tables/{id}/edit','TableController@edit')->middleware('auth');
+
+Route::post('/tables/{id}/exportar','TableController@exportar')->middleware('auth');
 
 Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito')->middleware('auth');
 
@@ -81,7 +104,6 @@ Route::get('/tables/{id}/insertYear','TableController@showInsertYear')->middlewa
 Route::get('/tables/{id}/insertCategoria','TableController@showInsertCategoria')->middleware('auth');
 
 Route::get('/tables/{id}/delete','TableController@delete')->middleware('auth');
-
 
 Route::post('/confirm/save', 'TableController@save')->middleware('auth');
 

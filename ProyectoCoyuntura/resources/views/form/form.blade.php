@@ -68,7 +68,10 @@
 <label for="filtrado" class="col-md-4 control-label"></label>
   <div class="row">
     <div class="form-group form-group-options col-md-4 col-md-offset-5">
-      <input type="submit" value="Enviar datos" class="btn btn-primary"  > 
+      <input type="submit" value="Enviar datos" class="btn btn-primary" onclick=this.form.action="{{ url('tables')}}/{{$id}}" > 
+    </div>
+    <div class="form-group form-group-options col-md-4 col-md-offset-5">
+    <input type="submit" value="Exportar a excel" class="btn btn-primary" onclick=this.form.action="{{ url('tables')}}/{{$id}}/{{'exportar'}}" > 
     </div>
   </div>
 </div>

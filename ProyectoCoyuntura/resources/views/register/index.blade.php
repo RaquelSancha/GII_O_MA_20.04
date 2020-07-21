@@ -14,12 +14,9 @@
       <td>{{ $user->email }}</th>
 
       <td class="col-xs-3">
-        <form action="{{ route('entrust-gui::users.destroy', $user->id) }}" method="post">
-          <input type="hidden" name="_method" value="DELETE">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <a class="btn btn-labeled btn-default" href="{{ route('entrust-gui::users.edit', $user->id) }}"><span class="btn-label"><i class="fa fa-pencil"></i></span>{{ trans('entrust-gui::button.edit') }}</a>
-          <button type="submit" class="btn btn-labeled btn-danger"><span class="btn-label"><i class="fa fa-trash"></i></span>{{ trans('entrust-gui::button.delete') }}</button>
-        </form>
+      <?php $id=$user->id ?>
+         <a class="btn btn-labeled btn-success" href="/register/editar/{{$id}}"><span class="btn-label">Editar</a>
+          <a class="btn btn-labeled btn-danger" href="/register/borrar/{{$id}}"><span class="btn-label">Borrar</a>
       </td>
     </tr>
   @endforeach
@@ -42,6 +39,6 @@
   @endforeach
 </table>
 <div class="text-center">
-  {!! $users->render() !!}
+
 </div>
 @endsection

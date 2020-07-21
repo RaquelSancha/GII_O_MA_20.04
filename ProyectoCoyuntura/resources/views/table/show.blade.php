@@ -14,7 +14,7 @@
     <div align="left"><b>Fuente:</b> "{{$fuentes[$i]->Name}}"<div>
 @endfor
 <div align="right">
-<button class="btn btn-primary btn-lg active" id="btnExport">Exportar a xls</button>
+<a href="{{ url('tables')}}/{{$id}}/{{'exportar'}}" class="btn btn-primary btn-lg active" role="button">Exportar a Excel</a><br><br><br><br><br><br>
 <a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a><br><br><br><br><br><br>
 </div>
 <div class="box">
@@ -122,7 +122,7 @@
 
 	<!-- /.box-body -->
 </div>
-		
+<!--		
 <script type="text/javascript">
     
 $(document).ready(function() {
@@ -140,6 +140,27 @@ $(document).ready(function() {
     a.click();
   });
 });
+-->
+<!--
+if(isset($_POST[“export_data”])) {
+if(!empty($libros)) {
+$filename = “libros.xls”;
+header(“Content-Type: application/vnd.ms-excel”);
+header(“Content-Disposition: attachment; filename=”.$filename);
+$mostrar_columnas = false;
+foreach($libros as $libro) {
+if(!$mostrar_columnas) {
+echo implode(“\t”, array_keys($libro)) . “\n”;
+$mostrar_columnas = true;
+}
+echo implode(“\t”, array_values($libro)) . “\n”;
+}
+}else{
+echo ‘No hay datos a exportar’;
+}
+exit;
+}
+-->
 </script>
 
 <script  type="text/javascript">

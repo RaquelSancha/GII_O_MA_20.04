@@ -16,6 +16,7 @@ use DB;
 */
 class DataController extends Controller
 {
+  
     /**
     * Función que se encarga de mostrar las variables de la BD
     *
