@@ -78,7 +78,7 @@ public function subirDatos($datos){
         $count = count($datos);
         for ($i = 0; $i < $count; $i++) {
             $aux2=$datos[$i]['Nombre'];
-            $aux=DatosINEController::multiexplode(array(".",","),$aux2);
+            $aux=DatosINEController::multiexplodeEspecial(array(".",","),$aux2);
             $tamAux= count($aux);
             for ($j = 0; $j < $tamAux; $j++){
                 $nomSinRepetir[$j][]= $aux[$j];
@@ -192,6 +192,20 @@ public function subirDatos($datos){
         }
         return $fechas;
     }
+    public function multiexplodeEspecial($delimiters,$string) {
+        if(strpos($string, ",")!== FALSE && strpos($string, ".")!== FALSE){
+            $launch2= explode(".", $string);
+        }else{
+            $ready = str_replace($delimiters, $delimiters[0], $string);
+            $launch2 = explode($delimiters[0], $ready);
+        }
+        foreach($launch2 as $l){
+            if($l!==" "){
+                $launch[]=$l;
+            }
+        }
+        return  $launch;
+    }
     public function show(Request $request,$id){
         $opciones=$request->input("opciones");
         $fechas=$request->input("fechas");
@@ -199,7 +213,7 @@ public function subirDatos($datos){
         $url= $urlObjeto->url;
         $datos= json_decode(file_get_contents($url), true);
         $count = count($datos);
-        $aux =DatosINEController::multiexplode(array(".",","),$datos[0]['Nombre']);
+        $aux =DatosINEController::multiexplodeEspecial(array(".",","),$datos[0]['Nombre']);
         $valores=array();
         $tiemposaux= array();
         $nOpciones= count($aux);
@@ -209,7 +223,7 @@ public function subirDatos($datos){
         $fechaNormal= array_key_exists('Anyo',$datos[0]['Data'][0]);
         for ($i = 0; $i < $count; $i++) {
                 $nombre= $datos[$i]['Nombre'];
-                $nombre_array= DatosINEController::multiexplode(array(".",","),$nombre); 
+                $nombre_array= DatosINEController::multiexplodeEspecial(array(".",","),$nombre); 
                 for($j = 0; $j< count($nombre_array); $j++){
                     $trimmed= ltrim($nombre_array[$j]);
                     foreach($opciones as $opcion){
@@ -228,6 +242,7 @@ public function subirDatos($datos){
                                     if(in_array($fecha,$datos[$i]['Data'][$j]['NombrePeriodo'])){
                                         $valores[$i]['Datos'][$j]['Año']= $datos[$i]['Data'][$j]['NombrePeriodo'];
                                         $valores[$i]['Datos'][$j]['Valor']= $datos[$i]['Data'][$j]['Valor'];
+                                    
                                     }   
                                }
                                if($tamFecha==2){
@@ -261,26 +276,119 @@ public function subirDatos($datos){
         $categorias = DB::select('SELECT * FROM categoria order by Nombre ASC');
         $ambitos = DB::select('SELECT * FROM ambito order by Nombre ASC');
         $id=  DatosINEController::subirDatos($valores);
-       /* print_r($valores);
-        print_r($años);
-        print_r($periodos);
-        */
         return view('datosINE.show',compact('valores','tiempos','variables','categorias','ambitos','id'));
     }
-    public function insertarDatos(Request $request,$id){
+    public function insertarDatos(Request $request,$id){ //PERIODOS: T1= Meses 1, 2, 3  T2= Meses 4, 5, 6  T3= 7, 8, 9  T4= 10, 11, 12
         $categoria=$request->input("categoria");
         $variable=$request->input("variable");
         $ambito=$request->input("ambito");
+        $fecha= $request->input("fecha");
+        $mesAux=0;
         $valores= DB::select('SELECT * FROM datosINE where id=?',[$id]);
         $idCategoria= DB::select('SELECT categoria.idCategoria FROM categoria where nombre=?', [$categoria]);
         $idVariable= DB::select('SELECT variable.idVariable FROM variable where nombre=?', [$variable]);
         $idAmbito= DB::select('SELECT ambito.idAmbito FROM ambito where nombre=?', [$ambito]);
         foreach($valores as $valor){
-            $mes= $valor->periodo;
-            $año= $valor->año;
-            $val= $valor->valor;
-            DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
-            ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mes,$año,$val]);
+            if(!empty($fecha)){
+                $mesAux++;
+                DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$fecha,$val]);
+            }else{
+                $mes= DatosINEController::traducirPeriodo($valor->periodo);
+                $mesAux=0;
+                $año= $valor->año;
+                $val= $valor->valor;
+                if($mes=="T1" || $mes=="T2" || $mes=="T3" || $mes=="T4" ){
+                    for($i=0; $i<3; $i++){
+                        if($mes=="T1"){
+                            $mesAux = 1 + $i;
+                        }
+                        if($mes=="T2"){
+                            $mesAux = 4 + $i;
+                        }
+                        if($mes=="T3"){
+                            $mesAux = 7 + $i;
+                        }
+                        if($mes=="T4"){
+                            $mesAux = 10 + $i;
+                        }
+                        DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                        ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$val]);
+                    }
+                }elseif($mes= " "){
+                    for($i=0; $i<12; $i++){
+                    $mesAux= 1 + $i;
+                    DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                    ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$val]);
+                    }
+                }else{
+                    DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                    ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mes,$año,$val]);
+                }
+            }
         }
+        return view('datosINE.confirmar');
+    }
+    public function traducirPeriodo($periodo){
+        switch($periodo){
+            case "Enero":
+                $periodo=1;
+                break;
+            case "Febrero":
+                $periodo=2;
+                break;
+            case "Marzo":
+                $periodo=3;
+                break;
+            case "Abril":
+                $periodo=4;
+                break;
+            case "Mayo":
+                $periodo=5;
+                break;
+            case "Junio":
+                $periodo=6;
+                break;
+            case "Julio":
+                $periodo=7;
+                break;
+            case "Agosto":
+                $periodo=8;
+                break;
+            case "Septiembre":
+                $periodo=9;
+                break;
+            case "Octubre":
+                $periodo=10;
+                break;
+            case "Noviembre":
+                $periodo=11;
+                break;
+            case "Diciembre":
+                $periodo=12;
+                break;
+            default:
+                break;
+        }
+        return $periodo;
+    }
+    public function actualizarDatos(){
+        $variables= DB::select('SELECT * FROM variable where idFuente= 29');
+        $aux=0;
+        foreach($variables as $variable){
+            $datos[]= DB::select('SELECT * FROM variableambitocategoria where idVariable=?',[$variable->idVariable]);
+        }
+        foreach($datos as $dato){
+            foreach($dato as $dat){
+                $año= $dat->Year;
+                if($año >= $aux){
+                    $aux = $año;
+                    $mayor= $dat;
+                }
+            }
+            $mes= $mayor->Mes;
+            print_r($mayor);
+        }
+
     }
 }
