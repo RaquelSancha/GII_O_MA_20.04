@@ -30,9 +30,6 @@ class PrediccionDatosController extends Controller
         //$extraido= mysqli_fetch_array($result);
        // mysqli_free_result($result);
         mysqli_close($nombreConexion);
-
-
-
        // $datos=DB::select("SELECT * INTO OUTFILE '$file' FROM variableambitocategoria  where idVariable=?",[$id]);
         /*  
         $datos = DB::select('SELECT idVariable, idCategoria, idAmbito, Mes, Year, Valor 
