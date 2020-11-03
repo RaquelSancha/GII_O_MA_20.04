@@ -1,0 +1,141 @@
+\capitulo{3}{Conceptos teóricos}
+ \section{Procesado de datos del INE}
+El instituto nacional de estadística proporciona un servicio que permite descargar los datos que nos ofrece en formato json. Para ello debemos crear una petición en forma de url para después guardar esos datos e introducirlos en nuestra base de datos.
+ \subsection{Creación de la url}
+ Para comprender este paso hace falta saber cómo es la estructura de una petición url para el servicio de datos abiertos del INE. \cite{ine:urljson}\\
+ \imagen{imagenes/urlJSON}{Estructura de la url}
+Los campos que aparecen entre llaves, \{ \}, son obligatorios.\\
+Los campos que aparecen entre corchetes, [ ], son opcionales y cambian en relación a la función considerada. En la construcción de nuestras url no utilizo estos campos.\\
+Descripción de cada uno de ellos
+\begin{description}
+	\item [idioma] ES para español e EN para inglés. Por defecto está puesto el español.\\
+	\item [función] Funciones implementadas en el sistema para poder realizar diferentes tipos de consulta en función del tipo de fuente, Tempus3 o PcAxis, y del elemento que se quiere obtener.\\
+    Funciones para la obtención de datos de Tempus3
+         \begin{description}
+         \item [Operaciones] OPERACIONES\_DISPONIBLES, OPERACIÓN.
+         \item [Variables] VARIABLES, VARIABLES\_OPERACION.
+         \item [Valores] VALORES\_VARIABLES, VALORES\_VARIABLEOPERACION.
+         \item [Tablas] TABLAS\_OPERACION, GRUPOS\_TABLA.
+         \item [Series] SERIE, SERIES\_OPERACION.
+         \item [Publicaciones] PUBLICACIONES, PUBLICACIONES\_OPERACION.
+         \item [Datos] DATOS\_SERIE, DATOS\_TABLA.
+         \end{description}
+    Función para la obtención de datos del repositorio de ficheros PcAxis Al ser Pc-Axis un formato para difundir tablas estadísticas, la única función implementada es la siguiente:
+         \begin{description}
+         \item [Datos] DATOS\_TABLA
+         \end{description}
+    \item [inputs] Identificadores de los elementos de entrada de las funciones. Estos inputs varían en base a la función utilizada.
+    Existen dos tipos de repositorios de los que el INE saca sus datos; los repositorios de tablas Tempus3 y los de PC-Axis.
+    \imagen{imagenes/idTempus3}{Identificador de las tablas Tempus3}
+    \imagen{imagenes/idPcAxis}{Identificador de las tablas PC-Axis}
+    \item [parámetros] Los parámetros en la URL se establecen a partir del símbolo ?.\\
+    Cuando haya más de un parámetro, el símbolo & se utiliza como separador.\\
+    No todas las funciones admiten todos los parámetros posibles. Por ello haremos una clasificación para explicarlos mejor:  
+     \begin{enumerate}
+        \item Parámetros comunes a todas las funciones
+            \begin{description}
+            \item [page] Si hay más de 500 elementos, la consulta se divide en páginas. Esta opción nos permite seleccionar la página que queremos visualizar.
+            \item [download] Para descargarnos el fichero json.
+            \item [det] Este parámetro da más detalles de la información mostrada.
+            \item [tip] Cambia la forma de mostrar la información.
+            \end{description}
+        \item Parámetros para la petición de datos
+            \begin{description}
+                \item [date] Filtra los datos por fecha; fecha concreta, lista o rango de fechas.
+                \item [nult] Devuelve los últimos n datos. Ejemplo: nult=4 devuelve los 4 últimos datos.
+            \end{description}
+        \item Parámetros para la obtención de datos y metadatos en base al ámbito geográfico
+            \begin{description}
+                \item [geo] Con geo = 1 para provincias, municipios u otras desagregaciones y geo = 0 para datos nacionales.
+            \end{description}
+        \end{enumerate}
+\end{description}
+ Para facilitar el trabajo a los usuarios de la aplicación, la petición url se genera automáticamente a partir de la url de la página del INE donde se encuentren los datos que queremos.
+ \imagen{imagenes/Ine}{Ejemplo de una tabla del INE}
+ \imagen{imagenes/urlINE}{Ejemplo de la url del INE}
+ El usuario copia y pega esta url y la aplicación la traduce a una petición de los datos en forma de json automáticamente.
+ \subsection{Estructura de los datos del INE}
+ Para entender cómo he tratado los datos, necesitamos saber primero su significado.
+
+
+
+
+Algunos conceptos teóricos de \LaTeX \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
+
+\section{Secciones}
+
+Las secciones se incluyen con el comando section.
+
+\subsection{Subsecciones}
+
+Además de secciones tenemos subsecciones.
+
+\subsubsection{Subsubsecciones}
+
+Y subsecciones. 
+
+
+\section{Referencias}
+
+Las referencias se incluyen en el texto usando cite \cite{wiki:latex}. Para citar webs, artículos o libros \cite{koza92}.
+
+
+\section{Imágenes}
+
+Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
+
+\imagen{escudoInfor}{Autómata para una expresión vacía}
+
+
+
+\section{Listas de items}
+
+Existen tres posibilidades:
+
+\begin{itemize}
+	\item primer item.
+	\item segundo item.
+\end{itemize}
+
+\begin{enumerate}
+	\item primer item.
+	\item segundo item.
+\end{enumerate}
+
+\begin{description}
+	\item[Primer item] más información sobre el primer item.
+	\item[Segundo item] más información sobre el segundo item.
+\end{description}
+	
+\begin{itemize}
+\item 
+\end{itemize}
+
+\section{Tablas}
+
+Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
+
+\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
+{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
+HTML5 & X & & &\\
+CSS3 & X & & &\\
+BOOTSTRAP & X & & &\\
+JavaScript & X & & &\\
+AngularJS & X & & &\\
+Bower & X & & &\\
+PHP & & X & &\\
+Karma + Jasmine & X & & &\\
+Slim framework & & X & &\\
+Idiorm & & X & &\\
+Composer & & X & &\\
+JSON & X & X & &\\
+PhpStorm & X & X & &\\
+MySQL & & & X &\\
+PhpMyAdmin & & & X &\\
+Git + BitBucket & X & X & X & X\\
+Mik\TeX{} & & & & X\\
+\TeX{}Maker & & & & X\\
+Astah & & & & X\\
+Balsamiq Mockups & X & & &\\
+VersionOne & X & X & X & X\\
+} 
