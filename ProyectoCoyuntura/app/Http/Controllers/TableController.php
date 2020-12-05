@@ -942,11 +942,6 @@ return \Excel::create('Filename', function($excel)  use ($data) {
     $excel->sheet('Sheetname', function($sheet) use ($data){
 
         $sheet->fromArray($data);
-      /* $sheet->row(2,$supercategorias);
-        $sheet->row(3,$categoria);
-        $sheet->row(4,$valoresForm);
-        $sheet->row(5,$fuentes);
-        */
     });
 
 })->export('xls');
