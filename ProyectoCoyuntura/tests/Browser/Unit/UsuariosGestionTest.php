@@ -36,7 +36,7 @@ class UsuariosGestionTest extends DuskTestCase
     public function testAceptarPeticion()
     {
         $this->browse(function (Browser $browser) {
-           $browser ->visit('/admin/users')
+           $browser ->visit('/register/index')
                     ->clickLink('Aceptar')
                     ->waitForText('1usuarioTest@Test.es')
                     ->assertSee('1usuarioTest@Test.es');        
@@ -52,7 +52,7 @@ class UsuariosGestionTest extends DuskTestCase
     public function testDeclinarPeticion()
     {
         $this->browse(function (Browser $browser) {
-           $browser ->visit('/admin/users')
+           $browser ->visit('/register/index')
                     ->clickLink('Declinar')
                     ->pause(3000)
                     ->assertDontSee('2usuarioTest@Test.es');        
@@ -68,7 +68,7 @@ class UsuariosGestionTest extends DuskTestCase
     public function testBorrarUsuario()
     {
         $this->browse(function (Browser $browser) {
-           $browser ->visit('/admin/users')
+           $browser ->visit('/register/index')
                     ->press('Borrar')
                     ->pause(3000)
                     ->assertDontSee('1usuarioTest@Test.es');        
