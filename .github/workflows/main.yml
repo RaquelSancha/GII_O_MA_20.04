@@ -25,8 +25,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Codacy Analysis CLI
-  # You may pin to the exact commit or the version.
-  # uses: codacy/codacy-analysis-cli-action@d840f886c4bd4edc059706d09c6a1586111c540b
-  uses: codacy/codacy-analysis-cli-action@1.1.0
+ 
 
