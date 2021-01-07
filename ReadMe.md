@@ -6,7 +6,7 @@
 </p>
 <h4 align="center">TFG de la <a href="https://www.ubu.es/">UBU</a></h4>
 <h3 align="center">
-  <img href="/Documentación/readme/escudoubu.jpg" alt="Escudo UBU"/> 
+  <img href="/Docs/readme/escudoubu.jpg" alt="Escudo UBU"/> 
 </h3>
 <p align="center">
   <b>Autora</b><br>
