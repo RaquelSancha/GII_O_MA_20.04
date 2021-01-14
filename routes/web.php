@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +9,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,7 +28,14 @@ Route::get('/datosINE/subirdatos', function(){
 	return view('/datosINE/subirdatos');
 });
 
-Route::post('/datosINE/confirmarsubida', 'DataController@subirdatos');
+Route::get('/datosINE/actualizar', 'DatosINEController@actualizarDatos');
+
+Route::post('/datosINE/show/{id}', 'DatosINEController@show');
+
+
+Route::post('/datosINE/confirmarsubida', 'DatosINEController@organizarDatos');
+
+Route::post('/datosINE/insertarDatos/{id}', 'DatosINEController@insertarDatos');
 
 
 Route::get('/equipo', function(){
@@ -97,6 +102,10 @@ Route::post('/tables/{id}', 'TableController@show');
 Route::get('/tables/{id}/edit','TableController@edit')->middleware('auth');
 
 Route::post('/tables/{id}/exportar','TableController@exportar')->middleware('auth');
+
+Route::get('/tables/{id}/cambiarDescripcion','TableController@cambiarDescripcion')->middleware('auth');
+
+Route::get('/tables/{id}/estimacion','PrediccionDatosController@estimar')->middleware('auth');
 
 Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito')->middleware('auth');
 
@@ -190,3 +199,8 @@ Route::get('data/delete/ambito/variable/{id}', 'DataController@chooseVariableDel
 
 Route::post('/data/delete/variables/ambito/{id}', 'DataController@DeleteAmbitoVariable')->middleware('auth');
 
+Route::get('/prediccionDatos', 'VariableController@index2');
+
+Route::get('/prediccionDatos/{id}', 'PrediccionDatosController@show');
+
+Route::post('prediccionDatos/predecir/{id}','PrediccionDatosController@predecir');

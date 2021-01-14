@@ -28,8 +28,9 @@
             <li><a href="{{ url('/home') }}"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li>
             @endif
 
-            <li ><a href="{{ url('/datosINE') }}"><i class='fa fa-users'></i> <span>Gestión datos INE</span></a></li>
+            <li ><a href="{{ url('/datosINE') }}"><i class='fa fa-database'></i> <span>Gestión datos INE</span></a></li>
 
+            <li ><a href="{{ url('/prediccionDatos') }}"><i class='fa fa-database'></i> <span>Predicción de datos</span></a></li>
 
             <li ><a href="{{ url('data/choose') }}"><i class='fa fa-database'></i> <span>Gestión Datos</span></a></li>
             <li class="treeview">

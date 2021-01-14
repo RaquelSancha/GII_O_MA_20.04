@@ -33,5 +33,15 @@ class VariableController extends Controller
         }
         return view('table/index',compact('fuentes','variables'));
     }
-   
+    public function index2()
+    {
+       $fuentes=array();
+    	$fuentesAux=array();
+        $variables = DB::select('SELECT * FROM variable order by Nombre');
+        foreach ($variables as $variable) {
+        	$fuentesAux = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.Nombre=?',[$variable->Nombre]);
+        	array_push($fuentes,$fuentesAux);
+        }
+        return view('prediccionDatos/index',compact('fuentes','variables'));
+    }
 }
