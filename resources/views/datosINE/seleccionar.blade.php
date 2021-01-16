@@ -32,20 +32,13 @@
           <div class="form-group form-group-options col-md-4 col-md-offset-5">
             <select multiple data-actions-box="true" data-live-search="true" data-width="auto" class="selectpicker dropup show-tick"  name="fechas[]" id="fechas" title="" required> 
               @for($i=0;$i<count($fechas['Año']);$i++) 
-                @for($j=0;$j<count($fechas['Periodo']);$j++) 
-                    @if($fechas['Periodo'][$j] == "19")
-                    <option>{{$fechas['Año'][$i]}} T1</option>
-                    @endif
-                    @if($fechas['Periodo'][$j] == "20")
-                    <option>{{$fechas['Año'][$i]}} T2</option>
-                    @endif
-                    @if($fechas['Periodo'][$j] == "21")
-                    <option>{{$fechas['Año'][$i]}} T3</option>
-                    @endif
-                    @if($fechas['Periodo'][$j] == "22")
-                    <option>{{$fechas['Año'][$i]}} T4</option>
-                    @endif
-                @endfor
+                @if(array_key_exists('Periodo',$fechas))
+                  @for($j=0; $j<count($fechas['Periodo']) ; $j++) 
+                    <option>{{$fechas['Año'][$i]}} {{$fechas['Periodo'][$j]}}</option>
+                  @endfor
+                @else
+                <option>{{$fechas['Año'][$i]}}</option>
+                @endif
               @endfor
             </select>  
           </div>

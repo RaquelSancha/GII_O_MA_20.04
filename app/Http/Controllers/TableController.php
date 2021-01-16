@@ -10,8 +10,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use Maatwebsite\Excel;
+use Maatwebsite\Excel;
 use DB;
+use App\Exports\InvoicesExport;
+use App\Exports\InvoicesCollection;
 
 /**
 * Clase que se encarga de gestionar las tablas de la aplicacion.
@@ -834,118 +836,47 @@ class TableController extends Controller
     return view('confirm.delete',compact('id'));
     }
 
-   public function exportar(Request $request,$id)  {
-    $data= array();
-    $valYear=array();
-    $values=array();
-    $valores=array();
-    $valYearForm=array();
-    $valuesForm=array();
-    $valoresForm=array();
-    $idsCategoria=array();
-    $idsCategoriaAux=array();
-    $supercategoriasAux=array();
-    $supercategorias=array();
-
-    $years = $request->input("years");
-    $categoria = $request->input("categoria");
-    $filtrado = $request->input("filtrado");
-    $ambitos = $request->input("ambitos");
-
-    $ambitosForm = $request->input("ambitosForm");
-    $yearsForm = $request->input("yearsForm");
-    $categoriasForm = $request->input("categoriasForm");
-    $tipoGrafico = $request->input("tipoGrafico");
-
-    $fuentes = DB::select('SELECT DISTINCT Name FROM fuente natural join variable where variable.idVariable=?',[$id]);
-    $nombre_variable=DB::select('SELECT * FROM variable where idVariable=?',[$id]);
-
-    foreach ($ambitos as $ambito) {
-        foreach ($categoria as $cat) {
-            foreach ($years as $year) {
-                for ($j=1; $j < 13 ; $j++) { 
-                    
-
-                    $valor=DB::select('SELECT valor FROM variableambitocategoria
-                                        INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
-                                        INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito,$year,$j,$cat,$year,$j]);
-                    if(empty($valor)){
-                        array_push($valYear,"NaN");
-                        array_push($data,"NaN");
-
-                    }else{
-                        array_push($valYear, $valor);
-                        array_push($data,$valor);
-                    }
-                }
-                array_push($valores,$valYear);
-                array_push($data,$valYear);
-                $valYear=array();
-            }
-        $supercategoriasAux = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria natural join categoria where categoria.Nombre=?',[$cat]);
-        if(!(in_array($supercategoriasAux, $supercategorias))){
-            array_push($supercategorias,$supercategoriasAux);  
-            array_push($data,$supercategoriasAux);   
-
-        } 
-        $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat]);
-        array_push($idsCategoria,$idsCategoriaAux);
-        array_push($data,$idsCategoriaAux);
-
-    }	
-        array_push($values,$valores);
+    public function exportar($id){
+        $valYear=array();
+        $values=array();
         $valores=array();
-    }
+        $idsCategoria=array();
+        $idsCategoriaAux=array();
 
-    if(empty($ambitosForm)){
-        for ($j=0; $j < count($ambitos) ; $j++) { 
-            $ambitosForm[$j] = $ambitos[$j];
-        }
-    }
-    if(empty($categoriasForm)){
-        for ($j=0; $j < count($categoria) ; $j++) {
-            $categoriasForm[$j] = $categoria[$j];
-        }
-    }
-    if(empty($yearsForm)){
-        for ($j=0; $j < count($years) ; $j++) {
-            $yearsForm[$j] = $years[$j];
-        }
-    }
-    if(empty($tipoGrafico)){
-        $tipoGrafico = "bar";
-    }
-    foreach ($ambitosForm as $ambF) {
-        foreach ($categoriasForm as $catF) {
-            foreach ($yearsForm as $yearF) {
-                for ($j=1; $j < 13 ; $j++) { 
-                    $valor=DB::select('SELECT valor FROM variableambitocategoria
-                                        INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
-                                        INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambF,$yearF,$j,$catF,$yearF,$j]);
-                    if(empty($valor)){
-                        array_push($valYearForm,'NULL');
-                    }else{
-                        array_push($valYearForm, $valor);
+        $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
+                                        INNER JOIN categoria on categoria.idSuperCategoria = supercategoria.idSuperCategoria
+                                        INNER JOIN variableambitocategoria on variableambitocategoria.idCategoria = categoria.idCategoria and variableambitocategoria.idVariable=?',[$id]);
+        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
+        $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
+        $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
+
+
+        foreach ($ambitos as $ambito) {
+            foreach ($categoria as $cat) {
+                foreach ($years as $year) {
+                    for ($j=1; $j < 13 ; $j++) { 
+                        
+                        $valor=DB::select('SELECT valor FROM variableambitocategoria
+                                            INNER JOIN ambito on ambito.idAmbito = variableambitocategoria.idAmbito AND ambito.Nombre=?  AND Year=? AND Mes=?  
+                                            INNER JOIN categoria on categoria.idCategoria = variableambitocategoria.idCategoria AND categoria.Nombre=?  AND Year=? AND Mes=? ',[$ambito->Nombre,$year->Year,$j,$cat->Nombre,$year->Year,$j]);
+                        if(empty($valor)){
+                            array_push($valYear,"NaN");
+                        }else{
+                            array_push($valYear, $valor);
+                        }
                     }
+                    array_push($valores,$valYear);
+                    $valYear=array();
                 }
-                array_push($valoresForm,$valYearForm);
-                $valYearForm=array();
-            }
+                $idsCategoriaAux=DB::select('SELECT idSuperCategoria FROM categoria where Nombre=?',[$cat->Nombre]);
+                array_push($idsCategoria,$idsCategoriaAux);   
+            }   
+            array_push($values,$valores);
+            $valores=array();
         }
-        array_push($valuesForm,$valoresForm);
-        $valoresForm=array();
+        return \Excel::download(new InvoicesExport($nombreVariable,$years,$ambitos,$supercategorias,$categoria,$values,$idsCategoria), 'datosBoletinCoyuntura.xlsx');
     }
-//'categoria','years','values','filtrado','id','ambitos','supercategorias','idsCategoria','nombre_variable','fuentes','ambitosForm','yearsForm','categoriasForm','valuesForm'));
-
-return \Excel::create('Filename', function($excel)  use ($data) {
-
-    $excel->sheet('Sheetname', function($sheet) use ($data){
-
-        $sheet->fromArray($data);
-    });
-
-})->export('xls');
-    }
-
+  
 
 }

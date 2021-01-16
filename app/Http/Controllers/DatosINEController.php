@@ -23,26 +23,27 @@ public function organizarDatos(Request $request)
         $urlJson= DatosINEController::crearUrl($url);
         print_r($urlJson);
         $datos= json_decode(file_get_contents($urlJson), true);
-        DB::insert('INSERT INTO urlDatosINE (url) VALUES (?)',[$urlJson]);
         $urlObjeto = UrlJson::where('url', $urlJson)->first();
+        if(empty($urlObjeto)){
+            DB::insert('INSERT INTO urlDatosINE (url) VALUES (?)',[$urlJson]);
+            $urlObjeto = UrlJson::where('url', $urlJson)->first();
+        }
         $id= $urlObjeto->id;
-        //DatosINEController::subirDatos($datos);
         $fechas= DatosINEController::seleccionarFechas($datos);
+        print_r($fechas);
         $nombres= DatosINEController::quitarRepetidos($datos);
        return view('datosINE.seleccionar',compact('nombres','fechas','id'));
     }
-public function subirDatos($datos){
+public function subirDatos($datos, $idUrl){
     $count = count($datos);
-    $periodo= 0;
+    $periodo= " ";
     $año=0;
-    $noExisteFecha=true;
     $primero=true;
     $id;
     for ($i = 0; $i < $count; $i++) {
         $nombre= $datos[$i]['Nombre'];
         $valor= $datos[$i]['Datos'][0]['Valor'];
         if(array_key_exists('Año',$datos[$i]['Datos'][0])){
-            $noExisteFecha=false;
             for($j = 0; $j< count($datos[$i]['Datos']); $j++){ 
                 $año= $datos[$i]['Datos'][$j]['Año'];
                 if(array_key_exists('Periodo',$datos[$i]['Datos'][0])){
@@ -50,25 +51,24 @@ public function subirDatos($datos){
                 }
                 $valor= $datos[$i]['Datos'][$j]['Valor'];
                 if($primero){
-                    DB::insert('INSERT INTO datosINE (nombre, periodo, año, valor ) VALUES(?,?,?,?)',[$nombre,$periodo,$año,$valor]);
+                    DB::insert('INSERT INTO datosINE (nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?)',[$nombre,$periodo,$año,$valor,$idUrl]);
                     $id_aux =  DB::select('SELECT datosINE.id FROM datosINE WHERE nombre=?',[$nombre]);
                     $id= $id_aux[0]->id;
                     $primero= false;
                 }else{
-                    DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor ) VALUES(?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor]);
+                    DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
                 }
             } 
         }else{
             if($primero){
-                DB::insert('INSERT INTO datosINE (nombre, periodo, año, valor ) VALUES(?,?,?,?)',[$nombre,$periodo,$año,$valor]);
+                DB::insert('INSERT INTO datosINE (nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?)',[$nombre,$periodo,$año,$valor,$idUrl]);
                 $id_aux =  DB::select('SELECT datosINE.id FROM datosINE WHERE nombre=?',[$nombre]);
                 $id= $id_aux[0]->id;
                 $primero= false;
             }else{
-                DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor ) VALUES(?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor]);
+                DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
             }
         }
-       
     }
     return $id;
 }
@@ -210,6 +210,7 @@ public function subirDatos($datos){
         $opciones=$request->input("opciones");
         $fechas=$request->input("fechas");
         $urlObjeto= urlJson::find($id);
+        $idUrl= $id;
         $url= $urlObjeto->url;
         $datos= json_decode(file_get_contents($url), true);
         $count = count($datos);
@@ -275,7 +276,7 @@ public function subirDatos($datos){
         $variables = DB::select('SELECT * FROM variable order by Nombre ASC');
         $categorias = DB::select('SELECT * FROM categoria order by Nombre ASC');
         $ambitos = DB::select('SELECT * FROM ambito order by Nombre ASC');
-        $id=  DatosINEController::subirDatos($valores);
+        $id=  DatosINEController::subirDatos($valores, $idUrl);
         return view('datosINE.show',compact('valores','tiempos','variables','categorias','ambitos','id'));
     }
     public function insertarDatos(Request $request,$id){ //PERIODOS: T1= Meses 1, 2, 3  T2= Meses 4, 5, 6  T3= 7, 8, 9  T4= 10, 11, 12
@@ -288,6 +289,7 @@ public function subirDatos($datos){
         $idCategoria= DB::select('SELECT categoria.idCategoria FROM categoria where nombre=?', [$categoria]);
         $idVariable= DB::select('SELECT variable.idVariable FROM variable where nombre=?', [$variable]);
         $idAmbito= DB::select('SELECT ambito.idAmbito FROM ambito where nombre=?', [$ambito]);
+        DB::insert('UPDATE datosINE SET idVariable=?, idCategoria=?, idAmbito=? WHERE id=?',[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$id]);
         foreach($valores as $valor){
             if(!empty($fecha)){
                 $mesAux++;
@@ -317,9 +319,9 @@ public function subirDatos($datos){
                     }
                 }elseif($mes= " "){
                     for($i=0; $i<12; $i++){
-                    $mesAux= 1 + $i;
-                    DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
-                    ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$val]);
+                        $mesAux= 1 + $i;
+                        DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                        ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$val]);
                     }
                 }else{
                     DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
@@ -373,22 +375,168 @@ public function subirDatos($datos){
         return $periodo;
     }
     public function actualizarDatos(){
-        $variables= DB::select('SELECT * FROM variable where idFuente= 29');
-        $aux=0;
-        foreach($variables as $variable){
-            $datos[]= DB::select('SELECT * FROM variableambitocategoria where idVariable=?',[$variable->idVariable]);
-        }
+        $datos= DB::select('SELECT * FROM datosINE');
         foreach($datos as $dato){
-            foreach($dato as $dat){
-                $año= $dat->Year;
+            $idUrl= $dato->idUrl;
+            $urls[]= DB::select('SELECT * FROM urldatosine WHERE id=?',[$idUrl]);
+        }
+        foreach($urls as $url){
+            $valores= json_decode(file_get_contents($url[0]->url), true);
+            $count = count($valores);
+            $idUrl2= $url[0]->id;
+            $datosSubidos= DB::select('SELECT * FROM datosINE where idUrl=?',[$idUrl2]);
+            foreach($datosSubidos as $dat){
+                $nombre=$dat->nombre;
+                $ultimaFecha= DatosINEController::ultimaFecha($nombre,$datosSubidos);
+                $categoria= $dat->idCategoria;
+                $ambito= $dat->idAmbito;
+                $variable= $dat->idVariable;
+                $idCategoria= DB::select('SELECT categoria.idCategoria FROM categoria where idCategoria=?', [$categoria]);
+                $idAmbito= DB::select('SELECT ambito.idAmbito FROM ambito where idAmbito=?', [$ambito]);
+                $idVariable= DB::select('SELECT variable.idVariable FROM variable where idVariable=?', [$variable]);
+                $id= $dat->id;
+                for ($i = 0; $i < $count; $i++) {
+                        $nombreNoSubido=$valores[$i]['Nombre'];
+                        if(strcmp($nombre,$nombreNoSubido)==0){
+                            for($j = 0; $j < count($valores[$i]['Data']) ;$j++){
+                                $año = $valores[$i]['Data'][$j]['Anyo'];
+                                $mes = $valores[$i]['Data'][$j]['FK_Periodo'];
+                                if($año >= $ultimaFecha['Año'] ){
+                                    if($mes > $ultimaFecha['Mes'] ){
+                                        $datoASubir= $valores[$i]['Data'][$j]['Valor'];
+                                        $subido= DB::select('SELECT * FROM datosINE where nombre=? and periodo=? and año=?',[$nombre,$dat->periodo,$año]);
+                                        if(empty($subido)){
+                                            DatosINEController::subirDatoActualizado($datoASubir,$idCategoria,$idAmbito,$idVariable,$mes,$año);
+                                            DatosINEController::subirDatoATablaAuxiliar($id,$nombre,$mes,$año,$datoASubir,$idUrl2,$categoria,$ambito,$variable);
+                                        }
+                                    }
+                                }   
+                            }
+                        }
+                }   
+            }
+        }
+        return view('datosINE.confirmarActualizacion');
+    }
+
+    public function ultimaFecha($nombre,$datosSubidos){
+        $aux = 0;
+        $mesAux=0;
+        foreach($datosSubidos as $dato){
+            if($nombre==$dato->nombre){
+                $año= $dato->año;
                 if($año >= $aux){
                     $aux = $año;
-                    $mayor= $dat;
+                    $mes= DatosINEController::traducirPeriodo($dato->periodo);
+                    if($mes=="T1"){
+                        $mes= 19;
+                    }
+                    if($mes=="T2"){
+                        $mes=20;
+                    }
+                    if($mes=="T3"){
+                        $mes=21;
+                    }
+                    if($mes=="T4"){
+                        $mes=22;
+                    }
+                    if($mes==" "){
+                        $mes=28;
+                    }
+                    if($mes > $mesAux){
+                        $mesAux = $mes;
+                        $mayor= $dato;
+                    }
                 }
             }
-            $mes= $mayor->Mes;
-            print_r($mayor);
         }
-
+        $ultimaFecha['Año']=$mayor->año;
+        $ultimaFecha['Mes']=$mayor->periodo;
+        return $ultimaFecha;
+    }
+    public function subirDatoActualizado($datoASubir,$idCategoria,$idAmbito,$idVariable,$mes,$año){
+        if($mes=="19" || $mes=="20" || $mes=="21" || $mes=="22" ){
+            for($i=0; $i<3; $i++){
+                if($mes=="19"){
+                    $mesAux = 1 + $i;
+                }
+                if($mes=="20"){
+                    $mesAux = 4 + $i;
+                }
+                if($mes=="21"){
+                    $mesAux = 7 + $i;
+                }
+                if($mes=="22"){
+                    $mesAux = 10 + $i;
+                }
+                DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$datoASubir]);
+            }
+        }elseif($mes= "28"){
+            for($i=0; $i<12; $i++){
+                $mesAux= 1 + $i;
+                DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+                ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$datoASubir]);
+            }
+        }else{
+            DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
+            ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$datoASubir]);
+        }
+    }
+    public function subirDatoATablaAuxiliar($id,$nombre,$mes,$año,$datoASubir,$idUrl2,$categoria,$ambito,$variable){
+        switch($mes){
+            case "1":
+                $mesAux="Enero";
+                break;
+            case "2":
+                $mesAux="Febrero";
+                break;
+            case "3":
+                $mesAux="Marzo";
+                break;
+            case "4":
+                $mesAux="Abril";
+                break; 
+            case "5":
+                $mesAux="Mayo";
+                break;   
+            case "6":
+                $mesAux="Junio";
+                break;
+            case "7":
+                $mesAux="Julio";
+                break;
+            case "8":
+                $mesAux="Agosto";
+                break;
+            case "9":
+                $mesAux="Septiembre";
+                break; 
+            case "10":
+                $mesAux="Octubre";
+                break;
+            case "11":
+                $mesAux="Noviembre";
+                break;
+            case "12":
+                $mesAux="Diciembre";
+                break;
+            case "19":
+                $mesAux="T1";
+                break;
+            case "20":
+                $mesAux="T2";
+                break; 
+            case "21":
+                $mesAux="T3";
+                break;
+            case "22":
+                $mesAux="T4";
+                break; 
+            case "28":
+                $mesAux=" ";
+                break;   
+         }
+         DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl, idVariable, idCategoria, idAmbito ) VALUES(?,?,?,?,?,?,?,?,?)',[$id,$nombre,$mesAux,$año,$datoASubir,$idUrl2,$variable,$categoria,$ambito]);
     }
 }

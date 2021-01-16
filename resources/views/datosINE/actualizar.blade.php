@@ -1,1 +1,0 @@
-@extends('adminlte::layouts.app')
