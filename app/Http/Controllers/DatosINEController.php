@@ -21,7 +21,6 @@ public function organizarDatos(Request $request)
     {
         $url = $request->input("url");
         $urlJson= DatosINEController::crearUrl($url);
-        print_r($urlJson);
         $datos= json_decode(file_get_contents($urlJson), true);
         $urlObjeto = UrlJson::where('url', $urlJson)->first();
         if(empty($urlObjeto)){
@@ -90,7 +89,7 @@ public function subirDatos($datos, $idUrl){
         }
         return $nomSinRepetirFinal;
     }
-    function multiexplode ($delimiters,$string) {
+    public function multiexplode ($delimiters,$string) {
         $ready = str_replace($delimiters, $delimiters[0], $string);
         $launch2 = explode($delimiters[0], $ready);
         foreach($launch2 as $l){
