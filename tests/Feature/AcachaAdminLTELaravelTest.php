@@ -237,7 +237,10 @@ class AcachaAdminLTELaravelTest extends TestCase
         ]);
 
         $response->assertStatus(422)->assertJson([
+            "message" => "The given data was invalid.",
+            "errors" =>[
             "email" => "These credentials do not match our records."
+            ]
         ]);
     }
 

@@ -1,16 +1,35 @@
 <?php 
-
-$ambitosForm=$_POST['ambitosForm'];
-$yearsForm=$_POST['yearsForm'];
-
-$years=$_POST['years'];
-$values=$_POST['values'];
-$filtrado=$_POST['filtrado'];
-$id=$_POST['id'];
-$ambitos=$_POST['ambitos'];
-$supercategorias=$_POST['supercategorias'];
-$idsCategoria=$_POST['idsCategoria'];
-$nombre_variable=$_POST['nombre_variable'];
-$fuentes=$_POST['fuentes'];
-
+if(isset($_POST['ambitosForm'])){
+    $ambitosForm=$_POST['ambitosForm'];
+}
+if(isset($_POST['yearsForm'])){
+    $yearsForm=$_POST['yearsForm'];
+}
+if(isset($_POST['years'])){
+    $years=$_POST['years'];
+}
+if(isset($_POST['values'])){
+    $values=$_POST['values'];
+}
+if(isset($_POST['filtrado'])){
+    $filtrado=$_POST['filtrado'];
+}
+if(isset($_POST['id'])){
+    $id=$_POST['id'];
+}
+if(isset($_POST['ambitos'])){
+    $ambitos=$_POST['ambitos'];
+}
+if(isset($_POST['supercategorias'])){
+    $supercategorias=$_POST['supercategorias'];
+}
+if(isset($_POST['idsCategoria'])){
+    $idsCategoria=$_POST['idsCategoria'];
+}
+if(isset($_POST['nombre_variable'])){
+    $nombre_variable=$_POST['nombre_variable'];
+}
+if(isset($_POST['fuentes'])){
+    $fuentes=$_POST['fuentes'];
+}
 ?>
