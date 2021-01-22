@@ -1,4 +1,28 @@
 \capitulo{3}{Conceptos teóricos}
+\section{Encriptado de contraseñas}
+Me preocupaba que las contraseñas no fueran seguras así que pensé en encriptarlas. Para ello me informé de posibles codificaciones para ellas.
+\subsection{password\_hash}
+Esta función de php crea un hash de contraseña usando un algoritmo de hash fuerte de único sentido.\\
+Para entender esta función me hizo falta aprender lo que es un hash.\\
+Una función criptográfica hash es un algoritmo matemático que transforma cualquier bloque arbitrario de datos en una nueva serie de caracteres con una longitud fija. Independientemente de la longitud de los datos de entrada, el valor hash de salida tendrá siempre la misma longitud.\cite{definicionHash}
+Password\_hash() se emplea para crear un hash con una cadena dada como primer argumento utilizando el algoritmo pasado como segundo argumento. 
+Se puede elegir entre estos dos algoritmos para el encriptado:
+\begin{description}
+    \item [PASSWORD\_DEFAULT] Usa el algoritmo bcrypt. Esta constante está diseñada para cambiar siempre que se añada un algoritmo nuevo y más fuerte a PHP. Por esto la longitud de la encriptación puede variar según cambia el algoritmo.
+    \item [PASSWORD\_BCRYPT] Usa el algoritmo CRYPT\_BLOWFISH para crear el hash. Produce un hash usando el identificador "\$2y\$". El resultado siempre será un string de 60 caracteres, o FALSE en caso de error.
+\end{description}
+Para comprobar que una contraseña introducida en el login coincide con el hash guardado en la base de datos se usa la función password\_verify().\cite{passwordHash}
+\imagen{imagenes/Ejpasshash}{Ejemplo de la utilización de password\_hash()}
+\subsection{crypt}
+Esta función tiene un funcionamiento muy similar que password\_hash().\\
+Se le pasan dos parámetros, el string que queremos encriptar y un string de salt para la base del hash.\cite{crypt} Pero, ¿qué es un string salt?.\\
+En criptografía, la sal o salt en inglés comprende bits aleatorios que se usan como argumento en una función que crea contraseñas. El otro argumento es el string que queremos codificar. La sal también puede usarse como parte de una clave en un cifrado u otro algoritmo criptográfico. A veces se usa como sal el vector de inicialización, un valor generado previamente.
+Las claves con sal complican los ataques de diccionario que cifran cada una de las entradas del mismo: cada bit de sal duplica la cantidad de almacenamiento y computación requeridas.\cite{salt}
+\subsection{Hash de Laravel}
+Laravel tiene una clase Hash que permite el encriptado de contraseñas usando los algoritmos Bcrypt y Argon2.\\
+Bcrypt es una excelente opción para hacer hash de contraseñas porque su "factor de trabajo" es ajustable, lo que significa que el tiempo que lleva generar un hash puede incrementarse a medida que aumenta la potencia del hardware. Cuando se procesan contraseñas, la lentitud es buena. Cuanto más tiempo tarda un algoritmo en codificar una contraseña, más tardan los usuarios malintencionados en generar todas las cadenas posibles que pueden utilizarse en ataques de fuerza bruta contra aplicaciones.\cite{HashLaravel}
+Al ser una clase integrada en Laravel y que su uso sea tan sencillo, hizo de esta la encriptación que elegí para mi aplicación.
+\imagen{imagenes/HashLaravel}{Encriptación de contraseñas en mi aplicación}
  \section{Procesado de datos del INE}
 El instituto nacional de estadística proporciona un servicio que permite descargar los datos que nos ofrece en formato json. Para ello debemos crear una petición en forma de url para después guardar esos datos e introducirlos en nuestra base de datos.
  \subsection{Creación de la url}
@@ -9,7 +33,7 @@ Los campos que aparecen entre corchetes, [ ], son opcionales y cambian en relaci
 Descripción de cada uno de ellos
 \begin{description}
 	\item [idioma] ES para español e EN para inglés. Por defecto está puesto el español.\\
-	\item [función] Funciones implementadas en el sistema para poder realizar diferentes tipos de consulta en función del tipo de fuente, Tempus3 o PcAxis, y del elemento que se quiere obtener.\\
+	\item [función] Funciones implementadas en el sistema para poder realizar diferentes tipos de consulta en función del tipo de fuente, Tempus3 o PcAxis, y del elemento que se quiere obtener. Hablaré de estas funciones más adelante en la sección de "Metadatos y datos".\\
     Funciones para la obtención de datos de Tempus3
          \begin{description}
          \item [Operaciones] OPERACIONES\_DISPONIBLES, OPERACIÓN.
@@ -29,7 +53,7 @@ Descripción de cada uno de ellos
     \imagen{imagenes/idTempus3}{Identificador de las tablas Tempus3}
     \imagen{imagenes/idPcAxis}{Identificador de las tablas PC-Axis}
     \item [parámetros] Los parámetros en la URL se establecen a partir del símbolo ?.\\
-    Cuando haya más de un parámetro, el símbolo & se utiliza como separador.\\
+    Cuando haya más de un parámetro, el símbolo \& se utiliza como separador.\\
     No todas las funciones admiten todos los parámetros posibles. Por ello haremos una clasificación para explicarlos mejor:  
      \begin{enumerate}
         \item Parámetros comunes a todas las funciones
@@ -54,88 +78,58 @@ Descripción de cada uno de ellos
  \imagen{imagenes/Ine}{Ejemplo de una tabla del INE}
  \imagen{imagenes/urlINE}{Ejemplo de la url del INE}
  El usuario copia y pega esta url y la aplicación la traduce a una petición de los datos en forma de json automáticamente.
- \subsection{Estructura de los datos del INE}
- Para entender cómo he tratado los datos, necesitamos saber primero su significado.
-
-
-
-
-Algunos conceptos teóricos de \LaTeX \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
-
-\section{Secciones}
-
-Las secciones se incluyen con el comando section.
-
-\subsection{Subsecciones}
-
-Además de secciones tenemos subsecciones.
-
-\subsubsection{Subsubsecciones}
-
-Y subsecciones. 
-
-
-\section{Referencias}
-
-Las referencias se incluyen en el texto usando cite \cite{wiki:latex}. Para citar webs, artículos o libros \cite{koza92}.
-
-
-\section{Imágenes}
-
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
-
-\imagen{escudoInfor}{Autómata para una expresión vacía}
-
-
-
-\section{Listas de items}
-
-Existen tres posibilidades:
-
-\begin{itemize}
-	\item primer item.
-	\item segundo item.
-\end{itemize}
-
+\subsection{Metadatos y datos}
+Los datos y los metadatos hacen referencia al apartado {función} de la petición url antes vista.
+\subsubsection{Metadatos}
+La petición de metadatos sólo está disponible para el sistema Tempus3. Se pueden consultar estos tipos de metadatos:
 \begin{enumerate}
-	\item primer item.
-	\item segundo item.
+    \item Operaciones\\ Para consultar todas las operaciones disponibles:\\ OPERACIONES\_DISPONIBLES.\\ La petición url sería esta:\\ https://servicios.ine.es/wstempus/js/ES/OPERACIONES\_DISPONIBLES\\ Y el output sería un json con información sobre todas las operaciones estadísticas disponibles como por ejemplo la del índice de precios de consumo\\
+    \{"Id":25, "Cod\_IOE":"30138", "Nombre":"Índice de Precios de Consumo (IPC)", "Codigo":"IPC"\}.\\
+    Para consultar una operación en concreto se usa la función OPERACIÓN y como input para identificar la operación se utilizan los códigos que sacamos del output anterios . Por ejemplo para consultar la operación del índice de precios de consumo (IPC), se pueden usar tres input diferentes:  IOE30138, IPC o 25.
+    \item Variables\\
+    Para obtener todas las variables: VARIABLES\\ https://servicios.ine.es/wstempus/js/ES/VARIABLES\\
+    Para obtener las variables de una operación concreta se utiliza como función VARIABLES\_OPERACIÓN y como input cualquiera de los códigos de identificación de la operación antes mencionados. Ejemplo: https://servicios.ine.es/wstempus/js/ES/VARIABLES\_OPERACION/IPC \\
+    \item Valores\\
+    Se puede acceder a los valores de una variable con la función VALORES\_VARIABLE y con el input correspondiente al código de la operación.\\
+    También se muestran los valores que tiene una variable para una operación en concreto con la función VALORES\_VARIABLEOPERACIÓN y el input de la operación que queramos mostrar. 
+    \item Tablas\\
+    Para obtener todas las tablas asociadas a una operación usamos TABLAS\_OPERACIÓN con el código identificativo de la operación como input.\\
+    También podemos mostrar los grupos de una tabla con GRUPOS\_TABLA y usar VALORES\_GRUPOSTABLA para obtener los valores de cada uno de los grupos de una tabla usando además su código identificativo como output. Ejemplo:\\
+    https://servicios.ine.es/wstempus/js/ES/GRUPOS\_TABLA/22350\\
+    Con esta petición url sacamos los grupos de la tabla con el identificador 22350.\\
+    Una fila del output correspondiente a los índices por comunidades autónomas sería esta:\\
+    \{"Id":22350, "Nombre":"Índices por comunidades autónomas: general y de grupos ECOICOP", "Codigo":"2016\_NAC-CCAA", "FK\_Periodicidad":1, "FK\_Publicacion":8, "FK\_Periodo\_ini":1, "Anyo\_Periodo\_ini":"2002", "FechaRef\_fin":"null", "Ultima\_Modificacion":1607673600000\}\\
+    Y para extraer los valores de ese grupo utilizaríamos la petición:\\
+    https://servicios.ine.es/wstempus/js/ES/VALORES\_GRUPOSTABLA/22350/81497\\
+    \item Series\\
+    Una serie es un conjunto de observaciones medidas en un instante de tiempo determinado.\\ 
+    La API JSON del INE nos permite usar las siguientes funciones para sacar información sobre las series:  
+    \begin{description}
+            \item [SERIE]
+            Para formar esta url se usa la función y el input identificativo de la serie. Como output sale la información de la serie requerida.\\
+            \item [SERIES\_OPERACION]
+            La url se construye de la misma manera pero el output de esta son las series pertenecientes a una determinada operación.\\
+            \item [VALORES\_SERIE]
+            Con esta función obtenemos información de los metadatos que definen a la serie.\\
+            \item [SERIES\_TABLA]
+            Utilizando esta función conseguimos datos sobre las series de una tabla de la que pasamos el código identificativo como input.\\
+            \item [SERIE\_METADATAOPERACION]
+            Esta opción sirve para obtener información detallada sobre un conjunto de datos preciso de una operación. La operación se pasa como un input mediante su identificador.\\
+    \end{description}
+    \item Publicaciones\\
+    Para este tipo de metadatos hay tres funciones muy sencillas: PUBLICACIONES que muestra una lista de todas las publicaciones existentes, PUBLICACIONES\_OPERACION que muestra las publicaciones de una determinada operación que se pasa como input y PUBLICACIONFECHA\_PUBLICACION que saca las fechas en las que se han añadido nuevos datos a una determinada publicación.\\
+\end{enumerate}
+\subsubsection{Datos}
+Es la parte que realmente se trata dentro de la aplicación. Existen varios tipos:\\
+\begin{enumerate}
+    \item DATOS\_SERIE\\
+    Con esta función obtenemos datos de una serie en concreto.\\
+    \item DATOS\_TABLA\\
+     Información y datos de las series contenidas en la tabla. Los valores vienen clasificados en función del periodo y del año. Puesto que en esta aplicación la forma de clasificar los datos es en tablas, esta función será la que usaremos.\\ 
+     \item DATOS\_METADATAOPERACION\\
+      Esta opción sirve para obtener información sobre un conjunto de datos preciso de una operación. La operación se pasa como un input mediante su identificador.\\
 \end{enumerate}
 
-\begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
-\end{description}
-	
-\begin{itemize}
-\item 
-\end{itemize}
 
-\section{Tablas}
 
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
-
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+ 

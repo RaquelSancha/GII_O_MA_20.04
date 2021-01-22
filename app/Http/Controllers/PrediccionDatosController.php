@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Rubix\ML\Datasets\Unlabeled;
 
 /**
 * Clase que se encarga de predecir los datos a futuro.
@@ -20,17 +21,20 @@ class PrediccionDatosController extends Controller
     public function seleccionarDatos($idVariable,$idCategoria,$idAmbito){
         $variables = DB::select('SELECT idVariable,idCategoria,idAmbito,Mes,Year FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?',[$idVariable,$idCategoria,$idAmbito]);
         $valores = DB::select('SELECT Valor FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?',[$idVariable,$idCategoria,$idAmbito]);
-        
-
-
+        $dataset = new Unlabeled($valores);
+        $estimator->train($dataset); 
+        $predictions = $estimator->predict($dataset);
+        var_dump($predictions);
         
     return $result;
     }
     public function predecir(Request $request,$id){
-        echo 'HOLA';
+        $idVariable = $id;
         $years = $request->input("years");
     	$categoria = $request->input("categoria");
-        $ambitos = $request->input("ambitos");
+        $ambito = $request->input("ambito");
+        $idCategoria=DB::select('SELECT idCategoria FROM categoria where Nombre=?',[$categoria]);
+        $idAmbito=DB::select('SELECT idAmbito FROM ambito where Nombre=?',[$ambito]);
         PrediccionDatosController::seleccionarDatos($idVariable,$idCategoria,$idAmbito);
        
     }

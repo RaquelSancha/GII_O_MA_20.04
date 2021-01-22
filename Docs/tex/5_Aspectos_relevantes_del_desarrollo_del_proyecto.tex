@@ -1,7 +1,115 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
+En esta sección hablaré de los pasos que he seguido para realizar el trabajo así como de los problemas que he tenido y cómo los he afrontado. 
+\section{Inicio del proyecto: Aprendizaje}
+En esta fase, probablemente la más costosa a nivel personal, detallaré los conceptos que me hicieron falta aprender para poder empezar mi trabajo.\\
+Al principio, no sabía cómo abordar este proyecto ya que no sabía nada de php ni de aplicaciones web ni de muchos otros aspectos relacionados, pero poco a poco pude abrirme paso y aprender a manejarme a través de una aplicación hecha con Laravel.\\
+\subsection{Laravel} 
+Entender y familiarizarme con este framework me costó mucho tiempo. Laravel tiene un sistema de carpetas y archivos de configuración muy extenso que al principio cuesta entender pero por suerte existen multitud de tutoriales en forma de vídeos o de artículos que explican como iniciarse en Laravel.\\
+Si no se tiene ningún conocimiento previo sobre este framework no recomendaría mirar la documentación de la página oficial ya que, aunque es muy completa, no considero que ofrezca una visión general sobre el funcionamiento del mismo sino información muy específica que no sirve al usuario si no conoce primero la dinámica general de la herramienta.\\
+Por todo esto me apoyé fundamentalmente en tutoriales de Youtube o en artículos explicativos mas que en la documentación oficial.\\
+Tutoriales que seguí:
+\begin{itemize}
+    \item \textit{Laravel PHP Framework Tutorial}(freeCodeCamp)\cite{TutorialLaravel}
+    \item \textit{Curso Laravel}(pildorasinformaticas)\cite{TutorialLaravel2}
+    \item \textit{Ejemplo de un proyecto en laravel}(ulio Yáñez Novo)\cite{PrimerProyecto}
+\end{itemize}
+\subsection{PHP} 
+Este lenguaje no se enseña en la carrera y tampoco había trabajado con él antes así que tuve que aprenderlo desde cero. No me resultó tan difícil como aprender a entender proyectos con laravel así que esta parte me supuso menos trabajo.\\
+Las herramientas que usé para familiarizarme con este lenguaje fueron:
+\begin{itemize}
+    \item \textit{Tutorial de PHP para principiantes}(ionos)\cite{TutorialPHP}
+    \item \textit{Curso php}(tutorialesya)\cite{CursoPHP} 
+\end{itemize}
+\subsection{Proyecto}
+Añado el propio proyecto a una de las cosas que tuve que aprender porque al ser un trabajo hecho por otra persona me costó mucho comprender su funcionamiento. De las cosas que más me costaron fue entender las plantillas y recursos externos que utilizaba porque no estaban documentados.
+\section{Gestión de los errores}
+El siguiente paso fue la identificación de los errores de la aplicación para su posterior solución.\\
+Además de algún error de diseño, los dos principales errores que había eran:
+\begin{itemize}
+    \item {Exportar datos a excel} Había implementado un botón para exportar los datos de la tabla elegida a excel pero no funcionaba. Para conseguir que el botón cumpliera la funcionalidad prometida he usado la biblioteca Laravel Excel (explicada anteriormente en el apartado "Técnicas y herramientas")
+    \item{Administración de usuarios} Esta sección daba un error cuando se intentaba acceder a ella.
+    \imagen{imagenes/Administracionusuarios}{Sección Administración de usuarios}
+    Desde esta pantalla, la cual solo se puede acceder si tienes privilegios de superadmin, se permite aceptar las solicitudes pendientes de creación de una cuenta así como editar y borrar otros perfiles.
+    \imagen{imagenes/EditarUsuario}{Editar datos de un usuario}
+    También cree esta pantalla para permitir editar los campos del usuario.
+\end{itemize}
+\section{Planteamiento de mejoras}
+Después de subsanar los errores que existían en la aplicación, decidí hacer algunas mejoras.\\
+Para realizar el informe de la coyuntura económica de Burgos se usan múltiples fuentes así que pensé en una forma de sacar la información de una manera más sencilla para el usuario.\\
+Las bases de datos más utilizadas son: eurostat, los datos abiertos de la junta de Castilla y León y el instituto nacional de estadística. Voy a hablar de cada una de ellas y de cuáles me ha parecido viable su incorporación en la aplicación y cuáles no.
+\subsection{Eurostat}
+Eurostat es una base de datos que recoge información a nivel europeo. Tiene un servicio de datos en json y en unicode mediante el cual permite descargar los archivos disponibles en estos dos formatos a través de una petición REST.
+\imagen{imagenes/eurostat}{Estructura de una petición REST de Eurostat}\cite{eurostat}
+Como podemos ver la estructura es muy parecida a la petición de datos del INE, con una parte fija, otra parte que indica el formato, una que indica el lenguaje y finalmente el código que identifica los datos. También permite filtrar la información.\\
+El inconveniente de este servicio es la forma de conseguir el identificador de los datos (datasetCode en la imagen).
+Los códigos de los conjuntos de datos se pueden encontrar ordenados por temas en la página de Eurostat así que pensé en las opciones que existían para automatizar las peticiones lo máximo posible:
+\begin{itemize}
+    \item Pedirle al usuario que seleccione el código del conjunto de datos y lo pegue en nuestra aplicación web para que cree la petición.
+    \item Guardar en mi base de datos todos los conjuntos de datos de Eurostat.
+\end{itemize}
+Ninguna de las opciones me parecía práctica así que descarté el uso de Eurostat en mi aplicación.
+\subsection{Datos abiertos de la junta de Castilla y León}
+La junta de Castilla y León tiene una API desde la que puedes buscar los datos.\cite{apijcyl}
+\imagen{imagenes/apijcyl}{Búsqueda de datos desde la API}
+Como esta página no ofrece un servicio para sacar la información de una forma más automatizada como con una petición url, no me pareció útil usar los datos abiertos de la junta de Castilla y León.
+\subsection{Instituto nacional de estadística}
+Una fuente de la que suelen sacar los datos para el análisis de la coyuntura económica es el instituto nacional de estadística (INE). Por ello, para facilitar la extracción de los datos, pensé que sería buena idea permitir seleccionar la información que queramos de esta página e insertarla directamente en nuestra base de datos.\\
+El INE tiene una API que permite mostrar los datos en formato JSON mediante una petición url como ya he explicado en el apartado "Conceptos teóricos".\\
+\imagen{imagenes/datosine}{Salida de los datos en formato JSON}
+Así que por la facilidad de obtención de los datos y la manera en la que están representados, me ha parecido muy interesante integrar este recurso en la aplicación.
+\section{Integración continua}
+La integración continua es una práctica de ingeniería de software que consiste en hacer integraciones automáticas de un proyecto lo más a menudo posible para así poder detectar fallos cuanto antes. Entendemos por integración la compilación y ejecución de pruebas de todo un proyecto.\cite{IntegraciónContinua}
+Ventajas de usar la integración continua 
+\begin{itemize}
+    \item Capacidad de detección de problemas temprana, lo que facilita su solución.
+    \item Disponibilidad en cualquier momento de distintas versiones.
+    \item Ejecución inmediata de las pruebas unitarias.
+    \item Monitorización continua de las métricas de calidad del código del proyecto.
+\end{itemize}
+Para usar la integración continua en mi proyecto he usado la herramienta codacy que analiza el código y realiza un informe cada vez que ocurre algún cambio en este y los test de laravel dusk que se ejecutan para ver que todo sigue funcionando correctamente.\\
+\section{Seguimiento}
+Para el seguimiento del proyecto he usado github. Esta herramienta me ha servido mucho para la organización de mis tareas.
+\imagen{imagenes/tablonGithub}{Tablón de mi proyecto en Github}
+\section{Problemas}
+Esta sección condicionó mucho el desarrollo del proyecto porque encontré numerosas dificultades.
+\subsection{Problemas con el código}
+Al ser un proyecto que no era mío, me costó mucho entender su código. Además el framework y el lenguaje no me eran familiares. Una de las principales razones por las que ocurrió esto es porque la aplicación usa plantillas y recursos ajenos al mismo que no estaban documentados.
+\subsubsection{AdminLTE}
+AdminLTE es una plantilla que usa la aplicación para su diseño general y para la barra lateral del menú. Está programado en HTML5 con el framework CSS Bootstrap. 
+\imagen{imagenes/admnLTE}{Ejemplo de plantilla que propociona AdminLTE}
+\subsubsection{Entrust GUI}
+Entrust GUI es una interfaz de administrador que facilita la administración de usuarios, roles y permisos.
+\imagen{imagenes/entrustgui}{Ejemplo de la interfaz}
+\subsection{Problemas de compatibilidad}
+Este tipo de problemas tuvieron que ver con Composer.\\
+Como ya he explicado, Composer es un gestor de dependencias del proyecto. Algunas de las que he usado son laravel dusk, maatwebsite, phpspreadsheet, etc y casi todas han dado algún problema de compatibilidad en su instalación.
+\imagen{imagenes/problemaComposer}{Captura de un problema típico al intentar instalar un paquete nuevo}
+Ha sido necesaria una solución diferente para resolver cada uno de estos problemas lo que ha supuesto un retraso importante en la realización del proyecto.
+\subsection{Problemas en el despliegue del proyecto}
+Para la producción del trabajo se han usado muchos servidores locales y online como xampp, wampp, docker, etc y todos ellos han dado algún problema.\\
+\subsubsection{Xampp}
+Xampp ha sido la herramienta más usada para probar el proyecto, sin embargo, tuve muchos problemas para conseguir que funcionara correctamente.\\
+La mayoría de los problemas los tuve a la hora de configurar el host virtual.
+\imagen{imagenes/vhostxamp}{Configuración de los hosts virtuales}
+Aunque a primera vista parece fácil, conseguir que cogiera la ruta del proyecto me costó mucho y todavía sigo sin entender el por qué. Mis suposiciones son que el navegador desde que accedía al host virtual guardaba la caché y por lo tanto usaba una configuración desactualizada antigua que se solucionó al borrar su caché y reiniciar el servidor.
+\subsubsection{Docker}
+Para usar esta herramienta usé el contenedor "laradock" que tiene multitud de imágenes. El principal problema que tuve fue el servidor que utilizaba ya que en todos los tutoriales aconsejaba usar "nginx", con el que no estaba familiarizada, pero al cambiar a "apache" todo fue algo más fácil aunque también tuve problemas para direccionar el proyecto.
+\imagen{imagenes/envlaradock}{Archivo de configuración .env de laradock}
+Laradock usa un direccionamiento virtual de los archivos lo que me confundió mucho ya que no veía realmente dónde se encontraba el proyecto.\\
+Otro problema que tuve con docker fue la ejecución de los tests con laravel dusk. En la documentación de la página oficial de laravel pone que usa un driver de chrome así que intenté descargarme una imagen para instalarla en laradock. Esto no fue una buena idea porque las imágenes de laradock están conectadas entre sí en un archivo de configuración docker-compose.yml y no conseguí que mi nueva imagen funcionara con las demás.\\
+Después de mucho buscar encontré un artículo \cite{selenium} que explicaba cómo usar selenium para ejecutar los test con laravel dusk en laradock. Como selenium es una de las imágenes incluidas en laradock ya estaba configurada y sólo tuve que cargarla.
+\subsubsection{Heroku}
+Para la presentación de la aplicación se decidió utilizar en Heroku en un principio, que es un hosting gratuito donde se puede alojar tu aplicación web. Tuve varios problemas al instalarlo ya que el proyecto tiene dos partes, la parte del código y la base de datos. Heroku ofrece una base de datos propia pero es de pago, además está en postgresql y la mía está en mysql.\\
+Para solucionar esto conseguí conectar mi proyecto a una base de datos externa totalmente gratuita llamada db4free.net.\\
+Cuando se consiguió que todo funcionaba correctamente, se notó la lentitud de la aplicación, pero al ser un hosting gratuito
+es normal ya que no nos ofrecen mucha memoria.\\
+La aplicación funciona, pero al tener tantos servicios con peticiones agotamos la memoria RAM que nos ofrece Heroku y el rendimiento de la aplicación no es el esperado.\\
+Para poder tener un buen rendimiento, sería necesario usar la versión de pago de Heroku, mucho más potente.
+\subsection{Problemas con laravel}
+La principal ventaja y a la vez problema que tuve con laravel son los archivos que te proporciona. Con esto me refiero a que sin haber programado nada, al crear un proyecto de laravel ya te da un sistema de archivos y carpetas que contiene una aplicación funcional. Lo que al principio puede ser cómodo pero cuando se produce algún error, la información sobre el por qué se ha producido el fallo puede ser confusa porque refleja ficheros que no han sido escritos por mí.
+\imagen{imagenes/errorlaravel}{Ejemplo de un error que se produce en laravel}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+
+
+
+
