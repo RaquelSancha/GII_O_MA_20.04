@@ -11,22 +11,47 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use Rubix\ML\Datasets\Unlabeled;
+use Rubix\ML\Datasets\Labeled;
+
+use Rubix\ML\Regressors\ExtraTreeRegressor;
+
+use Rubix\ML\Regressors\Adaline;
+use Rubix\ML\NeuralNet\Optimizers\Adam;
+use Rubix\ML\NeuralNet\CostFunctions\HuberLoss;
 
 /**
 * Clase que se encarga de predecir los datos a futuro.
 */
 class PrediccionDatosController extends Controller
 {
-    public function seleccionarDatos($idVariable,$idCategoria,$idAmbito){
-        $variables = DB::select('SELECT idVariable,idCategoria,idAmbito,Mes,Year FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?',[$idVariable,$idCategoria,$idAmbito]);
-        $valores = DB::select('SELECT Valor FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?',[$idVariable,$idCategoria,$idAmbito]);
-        $dataset = new Unlabeled($valores);
+    public function seleccionarDatos($idVariable,$idCategoria,$idAmbito,$categoria,$ambito,$nombreVariable){
+        $variables_aux = DB::select('SELECT idVariable,idCategoria,idAmbito,Mes,Year FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?',[$idVariable,$idCategoria,$idAmbito]);
+        $valores_aux = DB::select('SELECT * FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?',[$idVariable,$idCategoria,$idAmbito]);
+        $variables=array();
+        $i= 0;
+        foreach($variables_aux as $variable){
+            $variables[$i] = array();
+            array_push($variables[$i], $nombreVariable);
+            array_push($variables[$i], $categoria);
+            array_push($variables[$i], $ambito);
+            array_push($variables[$i], PrediccionDatosController::traducirMes($variable->Mes));
+            $i++;
+        }
+       // print_r($variables);
+        $valores=array();
+        foreach($valores_aux as $valor){
+            if(!empty($valor)){
+                array_push($valores,$valor->Valor);
+            }
+        }
+
+        $dataset = new Labeled($variables,$valores);
+        $estimator = new ExtraTreeRegressor(30, 3, 20, 0.05);
         $estimator->train($dataset); 
         $predictions = $estimator->predict($dataset);
         var_dump($predictions);
         
-    return $result;
+    return $predictions;
     }
     public function predecir(Request $request,$id){
         $idVariable = $id;
@@ -35,8 +60,10 @@ class PrediccionDatosController extends Controller
         $ambito = $request->input("ambito");
         $idCategoria=DB::select('SELECT idCategoria FROM categoria where Nombre=?',[$categoria]);
         $idAmbito=DB::select('SELECT idAmbito FROM ambito where Nombre=?',[$ambito]);
-        PrediccionDatosController::seleccionarDatos($idVariable,$idCategoria,$idAmbito);
-       
+        $nombreVariable=DB::select('SELECT Nombre FROM variable where idVariable=?',[$idVariable]);
+        $predictions = PrediccionDatosController::seleccionarDatos($idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$categoria,$ambito,$nombreVariable[0]->Nombre);
+    
+        return view('prediccionDatos/predicciones',compact('predictions','nombreVariable','categoria','ambito'));
     }
         /**
     * Función que se encarga de mostrar las supercategorias, categorias, ambitos y años de una variable pasada por parametro.
@@ -57,5 +84,46 @@ class PrediccionDatosController extends Controller
     	
 
 		 return view('prediccionDatos.show',compact('categorias','years','id','ambitos','supercategorias'));
+    }
+    public function traducirMes($mes){
+            switch($mes){
+                case "1":
+                    $mesAux="Enero";
+                    break;
+                case "2":
+                    $mesAux="Febrero";
+                    break;
+                case "3":
+                    $mesAux="Marzo";
+                    break;
+                case "4":
+                    $mesAux="Abril";
+                    break; 
+                case "5":
+                    $mesAux="Mayo";
+                    break;   
+                case "6":
+                    $mesAux="Junio";
+                    break;
+                case "7":
+                    $mesAux="Julio";
+                    break;
+                case "8":
+                    $mesAux="Agosto";
+                    break;
+                case "9":
+                    $mesAux="Septiembre";
+                    break; 
+                case "10":
+                    $mesAux="Octubre";
+                    break;
+                case "11":
+                    $mesAux="Noviembre";
+                    break;
+                case "12":
+                    $mesAux="Diciembre";
+                    break;
+                }
+        return $mesAux;
     }
 }
