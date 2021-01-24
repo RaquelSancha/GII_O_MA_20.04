@@ -98,14 +98,11 @@ Route::get('/tables', 'VariableController@index');
 
 Route::post('/tables/{id}', 'TableController@show');
 
-
 Route::get('/tables/{id}/edit','TableController@edit')->middleware('auth');
 
 Route::post('/tables/{id}/exportar','TableController@exportar')->middleware('auth');
 
 Route::get('/tables/{id}/cambiarDescripcion','TableController@cambiarDescripcion')->middleware('auth');
-
-Route::get('/tables/{id}/estimacion','PrediccionDatosController@estimar')->middleware('auth');
 
 Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito')->middleware('auth');
 
