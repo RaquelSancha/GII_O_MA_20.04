@@ -59,10 +59,10 @@
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                            <div align="left">
+                            <div align="center">
                                     <a href="{{ url('/user/editarPerfil')}}/{{Auth::user()->id}}" class="btn btn-default btn-flat" id="editar">Editar perfil</a>
                             </div>
-                                <div align="right">
+                                <div align="center">
                                     <a href="{{ url('/logout') }}" class="btn btn-default btn-flat" id="logout"
                                        onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">

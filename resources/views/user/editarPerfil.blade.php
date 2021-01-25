@@ -14,7 +14,7 @@
       <label for="nombre_usuario" class="col-md-4 control-label"> Nombre</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-              <input type="text" name="nombre_usuario" class="form-control" placeholder="{{$user->Name}}">
+              <input type="text" name="nombre_usuario" class="form-control" placeholder="{{$user->name}}">
           </div>
       </div>
 </div>
@@ -22,7 +22,7 @@
       <label for="email" class="col-md-4 control-label"> Email</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-             <input type="text" name="email" class="form-control" placeholder="{{$user->Email}}">
+             <input type="text" name="email" class="form-control" placeholder="{{$user->email}}">
           </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <label for="contraseña" class="col-md-4 control-label"> Contraseña</label>
       <div class="row">
             <div class="form-group form-group-options col-md-4 col-md-offset-5">
-             <input type="password" name="contraseña" class="form-control" placeholder="{{$user->password}}">
+             <input type="password" name="contraseña" class="form-control" >
             </div>
       </div>
     </div>

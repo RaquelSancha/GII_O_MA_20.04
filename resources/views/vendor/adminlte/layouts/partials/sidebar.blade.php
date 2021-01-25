@@ -51,7 +51,7 @@
             </li>
             @endif
             @endif
-            <li ><a href="{{ url('/equipo') }}"><i class='fa fa-users'></i> <span>Equipo de Coyuntura Económica</span></a></li>
+            <li ><a href="{{ url('/equipo') }}"><i class='fa fa-users'></i> <span>Equipo</span></a></li>
             @if (Auth::guest())
                 <li ><a href="{{ url('/helpGuest') }}"><i class='fa fa-info'></i> <span>Ayuda</span></a></li>
             @else
