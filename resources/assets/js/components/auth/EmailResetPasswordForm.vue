@@ -12,7 +12,7 @@
   <div class="row">
    <div class="col-xs-2">
    </div><!-- /.col -->
-   <div class="col-xs-8">
+   <div class="col-xs-8" >
     <button type="submit" class="btn btn-primary btn-block btn-flat" :disabled="form.errors.any()"><i v-if="form.submitting" class="fa fa-refresh fa-spin"></i> {{ trans('adminlte_lang_message.sendpassword') }}</button>
    </div><!-- /.col -->
    <div class="col-xs-2">
