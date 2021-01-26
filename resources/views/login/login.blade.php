@@ -1,7 +1,7 @@
 @extends('adminlte::layouts.auth')
 
 @section('htmlheader_title')
-    Login
+    Register
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="input-group col-md-8">
                                 <span class="input-group-addon"><i class="fa fa-unlock-alt  fa-fw"></i></span>
-                                <input type="password" name="password" class="form-control" required placeholder="{{ trans('adminlte_lang::message.password') }}">
+                                <input type="password" name="password" class="form-control"  required placeholder="{{ trans('adminlte_lang::message.password') }}">
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use DB;
+use Hash;
+
 use App\User;
 
 class UserController extends Controller
@@ -50,6 +52,20 @@ class UserController extends Controller
     $usuario->entrustPasswordHash();
     return Redirect::to('/home');
     }
-  
+  public function login(Request $request){
+    $errorPass = true;
+    $email=$request->input("email");
+    $contraseña=$request->input("password");
+    $usuario = DB::select('SELECT * FROM users WHERE email=?',[$email]);
+    if(!empty($usuario)){
+        if (Hash::check($contraseña , $usuario[0]->password)){
+          return Redirect::to('/home');
+        }else{
+          return view('login/login',compact('errorPass'));
+        }
+    }else{
+      return view('login/login',compact('errorPass'));
+    } 
+  }
 
 }
