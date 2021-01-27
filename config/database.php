@@ -50,7 +50,7 @@ return [
             'database' => env('DB_DATABASE_TESTING', database_path('testing.database.sqlite')),
             'prefix' => '',
         ],
-
+/*
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -73,7 +73,7 @@ return [
                 'NO_ENGINE_SUBSTITUTION',
                 ],
         ],
-/*
+*/
         'mysql' => [
             'driver' => 'mysql',
             'host' => 'db4free.net',
@@ -96,7 +96,7 @@ return [
 			'NO_ENGINE_SUBSTITUTION',
 			],
         ],
-        */
+        
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
