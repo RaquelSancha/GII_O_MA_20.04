@@ -58,8 +58,11 @@ class UserController extends Controller
     $contraseña=$request->input("password");
     $usuario = DB::select('SELECT * FROM users WHERE email=?',[$email]);
     if(!empty($usuario)){
-        if (Hash::check($contraseña , $usuario[0]->password)){
-          return Redirect::to('/home');
+      echo $contraseña;
+      echo $usuario[0]->password;
+        if (Hash::check($contraseña , $usuario[0]->password) || strcmp($contraseña,$usuario[0]->password)==0){
+          echo 'hola';
+          return Redirect::to('/help');
         }else{
           return view('login/login',compact('errorPass'));
         }
