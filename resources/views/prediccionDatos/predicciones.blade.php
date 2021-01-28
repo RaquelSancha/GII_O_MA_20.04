@@ -80,7 +80,7 @@
     </tbody>
 </table>
 </div>
-		   <canvas id="myChart" height="40vh" width="80vw"></canvas>
+		   <canvas id="myChart" height="400" width="400"></canvas>
 		 
 
        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js">
@@ -89,30 +89,97 @@
      <script>
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'Lineas',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
+      labels: ["Enero ","Febrero ","Marzo ","Abril ","Mayo ","Junio ","Julio ","Agosto ","Septiembre ","Octubre ","Noviembre ","Diciembre "],
+        datasets: [
+                                @for($l=0; $l<count($ambitosForm);$l++)
+                                    @for($i=0 ; $i<count($categoriasForm);$i++)
+                                         @for($j=0; $j<count($yearsForm);$j++)
+                                                <?php $red =rand(0,255) ;$green =rand(0,255) ;$blue =rand(0,255); ?>
+                                            {
+                                                label: '{{$categoriasForm[$i]}} {{$yearsForm[$j]}} ({{$ambitosForm[$l]}})',
+
+                                                
+                                                data: [
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][0][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][0][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][1][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][1][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][2][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][2][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][3][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][3][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][4][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][4][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][5][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][5][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][6][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][6][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][7][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][7][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][8][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][8][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][9][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][9][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][10][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][10][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][11][0]->valor)))
+                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][11][0]->valor}},
+                                                @else
+                                                ,
+                                                @endif
+                                                 ],
+                                                
+                                                 borderColor: [
+                                                    @for($aux=0 ; $aux<12 ; $aux++)
+                                                    "rgba({{$red}},{{$green}},{{$blue}}, 1)",
+                                                    @endfor
+
+                                                ],
+                                                backgroundColor: [
+                                                    @for($aux=0 ; $aux<12 ; $aux++)
+                                                    "rgba({{$red}},{{$green}},{{$blue}}, 0.2)",
+                                                    @endfor
+
+                                                ],
+                                            },
+                                        @endfor
+                                    @endfor
+                                @endfor]
     },
     options: {
         scales: {
