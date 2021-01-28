@@ -42,7 +42,7 @@
                 </ul>
             </li>
             @if (Auth::user()!=null)
-            @if (Auth::user()->hasRol(1))
+            @if (Auth::user()->hasRol(2))
             <li class="treeview">
                 <a href="#"><i class='fa fa-edit'></i> <span>{{ trans('adminlte_lang::message.administration') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">

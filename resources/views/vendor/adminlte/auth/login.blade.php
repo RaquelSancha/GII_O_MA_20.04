@@ -1,62 +1,52 @@
 @extends('adminlte::layouts.auth')
 
 @section('htmlheader_title')
-    Login
+    Log in
 @endsection
 
 @section('content')
-<body class="hold-transition register-page">
+<body class="hold-transition login-page">
     <div id="app" v-cloak>
-        <div class="register-box">
-            <div class="register-logo">
+        <div class="login-box">
+            <div class="login-logo">
                 <a href="{{ url('/home') }}"><b>Proyecto</b>Coyuntura</a>
+            </div><!-- /.login-logo -->
+
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-<div class="register-box-body">
-    <p class="login-box-msg">Inicia sesión</p>
+        @endif
 
-                
-            <form id="surveyForm" method="post" class="form-horizontal" action="{{ url('/loginUsuarios') }}">
-            {{ csrf_field() }}
-                <div class="form-group">
-                    <label for="nombre_variable" class="col-md-2 control-label"></label>
-                    <div class="row">
-                        <div class="input-group col-md-8">
-                                <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                                <input type="email" name="email" class="form-control" required placeholder="{{ trans('adminlte_lang::message.email') }}">
+        <div class="login-box-body">
+        <p class="login-box-msg"> {{ trans('adminlte_lang::message.siginsession') }} </p>
 
-                        </div>
-                    </div>
-                </div>
-                 <div class="form-group">
-                    <label for="nombre_variable" class="col-md-2 control-label"></label>
-                    <div class="row">
-                        <div class="input-group col-md-8">
-                                <span class="input-group-addon"><i class="fa fa-unlock-alt  fa-fw"></i></span>
-                                <input type="password" name="password" class="form-control" required placeholder="{{ trans('adminlte_lang::message.password') }}">
-                        </div>
-                    </div>
-                </div>
-                @if(isset($errorPass))
-                    @if($errorPass=='true')
-                    <FONT COLOR="red">La contraseña o el email no son correctos</FONT><br>
-                    @endif
-                @endif
-               
-                <div class="form-group">
-                    <div class="col-md-8 col-md-offset-4">
-                        <input type="submit" value="Acceder" class="btn btn-primary"  > 
-                    </div>
-                </div>
-            </form>
+        <login-form name="{{ config('auth.providers.users.field','email') }}"
+                    domain="{{ config('auth.defaults.domain','') }}"></login-form>
 
-            <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a>
-            </div><!-- /.form-box -->
-        </div><!-- /.register-box -->
+         <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br>
+         <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a>
+
+    </div>
+
+    </div>
     </div>
     @include('adminlte::layouts.partials.scripts_auth')
 
-@include('adminlte::auth.terms')
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
 </body>
+
 @endsection
-
-
