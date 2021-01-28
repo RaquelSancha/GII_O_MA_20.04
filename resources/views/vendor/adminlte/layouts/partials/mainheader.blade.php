@@ -1,4 +1,5 @@
 <!-- Main Header -->
+
 <header class="main-header">
 
     <!-- Logo -->
@@ -35,7 +36,7 @@
             <ul class="nav navbar-nav">
                
                        
-                @if (Auth::guest())
+                @if (Auth::guest() )
                     <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
                 @else

@@ -48,7 +48,7 @@ Route::get('/user/editarPerfil/{id}', 'UserController@edit');
 
 Route::post('/confirm/user/editarPerfil/{id}', 'UserController@update');
 
-Route::get('/register/index',  'RegisterController@show')->middleware('AdminUsuarios:1');
+Route::get('/register/index',  'RegisterController@show');
 
 Route::post('/register/solicitud', 'RegisterController@register');
 

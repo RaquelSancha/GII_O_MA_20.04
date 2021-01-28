@@ -16,6 +16,20 @@ use Rubix\ML\Datasets\Unlabeled;
 
 use Rubix\ML\Regressors\ExtraTreeRegressor;
 
+use Rubix\ML\Regressors\MLPRegressor;
+use Rubix\ML\NeuralNet\CostFunctions\LeastSquares;
+use Rubix\ML\NeuralNet\Layers\Dense;
+use Rubix\ML\NeuralNet\Layers\Activation;
+use Rubix\ML\NeuralNet\ActivationFunctions\ReLU;
+use Rubix\ML\NeuralNet\Optimizers\RMSProp;
+use Rubix\ML\CrossValidation\Metrics\RSquared;
+
+use Rubix\ML\Regressors\GradientBoost;
+use Rubix\ML\Regressors\RegressionTree;
+use Rubix\ML\CrossValidation\Metrics\SMAPE;
+use Rubix\ML\Regressors\DummyRegressor;
+use Rubix\ML\Other\Strategies\Constant;
+
 /**
 * Clase que se encarga de predecir los datos a futuro.
 */
@@ -43,7 +57,7 @@ class PrediccionDatosController extends Controller
             array_push($variables[$i], $nombreVariable);
             array_push($variables[$i], $categoria);
             array_push($variables[$i], $ambito);
-            array_push($variables[$i], PrediccionDatosController::traducirMes($variable->Mes));
+            array_push($variables[$i], $variable->Mes);
             array_push($variables[$i], $variable->Year);
             $i++;
         }
@@ -62,13 +76,30 @@ class PrediccionDatosController extends Controller
             array_push($datasetEstimar[$i], $nombreVariable);
             array_push($datasetEstimar[$i], $categoria);
             array_push($datasetEstimar[$i], $ambito);
-            array_push($datasetEstimar[$i], PrediccionDatosController::traducirMes($j));
+            array_push($datasetEstimar[$i], $j);
             array_push($datasetEstimar[$i], $año);
             $i++;
         }
         $dataset = new Unlabeled($datasetEstimar);
-        $predicciones = $estimator->predict($dataset);
-        return view('prediccionDatos/predicciones',compact('predicciones','nombreVariable','categoria','ambito','valores','año'));
+        $prediccionesExtraTree = $estimator->predict($dataset);
+        $estimator = new GradientBoost(new RegressionTree(3), 0.1, 0.8, 1000, 1e-4, 10, 0.1, new SMAPE(), new DummyRegressor(new Constant(0.0)));
+        $estimator->train($datasetTrain); 
+        $prediccionesGradientB = $estimator->predict($dataset);
+/*
+        $estimator = new MLPRegressor([
+            new Dense(100),
+            new Activation(new ReLU()),
+            new Dense(100),
+            new Activation(new ReLU()),
+            new Dense(50),
+            new Activation(new ReLU()),
+            new Dense(50),
+            new Activation(new ReLU()),
+        ], 128, new RMSProp(0.001), 1e-3, 100, 1e-5, 3, 0.1, new LeastSquares(), new RSquared());
+        $estimator->train($datasetTrain); 
+        $prediccionesMLP = $estimator->predict($dataset);
+       */
+        return view('prediccionDatos/predicciones',compact('prediccionesExtraTree','prediccionesGradientB','nombreVariable','categoria','ambito','valores','año'));
     }
         /**
     * Función que se encarga de mostrar las supercategorias, categorias, ambitos y años de una variable pasada por parametro.

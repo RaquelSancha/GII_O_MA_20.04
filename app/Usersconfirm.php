@@ -55,7 +55,7 @@ class Usersconfirm extends Model implements AuthenticatableContract, CanResetPas
 
     public function entrustPasswordHash() 
     {
-        $this->password = Hash::make($this->password);
+        $this->password = bcrypt($this->password);
         $this->save();
     }
 
