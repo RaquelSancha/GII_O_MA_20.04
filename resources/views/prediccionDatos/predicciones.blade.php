@@ -2,7 +2,7 @@
 @section('main-content')
 <?php $asterisco=0;?>
 <h2><b>Predicciones de la variable "{{ $nombreVariable }}"</b></h1><hr>
-
+<div class="box">
 <div class="table-responsive">
 <table  class="table table-striped header-fixed"  id="Tabla normal" align="center" border="5" class="display nowrap" cellspacing="0" width="100%">
     <thead >
@@ -80,106 +80,40 @@
     </tbody>
 </table>
 </div>
-		   <canvas id="myChart" height="400" width="400"></canvas>
-		 
+<div class="box-body">
+		   <canvas id="myChart" height="40vh" width="80vw" aria-label="Hello ARIA World" role="img"></canvas>
+		 </div>
+     </div>	 
 
-       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js">
-     </script>
 
-     <script>
+<script type="text/javascript">
+    $(document).ready(function($prediccionesExtraTree, $valores) {
+
 var ctx = document.getElementById('myChart');
+
 var myChart = new Chart(ctx, {
-    type: 'Lineas',
+    type: 'line',
     data: {
       labels: ["Enero ","Febrero ","Marzo ","Abril ","Mayo ","Junio ","Julio ","Agosto ","Septiembre ","Octubre ","Noviembre ","Diciembre "],
         datasets: [
-                                @for($l=0; $l<count($ambitosForm);$l++)
-                                    @for($i=0 ; $i<count($categoriasForm);$i++)
-                                         @for($j=0; $j<count($yearsForm);$j++)
-                                                <?php $red =rand(0,255) ;$green =rand(0,255) ;$blue =rand(0,255); ?>
-                                            {
-                                                label: '{{$categoriasForm[$i]}} {{$yearsForm[$j]}} ({{$ambitosForm[$l]}})',
+          
+          {
+            label: 'Valores reales',
+            data: [ @for($i=0 ; $i<count($valores);$i++) {{$valores[$i]}},  @endfor],
+            borderColor: "#3276B1",
+            borderWidth: 1
+        },
 
-                                                
-                                                data: [
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][0][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][0][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][1][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][1][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][2][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][2][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][3][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][3][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][4][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][4][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][5][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][5][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][6][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][6][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][7][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][7][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][8][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][8][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][9][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][9][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][10][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][10][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                @if(!(empty($valuesForm[$l][($i*count($yearsForm))+$j][11][0]->valor)))
-                                                {{$valuesForm[$l][($i*count($yearsForm))+$j][11][0]->valor}},
-                                                @else
-                                                ,
-                                                @endif
-                                                 ],
-                                                
-                                                 borderColor: [
-                                                    @for($aux=0 ; $aux<12 ; $aux++)
-                                                    "rgba({{$red}},{{$green}},{{$blue}}, 1)",
-                                                    @endfor
+        {
+          label: 'Predicción',
+            data: [ @for($i=0 ; $i<count($prediccionesExtraTree);$i++) {{$prediccionesExtraTree[$i]}}, @endfor  ],
+            borderColor: "#357ebd",
+            borderWidth: 1
 
-                                                ],
-                                                backgroundColor: [
-                                                    @for($aux=0 ; $aux<12 ; $aux++)
-                                                    "rgba({{$red}},{{$green}},{{$blue}}, 0.2)",
-                                                    @endfor
-
-                                                ],
-                                            },
-                                        @endfor
-                                    @endfor
-                                @endfor]
+        }
+        
+        
+        ]
     },
     options: {
         scales: {
@@ -191,8 +125,8 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+    });
 </script>
-
 
 
 
