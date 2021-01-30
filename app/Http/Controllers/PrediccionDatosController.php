@@ -101,6 +101,87 @@ class PrediccionDatosController extends Controller
        */
         return view('prediccionDatos/predicciones',compact('prediccionesExtraTree','prediccionesGradientB','nombreVariable','categoria','ambito','valores','año'));
     }
+    public function prueba(Request $request,$id){
+        $idVariable = $id;
+        $years = $request->input("years");
+    	$categoria = $request->input("categoria");
+        $ambito = $request->input("ambito");
+        $idCategoria = DB::select('SELECT idCategoria FROM categoria where Nombre=?',[$categoria]);
+        $idAmbito = DB::select('SELECT idAmbito FROM ambito where Nombre=?',[$ambito]);
+        $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$idVariable]);
+        $idCategoria = $idCategoria[0]->idCategoria;
+        $idAmbito = $idAmbito[0]->idAmbito;
+        $nombreVariable = $nombreVariable[0]->Nombre;
+        $variables_aux = DB::select('SELECT idVariable,idCategoria,idAmbito,Mes,Year FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=? ORDER BY Year ASC',[$idVariable,$idCategoria,$idAmbito]);
+        $valores_aux = DB::select('SELECT * FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=?  ORDER BY Year ASC',[$idVariable,$idCategoria,$idAmbito]);
+        $año_aux = DB::select('SELECT Year FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=? ORDER BY Year DESC',[$idVariable,$idCategoria,$idAmbito]);
+        $valoresReales_aux= DB::select('SELECT * FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=? AND Year=2019 ORDER BY Mes ASC',[$idVariable,$idCategoria,$idAmbito]);
+        $valoresReales=array();
+        foreach($valoresReales_aux as $valorR){
+            if(!empty($valorR)){
+                array_push($valoresReales,$valorR->Valor);
+            }
+        }
+        $año = $año_aux[0]->Year-1; //vamos a predecir el último año del que tenemos datos
+        $variables = array();
+        $j = 0;
+        for($i= 0;$i<(count($variables_aux)-1);$i++){ //Cogemos todos los valores menos los del último año ya que dejaremos al estimador que los predija
+            $variables[$j] = array();
+            array_push($variables[$i], $nombreVariable);
+            array_push($variables[$i], $categoria);
+            array_push($variables[$i], $ambito);
+            array_push($variables[$i], $variables_aux[$i]->Mes);
+            array_push($variables[$i], $variables_aux[$i]->Year);
+            $j++;
+        }
+        $valores=array();
+        for($i= 0;$i<(count($valores_aux)-1);$i++){
+            if(!empty($valores_aux)){
+                array_push($valores,$valores_aux[$i]->Valor);
+            }
+        }
+        $datasetTrain = new Labeled($variables,$valores);
+        $estimator = new ExtraTreeRegressor(30, 3, 20, 0.05);
+        $estimator->train($datasetTrain); 
+        $datasetEstimar=array();
+        for($j=1; $j<=12; $j++){
+            $datasetEstimar[$i] = array();
+            array_push($datasetEstimar[$i], $nombreVariable);
+            array_push($datasetEstimar[$i], $categoria);
+            array_push($datasetEstimar[$i], $ambito);
+            array_push($datasetEstimar[$i], $j);
+            array_push($datasetEstimar[$i], $año);
+            $i++;
+        }
+        $dataset = new Unlabeled($datasetEstimar);
+        $prediccionesExtraTree_aux = $estimator->predict($dataset);
+        $prediccionesExtraTree=array();
+        for($i=0; $i<count($prediccionesExtraTree_aux) ; $i++){
+            array_push($prediccionesExtraTree,round($prediccionesExtraTree_aux[$i],2));
+        }
+        $estimator = new GradientBoost(new RegressionTree(3), 0.1, 0.8, 1000, 1e-4, 10, 0.1, new SMAPE(), new DummyRegressor(new Constant(0.0)));
+        $estimator->train($datasetTrain); 
+        $prediccionesGradientB_aux = $estimator->predict($dataset);
+        $prediccionesGradientB=array();
+        for($i=0; $i<count($prediccionesGradientB_aux) ; $i++){
+            array_push($prediccionesGradientB,round($prediccionesGradientB_aux[$i],2));
+        }
+/*
+        $estimator = new MLPRegressor([
+            new Dense(100),
+            new Activation(new ReLU()),
+            new Dense(100),
+            new Activation(new ReLU()),
+            new Dense(50),
+            new Activation(new ReLU()),
+            new Dense(50),
+            new Activation(new ReLU()),
+        ], 128, new RMSProp(0.001), 1e-3, 100, 1e-5, 3, 0.1, new LeastSquares(), new RSquared());
+        $estimator->train($datasetTrain); 
+        $prediccionesMLP = $estimator->predict($dataset);
+       */
+        return view('prediccionDatos/prueba',compact('prediccionesGradientB','nombreVariable','categoria','ambito','valoresReales','año'));
+    }
         /**
     * Función que se encarga de mostrar las supercategorias, categorias, ambitos y años de una variable pasada por parametro.
     *
