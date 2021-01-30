@@ -29,7 +29,6 @@ public function organizarDatos(Request $request)
         }
         $id= $urlObjeto->id;
         $fechas= DatosINEController::seleccionarFechas($datos);
-        print_r($fechas);
         $nombres= DatosINEController::quitarRepetidos($datos);
        return view('datosINE.seleccionar',compact('nombres','fechas','id'));
     }
@@ -50,9 +49,13 @@ public function subirDatos($datos, $idUrl){
                 }
                 $valor= $datos[$i]['Datos'][$j]['Valor'];
                 if($primero){
-                    DB::insert('INSERT INTO datosINE (nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?)',[$nombre,$periodo,$año,$valor,$idUrl]);
-                    $id_aux =  DB::select('SELECT datosINE.id FROM datosINE WHERE nombre=?',[$nombre]);
-                    $id= $id_aux[0]->id;
+                    $ultimoIdConsulta = DB::select('SELECT * FROM datosINE ORDER BY id DESC');
+                    if(!isset($ultimoIdConsulta[0])){
+                        $id=1;
+                    }else{
+                        $id= $ultimoIdConsulta[0]->id + 1;
+                    }
+                    DB::insert('INSERT INTO datosINE (id, nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
                     $primero= false;
                 }else{
                     DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
@@ -60,9 +63,13 @@ public function subirDatos($datos, $idUrl){
             } 
         }else{
             if($primero){
-                DB::insert('INSERT INTO datosINE (nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?)',[$nombre,$periodo,$año,$valor,$idUrl]);
-                $id_aux =  DB::select('SELECT datosINE.id FROM datosINE WHERE nombre=?',[$nombre]);
-                $id= $id_aux[0]->id;
+                $ultimoIdConsulta = DB::select('SELECT * FROM datosINE ORDER BY id DESC');
+                if(!isset($ultimoIdConsulta[0])){
+                    $id=1;
+                }else{
+                    $id= $ultimoIdConsulta[0]->id + 1;
+                }
+                DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id, $nombre,$periodo,$año,$valor,$idUrl]);
                 $primero= false;
             }else{
                 DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
@@ -316,7 +323,7 @@ public function subirDatos($datos, $idUrl){
                         DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
                         ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mesAux,$año,$val]);
                     }
-                }elseif($mes= " "){
+                }elseif($mes== " "){
                     for($i=0; $i<12; $i++){
                         $mesAux= 1 + $i;
                         DB::insert('INSERT INTO variableambitocategoria (idVariable, idCategoria, idAmbito, Mes, Year, Valor) VALUES (?,?,?,?,?,?)'
@@ -327,6 +334,8 @@ public function subirDatos($datos, $idUrl){
                     ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mes,$año,$val]);
                 }
             }
+            DB::delete('DELETE FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=? AND Mes=? AND Year=? AND Valor IS NULL',
+            [$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mes,$año]);
         }
         return view('datosINE.confirmar');
     }
