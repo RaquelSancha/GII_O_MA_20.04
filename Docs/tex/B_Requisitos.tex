@@ -1,11 +1,84 @@
 \apendice{Especificación de Requisitos}
 
 \section{Introducción}
-
+En esta sección hablaré de los requisitos que cumple el proyecto en su totalidad aunque haré más hincapié en los que he creado yo.\\
+Al no ser mi propio proyecto sino que he mejorado uno existente, muchos de los requisitos ya estaban implementados pero me ha parecido interesante mencionarlos y hablar de ellos para que el proyecto se entienda mejor. Además he mejorado o arreglado muchos de ellos.\\
+Para poder diferenciar entre los que ya estaban en la aplicación y los que he creado yo los señalaré .\\
+Es importante señalar que existen tres roles:
+\begin{description}
+    \item [Súper administrador] Tiene acceso a todas las funcionalidades del sistema. Se diferencia del administrador normal en que éste no tiene acceso a la gestión de los usuarios.
+    \item [Administrador] Tiene acceso a todas las funcionalidades menos a la de gestión de los usuarios.
+    \item [Invitado] Sólo se le permite acceder a la información de las tablas ya definidas y a la ayuda de la aplicación. Serán las personas que accedan a la aplicación a través del navegador.
+\end{description}
 \section{Objetivos generales}
-
+Los objetivos generales del proyecto son:
+\begin{itemize}
+    \item Detectar y corregir los fallos del proyecto anterior.
+    \item Permitir la entrada de datos del Instituto nacional de estadística (INE) de una forma más sencilla para el usuario.
+    \item Mejorar la seguridad de la aplicación encriptando las contraseñas.
+    \item Realizar una predicción de los datos tomando de referencia los existentes en la base de datos.
+    \item Mejorar la ayuda de la aplicación para facilitar al usuario su utilización.
+\end{itemize}
 \section{Catalogo de requisitos}
-
+A continuación, se enumeran los requisitos específicos derivados de los objetivos generales del proyecto.
+\subsection{Requisitos funcionales}
+\begin{description}
+    \item [RF1 Registro en la aplicación web] Los nuevos usuarios podrán solicitar el registro en la aplicación por medio de un formulario con los siguientes campos: Nombre, correo electrónico y contraseña. Posteriormente el súper administrador aceptará la solicitud.
+    \item [RF2 Login] Acceso a la aplicación.
+    \item [RF3 Gestión de tablas] Gestión de las tablas de la aplicación.
+    \begin{description}
+        \item [RF3.1 Inserción de tablas] Insertar nuevas tablas a la base de datos.
+        \item [RF3.2 Creación de tablas con categorías de cualquier variable] La aplicación podrá crear tablas con cualquier categoría de cualquier variable.
+        \item [RF3.3 Modificación de tablas] Se permitirá modificar los valores que forman parte de una tabla.
+        \begin{description}
+            \item [RF3.3.1 Añadir año]
+            \item [RF3.3.2 Añadir categoría] Se podrá añadir categorías nuevas y se podrá asignar la súper categoría a la que pertenecen.
+            \item [RF3.3.3 Añadir ámbito geográfico] 
+            \item [RF3.3.4 Borrar año]
+            \item [RF3.3.5 Borrar categoría]
+            \item [RF3.3.6 Borrar ámbito geográfico]
+        \end{description}
+        \item [RF3.4 Borrado de tablas]
+    \end{description}
+    \item [RF4 Creación de gráficos] Se generarán gráficos automáticamente a partir de los datos introducidos en la tabla, se podrá filtrar los datos que se desean ver en el gráfico por medio de un formulario.
+    \item [RF5 Gestión de datos] Gestión de los datos de la aplicación.
+    \begin{description}
+        \item [RF5.1 Variables] Gestión de las variables.
+        \begin{description}
+            \item [RF5.1.1 Modificar] Se podrá modificar el nombre, la fuente, el tipo y la descripción.
+            \item [RF5.1.2 Borrar] Se borrará una variable con todos los datos asociados a ella.
+        \end{description}
+        \item [RF5.2 Categorías] Gestión de las categorías.
+        \begin{description}
+            \item [RF5.2.1 Crear] Se creará una categoría y se la podrá asignar a una súper categoría, si no se selecciona ninguna, se introducirá a la súper categoría “Sin categoría”.
+            \item [RF5.2.2 Modificar] Se podrá modificar el nombre y la súper categoría a la que está asignada una categoría.
+            \item [RF5.2.3 Borrar]  Se podrá elegir si quieres borrar una categoría del sistema o tan solo de una variable.
+        \end{description}
+        \item [RF5.3 Súper categorías] Gestión de las súper categorías.
+        \begin{description}
+            \item [RF5.3.1 Crear] Se creará una súper categoría nueva y se le podrá asignar las categorías que están sin categoría.
+            \item [RF5.3.2 Modificar] Se podrá modificar el nombre y las categorías que están asignadas.
+            \item [RF5.3.3 Borrar] Borrar una súper categoría del sistema, si la súper categoría tenía categorías estas pasarán a “Sin categoría”.
+        \end{description}
+        \item [RF5.4 Ámbitos geográficos] Gestión de los ámbitos geográficos.
+        \begin{description}
+            \item [RF5.4.1 Crear] Se podrá crear un ámbito geográfico nuevo.
+            \item [RF5.4.2 Modificar] Se modificará el nombre de un ámbito geográfico.
+            \item [RF5.4.3 Borrar] Se podrá elegir si se desea borrar un ámbito del sistema o tan solo de una variable.
+        \end{description}
+    \end{description}
+    \item [RF6 Exportación de tablas a Excel] La aplicación puede exportar las tablas creadas a partir de los datos almacenados en la base de datos a ficheros “.xls”.
+    \item[RF7 Gestión de usuarios] Sólo tiene acceso a esta funcionalidad el súper administrador.
+    \begin{description}
+        \item[RF7.1 Modificar rol de los usuarios] Se podrá cambiar el rol de los usuarios de administrador a súper administrador.
+        \item[RF7.2 Borrar usuario] Borrar usuario del sistema.
+        \item[RF7.3 Gestión de peticiones de nuevos usuarios] Se podrá aceptar o declinar una petición de registro en la aplicación.
+        \begin{description}
+            \item[RF7.3.1 Aceptar petición] El usuario pasa a la base de datos como usuario de la aplicación.
+            \item[RF7.3.2 Declinar petición] Se declina su solicitud y se borra de la tabla de usuarios por confirmar.
+        \end{description}
+    \end{description}
+\end{description}
 \section{Especificación de requisitos}
 
 

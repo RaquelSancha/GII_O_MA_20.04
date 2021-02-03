@@ -1,34 +1,36 @@
 \capitulo{4}{Técnicas y herramientas}
 \section{Técnicas}
 \subsection{Scrum}
-En Scrum un proyecto se ejecuta en ciclos temporales cortos y de duración fija (iteraciones o sprints).\cite{scrum:definicion}\\He intentado seguir esta técnica realizando sprints de unas 2 semanas asignando una serie de tareas a realizar durante ese tiempo. Al finalizar la iteración se revisaban las tareas en una reunión con mis tutores del proyecto. 
+En Scrum un proyecto se ejecuta en ciclos temporales cortos y de duración fija (iteraciones o sprints).\cite{scrum:definicion}\\
+A cada sprint se le asigna unas tareas, generalmente con relación entre sí y en torno a un mismo tema.\\ 
+Al finalizar la iteración se revisan las tareas en una reunión con el resto de miembros del equipo.. 
 \section{Herramientas}
 Voy a clasificar las herramientas según si las he usado en el desarrollo del proyecto, para probarlo, para evaluar la calidad del código o para redactar la documentación.  
 \subsection{Desarrollo}
 \subsubsection{Laravel}
 El framework usado para el desarrollo de la aplicación ha sido Laravel.\\
-Laravel incluye Eloquent, un mapeador relacional de objetos (ORM) que simplifica la interacción con la base de datos. Cuando se usa Eloquent, cada tabla de la base de datos tiene un "Modelo" correspondiente que se usa para interactuar con esa tabla. Además de recuperar registros de la tabla de la base de datos, los modelos Eloquent también le permiten insertar, actualizar y eliminar registros de la tabla.\cite{Laravel:modelos}\\
+Laravel incluye Eloquent, un mapeador relacional de objetos (ORM) que simplifica la interacción con la base de datos. Cuando se usa Eloquent, cada tabla de la base de datos tiene un modelo correspondiente que se usa para interactuar con esa tabla. Además de recuperar registros de la tabla de la base de datos, los modelos Eloquent también le permiten insertar, actualizar y eliminar registros de la tabla.\cite{Laravel:modelos}\\
 Laravel también se caracteriza por el uso de controladores para agrupar la funcionalidad de un determinado recurso.\cite{Laravel:controladores}\\
-Posee una estructura de directorios predefinidos que ayuda a organizar nuestro proyecto. Los más importantes son "resources" que contiene las vistas de la aplicación, "routes" que tiene el archivo que guarda la definición de las rutas y "app" que guarda los modelos y los controladores entre otros archivos de configuración del proyecto.\\
+Posee una estructura de directorios predefinidos que ayuda a organizar nuestro proyecto. Los más importantes son \textit{resources} que contiene las vistas de la aplicación, \textit{routes} que tiene el archivo que guarda la definición de las rutas y \textit{app} que guarda los modelos y los controladores entre otros archivos de configuración del proyecto.\\
 
 \subsubsection{Composer}
 Composer es un sistema de gestión de paquetes para programar en PHP el cual provee los formatos estándar necesarios para manejar dependencias y librerías de PHP. \cite{Composer:definicion}\\
 Es un gestor de dependencias para proyectos escritos en el leguaje de programación PHP. Eso quiere decir que nos permite gestionar (declarar, descargar y mantener actualizados) los paquetes de software en los que se basa nuestro proyecto PHP.\\
-Cuando se empieza un proyecto en PHP, ya de cierta complejidad, no  vale solo con la librería de funciones nativa de PHP. Generalmente todos usamos alguna que otra librería de terceros desarrolladores, que nos permite evitar empezar todo desde cero. Ya sea un framework o algo más específico como un sistema para debug o envío de email, registro de usuarios, exportación de datos, etc., cualquier cosa que podamos necesitar ya puede estar creada por otros desarrolladores.\\
-Para usar composer debemos tener un archivo json en el que deberemos escribir los paquetes que queramos instalar, el nombre del proyecto, la descripción, algunos comandos que queramos que se ejecuten en el momento de la instalación o de la actualización (como por ejemplo generar la clave del proyecto u optimizarlo), etc. Puede haber muchas opciones de configuración posibles en este archivo. 
-El archivo json debe llamarse composer.json.\\
-Al usar el comando "composer install", se crea automáticamente un archivo llamado composer.lock donde aparece una información más detallada de las dependencias instaladas además de ir a los repositorios de paquetes de software y descargar aquellas librerías mencionadas, copiándolas en la carpeta del proyecto.\\
-Estas dependencias se instalan en la carpeta "vendor" de la aplicación.\cite{composer}
+Cuando se empieza un proyecto en PHP, ya de cierta complejidad, no  vale solo con la librería de funciones nativa de PHP. Generalmente se usa alguna que otra librería de terceros desarrolladores, que permite evitar empezar todo desde cero. Ya sea un framework o algo más específico como un sistema para debug o envío de email, registro de usuarios, exportación de datos, etc., cualquier cosa que se pueda necesitar ya puede estar creada por otros desarrolladores.\\
+Para usar composer debemos tener un archivo JSON en el que deberemos escribir los paquetes que queramos instalar, el nombre del proyecto, la descripción, algunos comandos que queramos que se ejecuten en el momento de la instalación o de la actualización (como por ejemplo generar la clave del proyecto u optimizarlo), etc. Puede haber muchas opciones de configuración posibles en este archivo. 
+El archivo JSON debe llamarse composer.json.\\
+Al usar el comando \textit{composer install}, se crea automáticamente un archivo llamado \textit{composer.lock} donde aparece una información más detallada de las dependencias instaladas además de ir a los repositorios de paquetes de software y descargar aquellas librerías mencionadas, copiándolas en la carpeta del proyecto.\\
+Estas dependencias se instalan en la carpeta \textit{vendor} de la aplicación.\cite{composer}
 \subsubsection{Visual Studio Code}
 Es un entorno de desarrollo que permite crear sitios y aplicaciones web. Es compatible con múltiples lenguajes de programación, tales como C++, C\#, Visual Basic .NET, F\#, Java, Python, Ruby y PHP (Éste último es el que se ha usado para el proyecto).\cite{VisualStudio} 
 \subsubsection{Git}
-Se ha usado git como herramienta para el control de las versiones del proyecto. Además se puede usar junto con Github desde Visual Studio Code descargándonos su extensión.
+Se ha usado Git como herramienta para el control de las versiones del proyecto. Además se puede usar junto con Github desde Visual Studio Code descargándonos su extensión.
 
 \subsection{Entorno de pruebas}
 
 \subsubsection{Laravel dusk}
 Laravel Dusk proporciona una API de prueba y automatización para crear y ejecutar tests y así probar nuestra aplicación en laravel.
-En la documentación de laravel dusk pone que no hace falta descargarse JDK o Selenium sino que usa una instalación independiente de Chromedriver pero para que a mí me funcionara laravel dusk he tenido que ejecutar los test en un contenedor de docker con Selenium.\cite{LaravelDusk}
+En la documentación de laravel dusk pone que no hace falta descargarse JDK o Selenium sino que usa una instalación independiente de Chromedriver pero para que a mí me funcionara laravel dusk he tenido que ejecutar los test en un contenedor de Docker con Selenium.\cite{LaravelDusk}
 
 \subsubsection{Xampp}
 XAMPP es un paquete de software libre, que consiste principalmente en el sistema de gestión de bases de datos MySQL, el servidor web Apache y los intérpretes para lenguajes de script PHP y Perl. El nombre es en realidad un acrónimo: X (para cualquiera de los diferentes sistemas operativos), Apache, MariaDB/MySQL, PHP, Perl.\cite{Xampp}
@@ -37,14 +39,24 @@ He usado esta aplicación para las pruebas locales de mi proyecto.
 Docker sirve para automatizar el despliegue de aplicaciones dentro de contenedores software de forma que se pueda probar la aplicación en distintos equipos sin la necesidad de instalar un servidor local como Xampp.\\ \cite{Docker}
 Docker tiene como ventaja que aisla solo los recursos del sistema operativo que necesita y no una cantidad de recursos fija como hace una máquina virtual.\\
 Para el despliegue de mi aplicación he utilizado un contenedor especial para aplicaciones de Laravel llamado Laradock.\\
-Laradock contiene multitud de imágenes conectadas entre ellas que se usan para el despliegue de la app. Sin embargo, yo solo he usado apache, php, phpmyadmin, mysql y selenium.\\
+Laradock contiene multitud de imágenes conectadas entre ellas que se usan para el despliegue de la app. Sin embargo, yo solo he usado Apache, PHP, PhpMyAdmin, MySQL y Selenium.\\
 \subsubsection{Virtual Box}
-Al principio usé la máquina virtual "Virtual Box" para probar mi aplicación en un entorno de linux (yo trabajo con Windows) ya que el servidor de la ubu al que va destinado el proyecto está en linux pero no me funcionaba del todo bien así que hice una partición de disco de ubuntu para probarlo en ese entorno. 
+Al principio usé la máquina virtual Virtual Box para probar mi aplicación en un entorno de Linux (yo trabajo con Windows) ya que el servidor de la ubu al que va destinado el proyecto está en Linux pero no me funcionaba del todo bien así que hice una partición de disco de ubuntu para probarlo en ese entorno. 
 \subsubsection{Heroku}
 Heroku es una plataforma en la nube que permite subir aplicaciones para probarlas. La principal ventaja que tiene Heroku es que su uso a un nivel básico es gratuito. Como desventaja diría que la aplicación va muy lenta en este servidor web.
 \subsection{Calidad del código}
 \subsubsection{Codacy}
-Para evaluar la calidad de mi código he usado la herramienta Codacy. Es muy fácil de usar y se puede conectar a un repositorio de github de manera que al hacer algún cambio en éste el análisis se actualice.\\
+Para evaluar la calidad de mi código he usado la herramienta Codacy.\\
+Permite realizar un análisis del proyecto y reportar los posibles problemas que haya. En el apartado \textit{Issues} se pueden ver clasificados por varios criterios: 
+\begin{itemize}
+    \item Lenguaje de programación.
+    \item Categorías: Estilo del código, seguridad y código sin usar.
+    \item Nivel de peligrosidad: Distingue entre errores y warnings.
+    \item Patrones no recomendados: Accesos estáticos, nombres de variables cortos, etc.
+\end{itemize}
+En el apartado \textit{Files} aparecen los archivos del proyecto calificados con una nota en función del número de \textit{Issues} que tenga, el grado de duplicación y la complejidad.
+También permite ver la calidad de los cambios desde el apartado \textit{Commits}.\\
+Esta aplicación es muy fácil de usar y se puede conectar a un repositorio de Github de manera que al hacer algún cambio en éste el análisis se actualice.\\
  \imagen{imagenes/codacy}{Opciones que ofrece codacy para el análisis de nuestro código}
 \subsection{Documentación}
 \subsubsection{Latex}
@@ -54,5 +66,41 @@ Nunca había usado esta herramienta ni había oído hablar de ella pero estaba e
 \section{Librerías}
 \subsection{Laravel Excel}
 Para exportar los datos de las tablas a Excel he usado la biblioteca Laravel Excel.
-Esta biblioteca está basada en PhpSpreadsheet que es un recurso escrito en php puro el cual proporciona un conjunto de clases que permiten leer y escribir en diferentes formatos de archivo de hoja de cálculo, como Excel y LibreOffice Calc.\cite{LaravelExcel}\\
+Esta biblioteca está basada en PhpSpreadsheet que es un recurso escrito en PHP puro el cual proporciona un conjunto de clases que permiten leer y escribir en diferentes formatos de archivo de hoja de cálculo, como Excel y LibreOffice Calc.\cite{LaravelExcel}\\
 La he elegido porque me parece fácil de usar y con muchas opciones: estilo de las columnas, exportación de array enteros... además de que la documentación es muy buena y tiene muchos ejemplos.
+\subsection{Chart js}
+Esta librería en JavaScript es gratuita y de código abierto y se usa para la visualización de datos en forma de gráfico.
+Tipos de gráficos que permite crear:
+\begin{itemize}
+    \item Gráfico de barras.
+    \item Gráfico de líneas.
+    \item Área.
+    \item Burbuja.
+    \item Radar.
+    \item Polar.
+    \item Dispersión.
+\end{itemize}
+\subsection{Laravel DebugBar}
+Este proyecto, realizado por un particular llamado \href{https://github.com/barryvdh}{barryvdh} consiste en una DebugBar elaborada exclusivamente para proyectos en Laravel.\\
+Ayuda a identificar errores y a recopilar información de ejecución de la aplicación. Algunos de los datos que recopila son:
+\begin{itemize}
+    \item Resultado de las consultas realizadas a la base de datos.
+    \item Información de la ruta en la que estamos.
+    \item Información de las vistas cargadas.
+    \item Eventos.
+    \item Información de la versión de Laravel y del entorno de desarrollo.
+    \item Datos de los usuarios.
+    \item Valores de los archivos de configuración.
+\end{itemize}
+\imagen{imagenes/debugbar}{DebugBar para Laravel}
+\subsection{Rubix ML}
+Esta biblioteca ha sido usada para la predicción de los datos. Incluye múltiples algoritmos de aprendizaje tanto para datos categóricos como continuos. En el caso de mi aplicación he usado los algoritmos para datos continuos.\\
+Las fases por las que tienen que pasar los datos para realizar la predicción son:
+\begin{itemize}
+    \item Extracción.
+    \item Transformación.
+    \item Carga.
+    \item Entrenamiento.
+    \item Predicción.
+\end{itemize}
+Para realizar la estimación, hay que precargar los datos que tenemos, adaptarlos y pasárselos al estimador para entrenarlo. Los posibles algoritmos que se usan para la estimación los he explicado en el apartado de conceptos teóricos.
