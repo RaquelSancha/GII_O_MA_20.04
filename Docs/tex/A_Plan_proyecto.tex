@@ -4,34 +4,87 @@
 En este apartado se va a hablar de la planificación temporal del proyecto mediante los sprints de github que es la herramienta que se ha usado para organizar las tareas y su secuencia de ejecución.\\
 También se hará un estudio sobre la viabilidad del proyecto para comprobar que su desarrollo en un marco real como puede ser el de una empresa sería posible.
 \section{Planificación temporal}
-
+Se ha intentado usar la metodología SCRUM pero adaptándola a mi forma de trabajar y a mis capacidades. Con esto quiero decir que aunque se ha trabajado con sprints, éstos no han tenido una duración fija y preestablecida como dice que deben ser en la definición de la técnica.\\
+Estas iteraciones han tenido unas duraciones variables, de 15 días hasta 2 meses, dependiendo de las tareas de dichos sprints y de la dificultad que me ha supuesto resolverlas.\\
+Se realizaban reuniones de revisión al finalizar cada sprint y se pensaban y preparaban las siguientes tareas a realizar.
+Estas tareas se estimaban y priorizaban con la ayuda del tablón que nos ofrece Github.
+\imagen{imagenes/tablonGithub}{Organización de las tareas}
+Para monitorizar el progreso del proyecto se han utilizado los gráficos burndown que ofrece la extensión ZenHub.
+\subsection{Primer sprint: Inicio del proyecto}
+En este primer sprint las principales tareas fueron:
+\begin{itemize}
+    \item Importación del proyecto anterior
+    \item Leer su documentación.
+    \item Descargar las herramientas necesarias para su producción.
+    \item Probar el proyecto e identificar los fallos.
+    \item Aprendizaje del lenguaje de programación y del entorno del trabajo.
+\end{itemize}
+\imagen{imagenes/sprint1}{Gráfica burndown del sprint 1}
+\subsection{Segundo sprint: Inicio del proyecto parte 2}
+Este sprint fue el más difícil para mí porque todavía no estaba familiarizada del todo con el código y me costó mucho empezar a programar.\\
+Las tareas de este sprint fueron ejecutar los tests que ya estaban hechos para probar el proyecto y empezar a arreglar los fallos que había en la administración de usuarios.\\
+\imagen{imagenes/sprint2}{Gráfica burndown del sprint 2}
+\subsection{Tercer sprint: Fase de pruebas}
+En esta iteración realicé una serie de tests para poner a prueba a la aplicación y así detectar sus posibles errores para posteriormente corregirlos.\\
+Para ello usé el proyecto de barryvdh consistente en una debugbar para laravel.\\
+\imagen{imagenes/debugbar}{Debugbar para Laravel}
+\imagen{imagenes/sprint3}{Gráfica burndown del sprint 3}
+\subsection{Cuarto sprint:  Primera fase de cambios en el proyecto}
+El sprint se llama así porque es cuando realmente empecé a hacer cambios significativos en el proyecto.
+Las principales tareas que se llevaron a cabo fueron:
+\begin{itemize}
+    \item Crear las migraciones de las tablas de la base de datos.
+    \item Empezar a pensar la funcionalidad de la extracción de datos desde el INE.
+    \item Tareas relacionadas con la gestión de los usuarios de la aplicación.
+    \begin{itemize}
+        \item Añadir la opción de editar el perfil del usuario.
+        \item Encriptado de las contraseñas.
+        \item Arreglar la confirmación de la creación de cuentas: Un usuario puede solicitar su registro en la aplicación para que posteriormente el superadministrador le acepte y su cuenta se active.
+    \end{itemize}
+\end{itemize}
+\imagen{imagenes/sprint4}{Gráfica burndown del sprint 4}
+\subsection{Quinto sprint: Introducción de datos desde el INE}
+Este fue el sprint más costoso. Para su realización hicieron falta casi tres meses. En él las funcionalidades que se implementaron fueron:
+\begin{itemize}
+    \item Crear nuevas tablas en la base de datos para recoger los datos del INE y sus urls.
+    \item Crear las vistas para mostrar los datos.
+    \item Paso de datos desde el json proporcionado por el INE a la base de datos.
+    \item Implementar funcionalidad para actualizar los datos de las variables del INE.  
+    \item Crear la vista para indicar al usuario que se han actualizado los datos.
+    \item Elegir la librería para exportar los datos de las tablas a excel.
+    \item Arreglar la funcionalidad para exportar los datos a Excel.
+\end{itemize}
+\imagen{imagenes/sprint5}{Gráfica burndown del sprint 5}
+\subsection{Sexto sprint: Mejora del tratamiento de datos}
+En esta iteración se desarrollo la primera parte del análisis de los datos y su predicción a futuro.
+Principales tareas:
+\begin{itemize}
+    \item Elegir la biblioteca para la predicción de datos.
+    \item Pruebas con bibliotecas de machine learning como PHP-ML y Rubix. Al final escogí Rubix.
+    \item Aprendizaje del uso de la biblioteca Rubix.
+\end{itemize}
+\imagen{imagenes/sprint6}{Gráfica burndown del sprint 6}
+\subsection{Séptimo sprint: Configuración del entorno de pruebas}
+Para que mis tutores pudieran probar mi código decidí usar Docker y Heroku.\\
+Tanto la configuración de docker como la de Heroku me costaron mucho y me llevó más tiempo del esperado por lo que subí la duración de las tareas.\\
+En este sprint también conecté codacy al repositorio de Github para la revisión del código.
+\imagen{imagenes/sprint7}{Gráfica burndown del sprint 7}
+\subsection{Octavo sprint: Configuración de tests y documentación}
+Como no quería dejar la documentación para el final por si no me daba tiempo, comencé a escribirla antes de haber acabado el código.\\
+En esta iteración además de escribir la memoria del proyecto (aunque será retocada en un sprint posterior), también se conectó los test de laravel al repositorio de Github para que se pasen de forma automática al hacer cambios en el mismo.\\
+\imagen{imagenes/sprint8}{Gráfica burndown del sprint 8}
+\subsection{Noveno sprint: Mejora de tratamiento de datos 2ª parte}
+En este sprint las tareas fueron:
+\begin{itemize}
+    \item Implementación del análisis de datos y su predicción posterior.
+    \item Creación de la vista de los datos predichos.
+    \item Aspectos de configuración pendientes de Docker y Heroku.
+\end{itemize}
+\imagen{imagenes/sprint9}{Gráfica burndown del sprint 9}
 \section{Estudio de viabilidad}
 En esta sección se realizarán algunos cálculos para conocer los gastos que tendría el proyecto en una empresa real así como los temas legales que habría que solucionar.
 \subsection{Viabilidad económica}
 
 \subsection{Viabilidad legal}
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+
 

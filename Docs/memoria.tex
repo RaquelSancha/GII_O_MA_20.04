@@ -7,6 +7,7 @@
 \usepackage{lmodern} % Scalable font
 \usepackage{microtype}
 \usepackage{placeins}
+\usepackage[numbers,sort]{natbib}
 
 \RequirePackage{booktabs}
 \RequirePackage[table]{xcolor}
@@ -318,7 +319,7 @@
 
   }%
   \hfill\begin{minipage}{.20\textwidth}
-    \includegraphics[width=\textwidth]{escudoubu}
+  %  \includegraphics[width=\textwidth]{escudoubu}
   \end{minipage}
   \vfill
   % Datos de alumno, curso y tutores ------------------
@@ -327,7 +328,7 @@
     \noindent\LARGE
     Presentado por \@author{}\\ 
     en Universidad de Burgos --- \@date{}\\
-    Tutor: \@tutor{}\\
+    Tutores: \@tutor{}\\
   }%
   \end{center}%
   \null
@@ -340,7 +341,9 @@
 % Datos de portada
 \title{título del TFG}
 \author{\nombre}
-\tutor{nombre tutor}
+\tutor{Bruno Baruque Zanon
+Santiago Porras Alfonso
+Julio César Puche Regaliza}
 \date{\today}
 
 \begin{document}
@@ -361,7 +364,7 @@
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI dni, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI 71567050C, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -405,12 +408,17 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto.
+Este trabajo es una ampliación de otro proyecto de fin de grado llamado \textit{Herramienta web dinámica para la captación, tratamiento y presentación de datos relacionados con la coyuntura económica de Burgos} \href{https://github.com/NelsonParamo/GI16.M_ProyectoCoyuntura/}{Link al proyecto en Github}.\\
+Este proyecto fue creado para facilitar el trabajo del equipo que todos los años realiza unos boletines de coyuntura económica para informar de la situación de la economía burgalesa.\\
+Esta aplicación permite la entrada de datos y su clasificación.\\
+El objetivo de mi proyecto es mejorar la aplicación y añadir nuevas funcionalidades como la introducción de datos directamente de la página del INE o la capacidad de exportar las tablas a Excel.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-Palabras separadas por comas que identifiquen el contenido del proyecto Ej: servidor web, buscador de vuelos, android \ldots
+Economía, coyuntura económica, boletín, MySQL, Laravel, PHP, variables, aplicación web, Instituto Nacional de Estadística, predicción
+
+ \ldots
 \end{abstract}
 
 \clearpage
