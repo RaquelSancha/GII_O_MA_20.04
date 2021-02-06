@@ -38,16 +38,34 @@ public function subirDatos($datos, $idUrl){
     $año=0;
     $primero=true;
     $id;
-    for ($i = 0; $i < $count; $i++) {
-        $nombre= $datos[$i]['Nombre'];
-        $valor= $datos[$i]['Datos'][0]['Valor'];
-        if(array_key_exists('Año',$datos[$i]['Datos'][0])){
-            for($j = 0; $j< count($datos[$i]['Datos']); $j++){ 
-                $año= $datos[$i]['Datos'][$j]['Año'];
-                if(array_key_exists('Periodo',$datos[$i]['Datos'][0])){
-                    $periodo= $datos[$i]['Datos'][$j]['Periodo'];
-                }
-                $valor= $datos[$i]['Datos'][$j]['Valor'];
+        for ($i = 0; $i < $count; $i++) {
+            $nombre= $datos[$i]['Nombre'];
+            if(!isset($datos[$i]['Datos'][0])){
+                throw new \App\Exceptions\CustomException('Datos incompatibles');
+
+            }
+            $valor= $datos[$i]['Datos'][0]['Valor'];
+            if(array_key_exists('Año',$datos[$i]['Datos'][0])){
+                for($j = 0; $j< count($datos[$i]['Datos']); $j++){ 
+                    $año= $datos[$i]['Datos'][$j]['Año'];
+                    if(array_key_exists('Periodo',$datos[$i]['Datos'][0])){
+                        $periodo= $datos[$i]['Datos'][$j]['Periodo'];
+                    }
+                    $valor= $datos[$i]['Datos'][$j]['Valor'];
+                    if($primero){
+                        $ultimoIdConsulta = DB::select('SELECT * FROM datosINE ORDER BY id DESC');
+                        if(!isset($ultimoIdConsulta[0])){
+                            $id=1;
+                        }else{
+                            $id= $ultimoIdConsulta[0]->id + 1;
+                        }
+                        DB::insert('INSERT INTO datosINE (id, nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
+                        $primero= false;
+                    }else{
+                        DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
+                    }
+                } 
+            }else{
                 if($primero){
                     $ultimoIdConsulta = DB::select('SELECT * FROM datosINE ORDER BY id DESC');
                     if(!isset($ultimoIdConsulta[0])){
@@ -55,26 +73,16 @@ public function subirDatos($datos, $idUrl){
                     }else{
                         $id= $ultimoIdConsulta[0]->id + 1;
                     }
-                    DB::insert('INSERT INTO datosINE (id, nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
+                    DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id, $nombre,$periodo,$año,$valor,$idUrl]);
                     $primero= false;
                 }else{
                     DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
                 }
-            } 
-        }else{
-            if($primero){
-                $ultimoIdConsulta = DB::select('SELECT * FROM datosINE ORDER BY id DESC');
-                if(!isset($ultimoIdConsulta[0])){
-                    $id=1;
-                }else{
-                    $id= $ultimoIdConsulta[0]->id + 1;
-                }
-                DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id, $nombre,$periodo,$año,$valor,$idUrl]);
-                $primero= false;
-            }else{
-                DB::insert('INSERT INTO datosINE (id,nombre, periodo, año, valor, idUrl ) VALUES(?,?,?,?,?,?)',[$id,$nombre,$periodo,$año,$valor,$idUrl]);
             }
         }
+    if(!isset($id)){
+        throw new \App\Exceptions\CustomException('Datos incompatibles');
+
     }
     return $id;
 }
