@@ -6,6 +6,11 @@ body.nav-sm .container.body .left_col {
     z-index: 200;
 }
 
+div.crearTabla {
+    font-family: 'Source Sans Pro';
+    font-weight: 400;
+    margin-left: -10px;
+  }
 body.nav-sm .container.body .right_col {
     padding: 10px 20px;
     margin-left: 70px;

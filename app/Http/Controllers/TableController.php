@@ -261,7 +261,7 @@ class TableController extends Controller
         $idsCategoriaAux=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre  FROM categoria natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria
@@ -390,7 +390,7 @@ class TableController extends Controller
         $idsCategoriaAux=array();
 
         $nombreVariable = DB::select('SELECT Nombre FROM variable where idVariable=?',[$id]);
-        $categoria  = DB::select('SELECT DISTINCT Nombre FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
+        $categoria  = DB::select('SELECT DISTINCT Nombre,idSuperCategoria FROM categoria natural join variableambitocategoria WHERE idVariable=? order by idSuperCategoria',[$id]);
         $years = DB::select('SELECT DISTINCT Year FROM variableambitocategoria where idVariable=? ORDER BY Year ASC',[$id]);
         $ambitos  = DB::select('SELECT DISTINCT Nombre FROM ambito natural join variableambitocategoria WHERE idVariable=?',[$id]);
         $supercategorias = DB::select('SELECT DISTINCT Name,supercategoria.idSuperCategoria FROM supercategoria

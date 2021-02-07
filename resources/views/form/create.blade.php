@@ -71,18 +71,6 @@
   </div>
 </div>
 <div class="form-group">
-<label for="filtrado" class="col-md-4 control-label">Selecciona cómo deseas filtrar los datos</label>
-  <div class="row">
-    <div class="form-group form-group-options col-md-4 col-md-offset-5">
-      <select class="selectpicker" name="filtrado" required>
-        <option>Meses</option>
-        <option>Años</option>
-        <option>Trimestres</option>
-      </select>
-    </div>
-  </div>
-</div>
-<div class="form-group">
   <label for="categoria" class="col-md-4 control-label">Selecciona las categorías</label>
     <div class="row">
       <div class="form-group form-group-options col-md-4 col-md-offset-5">

@@ -19,7 +19,6 @@
       <td>{{ $fuentes[$i][0]->Name}}</td>
       <td style="width:305px;" class="col-xs-3"><a href="{{ url('form')}}/{{$variables[$i]->idVariable}}" class="btn btn-success" role="button">Ver tabla</a>  
                           <a href="{{ url('tables')}}/{{$variables[$i]->idVariable}}/{{'edit'}}" class="btn btn-warning" role="button">Modificar Valores</a>  
-                          <a href="{{ url('tables')}}/{{$variables[$i]->idVariable}}/{{'exportar'}}" class="btn btn-success" role="button">Exportar a Excel</a>  
                           <a href="{{ url('tables')}}/{{$variables[$i]->idVariable}}/{{'delete'}}" onclick="return confirm('Al borrar la tabla, se perderan los datos de la Base de Datos, ¿Estás seguro de querer borrarla?')" class="btn btn-danger"> Borrar</a>
       </td>
     </tr>

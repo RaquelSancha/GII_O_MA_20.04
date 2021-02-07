@@ -1,4 +1,9 @@
 /* Pratt Landing page css http://blacktie.co/demo/pratt/assets/css/main.css */
+div.crearTabla {
+    font-family: 'Source Sans Pro';
+    font-weight: 400;
+    margin-left: -40px;
+  }
 body {
     background-color: #f2f2f2;
     font-family: "Lato";

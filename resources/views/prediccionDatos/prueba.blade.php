@@ -35,8 +35,8 @@
         </tr>
         <tr>
             <th scope="row">{{ $categoria }}</th> 
-            @for ($i = 0; $i < count($prediccionesGradientB); $i++)
-                <td>{{ $prediccionesGradientB[$i] }}</td>
+            @for ($i = 0; $i < count($predicciones); $i++)
+                <td>{{ $predicciones[$i] }}</td>
             @endfor
           </tr>  
     </tbody>
@@ -90,7 +90,7 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function($prediccionesGradientB, $valoresReales) {
+    $(document).ready(function($predicciones, $valoresReales) {
 
 var ctx = document.getElementById('myChart');
 
@@ -109,7 +109,7 @@ var myChart = new Chart(ctx, {
 
         {
           label: 'Predicción',
-            data: [ @for($i=0 ; $i<count($prediccionesGradientB);$i++) {{$prediccionesGradientB[$i]}}, @endfor  ],
+            data: [ @for($i=0 ; $i<count($predicciones);$i++) {{$predicciones[$i]}}, @endfor  ],
             borderColor: "#357ebd",
             borderWidth: 1
 
