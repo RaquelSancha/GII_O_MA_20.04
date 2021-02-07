@@ -5,6 +5,11 @@
   -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
+div.crearTabla {
+  font-family: 'Source Sans Pro';
+  font-weight: 400;
+  margin-left: -10px;
+}
 .toast-message a,
 .toast-message label {
   color: #FFFFFF;

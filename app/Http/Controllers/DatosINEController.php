@@ -342,10 +342,10 @@ public function subirDatos($datos, $idUrl){
                     ,[$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mes,$año,$val]);
                 }
             }
-            DB::delete('DELETE FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=? AND Mes=? AND Year=? AND Valor IS NULL',
-            [$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito,$mes,$año]);
+            DB::delete('DELETE FROM variableambitocategoria WHERE idVariable=? AND idCategoria=? AND idAmbito=? AND Valor IS NULL',
+            [$idVariable[0]->idVariable,$idCategoria[0]->idCategoria,$idAmbito[0]->idAmbito]);
         }
-        return view('datosINE.confirmar');
+        return view('datosINE.confirmar',compact('idVariable'));
     }
     public function traducirPeriodo($periodo){
         switch($periodo){

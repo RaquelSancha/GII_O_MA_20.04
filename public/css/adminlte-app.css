@@ -10,6 +10,11 @@
  * Core: General Layout Style
  * -------------------------
  */
+div.crearTabla {
+  font-family: 'Source Sans Pro';
+  font-weight: 400;
+  margin-left: -10px;
+}
 html,
 body {
   height: 100%;

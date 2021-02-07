@@ -14,7 +14,6 @@
     <div align="left"><b>Fuente:</b> "{{$fuentes[$i]->Name}}"<div>
 @endfor
 <div align="right">
-<a href="{{ url('tables')}}/{{$id}}/{{'exportar'}}" class="btn btn-primary btn-lg active" role="button">Exportar a Excel</a><br><br><br><br><br><br>
 <a href="{{ url('tables')}}/{{$id}}/{{'edit'}}" class="btn btn-primary btn-lg active" role="button">Modificar Valores</a><br><br><br><br><br><br>
 </div>
 <div class="box">
