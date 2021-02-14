@@ -1,8 +1,5 @@
-<IfModule mod_rewrite.c>
 RewriteEngine on
-RewriteCond %{REQUEST_URI} !^public
-RewriteRule ^(.*)$ public/$1 [L]
-</IfModule>
-<IfModule dir_module>
-    DirectoryIndex index.html index.php
-</IfModule>
+RewriteCond %{HTTP_HOST}$
+RewriteRule (.*)https://www3.ubu.es/boletincoyuntura/$1 [R=301,L]
+RewriteRule ^$ /public/ [L]
+

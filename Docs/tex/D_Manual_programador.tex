@@ -1,11 +1,62 @@
 \apendice{Documentación técnica de programación}
 
 \section{Introducción}
-
+En este anexo se describe la documentación técnica de programación, incluyendo la instalación del entorno de desarrollo, la estructura de la aplicación, su compilación y la configuración de los diferentes servicios de integración utilizados.
 \section{Estructura de directorios}
-
+La estructura del proyecto se compone de las carpetas:
+\begin{description}
+    \item [App] Carpeta principal de la aplicación. Contiene los modelos. Los modelos son representaciones de las tablas de la base de datos. En ellos se permite crear funciones que actúen sobre dichas tablas. La carpeta app tiene otros subdirectorios importantes:
+    \begin{description}
+        \item [Exceptions] Contiene las excepciones de la aplicación.
+        \item [Exports] Contiene el archivo usado para crear los datos que exportar a Excel.
+        \item [Http] Este directorio contiene a los controladores y al middleware.
+        \begin{description}
+            \item [Controllers] Los controladores son los archivos que controlan toda la funcionalidad de la aplicación.
+            \item[Middleware] Controla los privilegios de los usuarios.
+        \end{description}
+    \end{description}
+    \item[Config] Contiene los archivos de configuración. Los más importantes son:
+    \begin{description}
+        \item [App] Define el nombre de la aplicación y otras características.
+        \item[Database] Configura la base de datos y su conexión.
+    \end{description}
+    \item[Public] Contiene el index de la aplicación, los archivos css y las imágenes.
+    \item[Resources] Principalmente contiene el directorio de las vistas de la aplicación llamado views.
+    \item[Routes] Define las rutas de la aplicación y su destino. Puede definirse una ruta hacia un controlador para que haga alguna funcionalidad o hacia una vista.
+    \item[Vendor] Contiene las dependencias externas de la aplicación.
+\end{description}
 \section{Manual del programador}
-
-\section{Compilación, instalación y ejecución del proyecto}
-
+El siguiente manual tiene como objetivo servir de referencia a futuros programadores que trabajen en la aplicación. En él se explica cómo instalar y configurar el entorno de desarrollo. Se usaron dos entornos diferentes: Xampp y Docker.
+\section{Entorno de desarrollo}
+Para trabajar con el proyecto se necesita tener instalados los siguientes
+programas y dependencias.
+\subsection{Composer}
+Para instalar o actualizar dependencias de la aplicación, el proyecto necesita tener instalado el gestor de dependencias de PHP Composer.\\
+Su descarga se puede hacer desde aquí \href{https://getcomposer.org/}{Descargar composer}
+\subsection{Laravel}
+Para el desarrollo de la aplicación hemos utilizado el framework Laravel, en su versión 5.4. Es posible descargarse Laravel desde \href{https://laravel.com/}{aquí}
+\subsection{Visual Studio Code}
+Este editor de texto no es de uso obligatorio para la aplicación, pero si altamente recomendable para la edición del código.
+\subsection{Xampp}
+Xampp incluye PHP para el desarrollo del código y la instalación de dependencias, PhpMyAdmin para gestionar la base de datos y apache para probar la aplicación. Su descarga se puede hacer desde \href{https://www.apachefriends.org/es/download.html}{aquí}.\\
+Después de descargar este programa hay que configurar el host virtual del proyecto. Para ello hará falta editar el archivo httpd-vhosts.conf que se encuentra en la configuración de apache de la siguiente forma.
+\imagen{imagenes/vhostxamp}{Configuración del host virtual}
+Además, hará falta editar el archivo de los hosts del sistema añadiendo nuestro host virtual.\\
+Para subir la base de datos, se deberá abrir PhpMyAdmin e importar la base de datos situada en database llamada bdcoyuntura.sql.
+\subsection{Docker}
+Primero se tendrá que descargar Docker desde \href{https://www.docker.com/products/docker-desktop}{aquí}.\\
+Después, habrá que clonar un proyecto de Github que incluye un contenedor llamado laradock para proyectos de Laravel. Para ello:
+\begin{enumerate}
+    \item Se deberá clonar este proyecto dentro del nuestro. Para ello se ejecutará el comando \textit{git clone https://github.com/Laradock/laradock.git}
+    \item Posicionándose en la carpeta laradock y se copia el archivo .env-example a .env.
+    \item Se ejecutarán los contenedores necesarios con el comando \textit{docker-compose up -d apache php-fpm mysql phpmyadmin workspace }
+    \item En el navegador, se introducirá la dirección \textit{http://localhost}
+\end{enumerate}
+Para subir la base de datos, al igual que en Xampp, se deberá abrir PhpMyAdmin e importar la base de datos situada en database llamada bdcoyuntura.sql. La única diferencia está en que para acceder a PhpMyAdmin se necesitan unos datos de acceso que se pueden encontrar en el archivo de configuración de la imagen de PhpMyadmin.
+\imagen{imagenes/accesophpmyadmin}{Credenciales de acceso}
+Server: mysql\\
+Username: root\\
+Password: root\\
 \section{Pruebas del sistema}
+Para ejecutar los tests de la aplicación con Docker se deberá abrir la consola del workspace ejecutando el comando \textit{docker exec workspace}\\
+Una vez dentro de la consola, para ejecutar los tests se deberá ejecutar en comando \textit{vendor/bin/phpunit}\\

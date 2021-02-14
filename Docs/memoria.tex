@@ -94,7 +94,7 @@
 %
 % Nuevo comando para tablas pequeñas (menos de una página).
 \newcommand{\tablaSmall}[5]{%
- \begin{table}
+ \begin{table}[h]
   \begin{center}
    \rowcolors {2}{gray!35}{}
    \begin{tabular}{#2}
@@ -308,7 +308,7 @@
   \vfill
   % Título proyecto y escudo informática ----------------
   \colorbox{cpardoBox}{%
-    \begin{minipage}{.8\textwidth}
+    \begin{minipage}{\textwidth}
       \vspace{.5cm}\Large
       \begin{center}
       \textbf{TFG del Grado en Ingeniería Informática}\vspace{.6cm}\\
@@ -318,9 +318,7 @@
     \end{minipage}
 
   }%
-  \hfill\begin{minipage}{.20\textwidth}
-  %  \includegraphics[width=\textwidth]{escudoubu}
-  \end{minipage}
+
   \vfill
   % Datos de alumno, curso y tutores ------------------
   \begin{center}%
@@ -339,11 +337,14 @@
 \newcommand{\nombre}{Raquel Sancha Sánchez} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{Mejora de la herramienta web dinámica para la
+captación, tratamiento y presentación de
+datos relacionados con la coyuntura
+económica de Burgos}
 \author{\nombre}
-\tutor{Bruno Baruque Zanon
-Santiago Porras Alfonso
-Julio César Puche Regaliza}
+\tutor{Bruno Baruque Zanon\\
+Santiago Porras Alfonso\\
+Carlos López Nozal}
 \date{\today}
 
 \begin{document}
@@ -364,7 +365,7 @@ Julio César Puche Regaliza}
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI 71567050C, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI 71567050C, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado Mejora de la herramienta web dinámica para la captación, tratamiento y presentación de datos relacionados con la coyuntura económica de Burgos. 
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -408,10 +409,10 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-Este trabajo es una ampliación de otro proyecto de fin de grado llamado \textit{Herramienta web dinámica para la captación, tratamiento y presentación de datos relacionados con la coyuntura económica de Burgos} \href{https://github.com/NelsonParamo/GI16.M_ProyectoCoyuntura/}{Link al proyecto en Github}.\\
+Este trabajo es una ampliación de la primera versión del TFG llamado \textit{Herramienta web dinámica para la captación, tratamiento y presentación de datos relacionados con la coyuntura económica de Burgos} \href{https://github.com/NelsonParamo/GI16.M_ProyectoCoyuntura/}{Link al proyecto en Github}.\\
 Este proyecto fue creado para facilitar el trabajo del equipo que todos los años realiza unos boletines de coyuntura económica para informar de la situación de la economía burgalesa.\\
 Esta aplicación permite la entrada de datos y su clasificación.\\
-El objetivo de mi proyecto es mejorar la aplicación y añadir nuevas funcionalidades como la introducción de datos directamente de la página del INE o la capacidad de exportar las tablas a Excel.
+El objetivo del presente proyecto es realizar mejoras en el diseño de la aplicación y la corrección de errores o malas prácticas del código así como añadir nuevas funcionalidades como la introducción de datos directamente de la página del INE o la capacidad de exportar las tablas a Excel.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
@@ -426,12 +427,15 @@ Economía, coyuntura económica, boletín, MySQL, Laravel, PHP, variables, aplic
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+This work is an extension of the first version of the TFG called \textit {Dynamic web tool for the collection, treatment and presentation of data related to the economic situation of Burgos} \href {https://github.com/NelsonParamo/GI16. M_ProyectoCoyuntura /} {Link to the project on Github}. \\
+This project was created to facilitate the work of the team that every year produces economic newsletters to report on the situation of the Burgos economy. \\
+This application allows data entry and classification. \\
+The objective of this project is to make improvements in the design of the application and the correction of errors or bad practices in the code as well as to add new functionalities such as entering data directly from the INE page or the ability to export the tables to Excel.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-keywords separated by commas.
+Economy, economic situation, newsletter, MySQL, Laravel, PHP, variables, web application, National Institute of Statistics, prediction 
 \end{abstract}
 
 \clearpage
@@ -458,7 +462,7 @@ keywords separated by commas.
 \include{./tex/7_Conclusiones_Lineas_de_trabajo_futuras}
 
 
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{bibliografia}
 
 \end{document}

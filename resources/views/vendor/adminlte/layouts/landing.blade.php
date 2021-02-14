@@ -54,7 +54,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                         </li>
                         <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     @else
-                        <li><a href="/home">{{ Auth::user()->name }}</a></li>
+                        <li><a href="{{ url('/home') }}">{{ Auth::user()->name }}</a></li>
                     @endif
                 </ul>
             </div><!--/.nav-collapse -->

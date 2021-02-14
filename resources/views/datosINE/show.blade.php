@@ -63,16 +63,15 @@
   <div class="col-md-8 col-md-offset-4">
     <input type="submit" value="Aceptar" class="btn btn-primary"  > 
   </div>
+  <br><br>
 
-  
+  <div  class="col-md-8 col-md-offset-4">
+      <a href="{{ url('/form/create')}}"  class="btn btn-primary " role="button">Crear tabla</a>      
+    </div>   
 </div>
 </div>
 </form>
 <br><br>
-
-<div style="text-align: center;width:400px">
-      <a href="{{ url('/form/create')}}"  class="btn btn-primary " role="button">Crear tabla</a>      
-    </div>   
 
 
 

@@ -67,7 +67,9 @@
                                 <input type="password" name="repassword" class="form-control" pattern="[A-Za-z0-9!?-]{8,16}" required placeholder="{{ trans('adminlte_lang::message.retypepassword') }}">
 
                         </div>
+                       
                     </div>
+                    <small>*La contraseña debe tener como mínimo 8 caracteres</small>
                 </div>
                 @if(isset($errorPass))
                     @if($errorPass==true)

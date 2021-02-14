@@ -1,12 +1,11 @@
 \apendice{Especificación de Requisitos}
 
 \section{Introducción}
-En esta sección hablaré de los requisitos que cumple el proyecto en su totalidad aunque haré más hincapié en los que he creado yo.\\
-Al no ser mi propio proyecto sino que he mejorado uno existente, muchos de los requisitos ya estaban implementados pero me ha parecido interesante mencionarlos y hablar de ellos para que el proyecto se entienda mejor. Además he mejorado o arreglado muchos de ellos.\\
-Para poder diferenciar entre los que ya estaban en la aplicación y los que he creado yo los señalaré .\\
+En esta sección se hablará de los requisitos que cumple la aplicación en su totalidad aunque se remarcará los que se han conseguido con este trabajo.\\
+Al no ser un proyecto que se haya empezado desde cero, sino que se ha mejorado uno existente, muchos de los requisitos ya estaban implementados pero es interesante mencionarlos y hablar de ellos para que la funcionalidad de la aplicacion se entienda mejor. Además se ha mejorado o arreglado muchos de ellos.\\
 Es importante señalar que existen tres roles:
 \begin{description}
-    \item [Súper administrador] Tiene acceso a todas las funcionalidades del sistema. Se diferencia del administrador normal en que éste no tiene acceso a la gestión de los usuarios.
+    \item [Súper administrador] Tiene acceso a todas las funcionalidades del sistema. Se diferencia del administrador normal en que este último no tiene acceso a la gestión de los usuarios.
     \item [Administrador] Tiene acceso a todas las funcionalidades menos a la de gestión de los usuarios.
     \item [Invitado] Sólo se le permite acceder a la información de las tablas ya definidas y a la ayuda de la aplicación. Serán las personas que accedan a la aplicación a través del navegador.
 \end{description}
@@ -22,6 +21,7 @@ Los objetivos generales del proyecto son:
 \section{Catalogo de requisitos}
 A continuación, se enumeran los requisitos específicos derivados de los objetivos generales del proyecto.
 \subsection{Requisitos funcionales}
+\subsection{Requisitos originales}
 \begin{description}
     \item [RF1 Registro en la aplicación web] Los nuevos usuarios podrán solicitar el registro en la aplicación por medio de un formulario con los siguientes campos: Nombre, correo electrónico y contraseña. Posteriormente el súper administrador aceptará la solicitud.
     \item [RF2 Login] Acceso a la aplicación.
@@ -38,7 +38,8 @@ A continuación, se enumeran los requisitos específicos derivados de los objeti
             \item [RF3.3.5 Borrar categoría]
             \item [RF3.3.6 Borrar ámbito geográfico]
         \end{description}
-        \item [RF3.4 Borrado de tablas]
+        \item [RF3.4 Visualización de tablas]
+        \item [RF3.5 Borrado de tablas]
     \end{description}
     \item [RF4 Creación de gráficos] Se generarán gráficos automáticamente a partir de los datos introducidos en la tabla, se podrá filtrar los datos que se desean ver en el gráfico por medio de un formulario.
     \item [RF5 Gestión de datos] Gestión de los datos de la aplicación.
@@ -67,7 +68,8 @@ A continuación, se enumeran los requisitos específicos derivados de los objeti
             \item [RF5.4.3 Borrar] Se podrá elegir si se desea borrar un ámbito del sistema o tan solo de una variable.
         \end{description}
     \end{description}
-    \item [RF6 Exportación de tablas a Excel] La aplicación puede exportar las tablas creadas a partir de los datos almacenados en la base de datos a ficheros “.xls”.
+    \subsection{Requisitos nuevos}
+    \item [RF6 Exportación de tablas a Excel] La aplicación puede exportar las tablas creadas a partir de los datos almacenados en la base de datos a ficheros \textit{.xls}.
     \item[RF7 Gestión de usuarios] Sólo tiene acceso a esta funcionalidad el súper administrador.
     \begin{description}
         \item[RF7.1 Modificar rol de los usuarios] Se podrá cambiar el rol de los usuarios de administrador a súper administrador.
@@ -78,7 +80,2077 @@ A continuación, se enumeran los requisitos específicos derivados de los objeti
             \item[RF7.3.2 Declinar petición] Se declina su solicitud y se borra de la tabla de usuarios por confirmar.
         \end{description}
     \end{description}
+    \item[RF8 Gestión de datos desde el INE] Se permite la introducción y actualización de datos del Instituto Nacional de Estadística a las tablas de la aplicación.
+    \begin{description}
+        \item[RF8.1 Introducción de datos] El administrador o el súper administrador pueden introducir datos a las tablas de la aplicación a partir de la dirección web de una página del INE.
+        \item[RF8.2 Actualización de datos] El administrador o el súper administrador pueden actualizar las tablas que contengan datos que provengan del INE con información nueva.
+    \end{description}
+    \item[RF9 Predicción de datos] Todos los usuarios pueden acceder  a una predicción del siguiente año de las variables de la aplicación.
+    \item[RF10 Editar perfil del usuario] Cada usuario podrá editar los datos de su perfil.
+    \item[RF11 Ayuda de la aplicación] El usuario debe poder obtener ayuda sobre el uso de las funcionalidades de la aplicación.
+\end{description}
+\subsection{Requisitos no funcionales}
+\begin{description}
+    \item[RNF1 Usabilidad] La aplicación debe ser intuitiva, con una curva baja de aprendizaje y adaptada al entorno de trabajo.
+    \item[RNF2 Rendimiento] La aplicación debe tener unos tiempos de carga razonables y aceptables.
+    \item[RNF3 Escalabilidad] Debe permitir la adición de nuevas funcionalidades sin problemas.
+    \item[RNF4 Disponibilidad] Debe estar disponible y operativa en cualquier momento.
+    \item[RNF5 Seguridad] Debe gestionar la información sensible, como las contraseñas de una forma correcta.
+\end{description}
+\subsection{Requisitos de restricción}
+\begin{description}
+    \item[RR1]  La aplicación prohíbe a los invitados la modificación o borrado de los datos introducidos, por lo que solo podrán visualizar las tablas y gráficos creadas por los administradores de la aplicación web.
+    \item[RR2] Los administradores/editores no podrán tener acceso a la gestión de usuarios, por lo que no podrán modificar datos de los usuarios registrados ni administrar las peticiones de registro.
 \end{description}
 \section{Especificación de requisitos}
+En esta sección se mostrará los diagramas de casos de uso resultante y se desarrollará cada uno de ellos.
+\subsection{Diagramas de casos de uso}
+\subsection{Actores}
+\begin{description}
+    \item [Súper administrador] Tiene acceso a todas las funcionalidades del sistema. Se diferencia del administrador normal en que este último no tiene acceso a la gestión de los usuarios.
+    \item [Administrador] Tiene acceso a todas las funcionalidades menos a la de gestión de los usuarios.
+    \item [Invitado] Sólo se le permite acceder a la información de las tablas ya definidas y a la ayuda de la aplicación. Serán las personas que accedan a la aplicación a través del navegador.
+\end{description}
+\subsection{Casos de uso}
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-01}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Registro en la aplicación}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisito asociado}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-1 Registro en la aplicación\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Los usuarios que quieran solicitar el registro en la página deben rellenar un
+formulario para que el súper administrador decida si acepta o declina esta
+solicitud.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario entra en la aplicación.
+\item
+  Pinchar el botón de registro de la pantalla inicial.
+\item
+Rellenar los campos del formulario.
+\item
+El sistema envía una petición al súper administrador.
+\item 
+El súper administrador decide si acepta o no al nuevo usuario.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se acepta la petición de registro o se deniega.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Si el administrador acepta la petición el rol del usuario cambia a
+administrador/editor. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-01 Registro en la aplicación}
+\end{longtable}
 
 
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-02}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Login}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisito asociado}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-2 Login\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Los administradores/editores o los súper usuarios, podrán acceder a la aplicación con sus datos de usuario.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario entra en la aplicación.
+\item
+  Pinchar el botón de iniciar sesión.
+\item
+Rellenar los campos email y contraseña con sus datos de acceso.
+\item
+Hacer click en el botón enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se accede a la aplicación.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Si se introducen datos incorrectos, se lanza un mensaje de error.
+ \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-02 Login}
+\end{longtable}
+
+
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-03}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Inserción de variables}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisito asociado}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF-3.1 Inserción de tablas\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Los administradores/editores o los súper usuarios, podrán insertar tablas con
+valores nuevos a la base de datos.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El usuario entra en la aplicación.
+\item
+  Pinchar el botón de crear tabla.
+\item
+Rellenar los campos del formulario correspondientes al nombre de la tabla, sus categorías y sus ámbitos.
+\item
+Hacer click en el botón enviar.
+\item 
+Rellenar las celdas con los valores de la tabla.
+\item
+Hacer click en guardar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se acepta la petición de registro o se deniega.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-03 Gestión de tablas: Inserción de variables}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-03}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Modificación de las tablas. Añadir año}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3, RF3.3 y RF3.3.1 Añadir año\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+En cada tabla predefinida se podrá añadir un año para continuar con el registro
+de los datos.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Hacer click en el botón modificar valores.
+\item
+Hacer click en el menú de opciones.
+\item
+En el apartado de añadir, pinchar en año.
+\item
+El sistema añadirá a la derecha de la tabla un nuevo año con
+campos en el lugar de las celdas.
+\item 
+Rellenar el campo del año.
+\item
+Rellenar los valores que corresponden al nuevo año.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se almacenará en el sistema los valores del nuevo año.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Mensaje: Es necesario rellenar este campo si queda alguno vacío. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-04 Gestión de tablas: Modificación de tablas. Añadir año.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-05}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Modificación de las tablas. Añadir categoría}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3, RF3.3 y RF3.3.2 Añadir categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá añadir categorías nuevas y se podrá asignar la súper categoría a la
+que pertenecen.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Hacer click en el botón modificar valores.
+\item
+Hacer click en el menú de opciones.
+\item
+En el apartado de añadir, pinchar en categoría.
+\item
+El sistema nos redirigirá a una página con una tabla y un
+formulario.
+\item 
+Rellenar el formulario con el nombre de la nueva categoría y
+seleccionar si se desea una súper categoría para asignarle.
+\item
+Rellenar las celdas con los datos de la nueva categoría.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se almacenará en el sistema los valores de la nueva categoría.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Mensaje: Es necesario rellenar este campo si queda alguno vacío. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-05 Gestión de tablas: Modificación de tablas. Añadir categoría.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-06}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Modificación de las tablas. Añadir ámbito}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3, RF3.3 y RF3.3.3 Añadir ámbito\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Las tablas predefinidas tendrán la posibilidad de añadir nuevos ámbitos
+geográficos. Cada nuevo ámbito vendrá acompañado de las distintas
+categorías almacenadas en la tabla.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Hacer click en el botón modificar valores.
+\item
+Hacer click en el menú de opciones.
+\item
+En el apartado de añadir, pinchar en ámbito.
+\item
+El sistema añadirá en la parte inferior celdas por valor de todas las
+categorías que pertenecen a la tabla.
+\item 
+Rellenar el campo del nombre del ámbito
+\item
+Rellenar las celdas con los datos del nuevo ámbito
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se almacenará en el sistema los valores del nuevo ámbito.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Mensaje: Es necesario rellenar este campo si queda alguno vacío. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-06 Gestión de tablas: Modificación de tablas. Añadir ámbito.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-07}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Modificación de las tablas. Borrar año}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3, RF3.3 y RF3.3.4 Borrar año\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar años de una tabla.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Hacer click en el botón modificar valores.
+\item
+Hacer click en el menú de opciones.
+\item
+En el apartado de borrar, pinchar en año.
+\item
+El sistema redirigirá a una página donde existirá un formulario
+\item 
+Seleccionar los años que se desean borrar.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrarán los datos del año en la base de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-07 Gestión de tablas: Modificación de tablas. Borrar año.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-08}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Modificación de las tablas. Borrar categoría}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3, RF3.3 y RF3.3.5 Borrar categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar las categorías de una tabla.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Hacer click en el botón modificar valores.
+\item
+Hacer click en el menú de opciones.
+\item
+En el apartado de borrar, pinchar en categoría.
+\item
+El sistema redirigirá a una página donde existirá un formulario
+\item 
+Seleccionar las categorías que se desean borrar.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrarán los datos de la categoría en la base de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-08 Gestión de tablas: Modificación de tablas. Borrar categoría.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-09}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Modificación de las tablas. Borrar ámbito}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3, RF3.3 y RF3.3.6 Borrar ámbito\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar un ámbito geográfico de una tabla.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Hacer click en el botón modificar valores.
+\item
+Hacer click en el menú de opciones.
+\item
+En el apartado de borrar, pinchar en ámbito.
+\item
+El sistema redirigirá a una página donde existirá un formulario
+\item 
+Seleccionar los ámbitos que se desean borrar.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrarán los datos del ámbito en la base de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-09 Gestión de tablas: Modificación de tablas. Borrar ámbito.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-10}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Visualización}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3.4 Visualización de tablas\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Los datos almacenados en la base de datos se mostrarán al usuario en forma
+de tablas.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a tablas.
+\item
+Seleccionar el enlace a Tablas predefinidas.
+\item
+Seleccionar la tabla que se desea ver.
+\item
+El sistema redirigirá a una página donde existirá un formulario para seleccionar los datos se quieran ver.
+\item 
+Rellenar los campos del formulario.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se mostrará la tabla con los valores elegidos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-10 Gestión de tablas: Visualización.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-11}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de tablas: Borrado de tablas}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF3 y R3.5 Borrado de tablas\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Borrado de las tablas de la aplicación.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a tablas.
+\item
+Seleccionar el enlace a Tablas predefinidas.
+\item
+Seleccionar la tabla que se desea borrar.
+\item
+Hacer click en aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrará la tabla de la base de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-11 Gestión de tablas: Borrado de tablas.}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-12}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Creado de gráficos}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF4 Creación de gráficos\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se generarán gráficos automáticamente desde los datos introducidos en la
+tabla, se podrá filtrar los datos que se desean ver en el gráfico por medio de un
+formulario.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a tablas.
+\item
+Seleccionar el enlace a Tablas predefinidas.
+\item
+Seleccionar la tabla que se desea ver.
+\item
+El sistema enviará a una página con un formulario para filtrar los
+datos. 
+\item
+Rellenar los campos del formulario.
+\item
+Hacer click en enviar.
+\item 
+El sistema mostrará un gráfico de barras con todos los valores de
+la tabla.
+\item
+El sistema mostrará un formulario para filtrar los datos que se
+desea mostrar en el formulario.
+\item
+Rellenar los campos del formulario.
+\item
+Hacer click en enviar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se mostrarán los datos en gráficos de barras,lineas o radar.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se deberán rellenar todos los datos. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-12 Creado de gráficos}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-13}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos: Variables. Modificar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.1.1 Modificar variable\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá modificar el nombre, la fuente, el tipo y la descripción
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida y estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar Variables.
+\item
+El sistema mostrará las variables almacenadas en el sistema.
+\item
+Seleccionar la variable que se desea modificar.
+\item
+El sistema enviará a una página con un formulario para modificar
+la tabla.
+\item
+Rellenar los datos que se desean modificar
+\item
+Hacer click en modificar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se modificará la variable seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-13 Gestión de variables. Modificar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-14}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos: Variables. Borrar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.1.2 Borrar variable\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar una variable
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Que haya una tabla predefinida y estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar Variables.
+\item
+El sistema mostrará las variables almacenadas en el sistema.
+\item
+Seleccionar la variable que se desea borrar.
+\item
+Hacer click en aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrará la variable seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-14 Gestión de variables. Borrar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-15}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos: Categorías. Crear}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.2.1 Crear categoría.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá crear una nueva categoría.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar Categorías.
+\item
+El sistema mostrará las categorías almacenadas en el sistema.
+\item
+Hacer click en el botón Crear categoría
+\item
+El sistema enviará a una página con un formulario para crear la
+nueva categoría.
+\item
+Rellenar el formulario.
+\item
+Hacer click en Crear.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se creará la categoría.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-15 Gestión de categorías. Crear}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-16}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos: Categorías. Modificar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.2.2 Modificar categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá modificar la categoría.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar Categorías.
+\item
+El sistema mostrará las categorías almacenadas en el sistema.
+\item
+Seleccionar la categoría que se desea modificar.
+\item
+El sistema enviará a una página con un formulario para modificar
+la categoría.
+\item
+Rellenar los datos que se desean modificar
+\item
+Hacer click en modificar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se modificará la categoría seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-16 Gestión de categorías. Modificar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-17}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de categorías. Borrar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.2.3 Borrar categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar una categoría.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar Categorías.
+\item
+El sistema mostrará las categorías almacenadas en el sistema.
+\item
+Seleccionar la categoría que se desea borrar. Se tendrá que elegir entre
+\begin{enumerate}
+    \item Borrar categoría de una tabla.
+    \item Borrar categoría del sistema.
+\end{enumerate}
+\item
+Hacer click en borrar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrará la categoría seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-17 Gestión de categorías. Borrar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-18}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos: Súper categorías. Crear}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.3.1 Crear súper categoría.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se creará una súper categoría nueva y se le podrá asignar las categorías que
+están sin categoría.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar súper categorías.
+\item
+El sistema mostrará las súper categorías almacenadas en el sistema.
+\item
+Hacer click en el botón Crear súper categoría
+\item
+El sistema enviará a una página con un formulario para crear la
+nueva súper categoría.
+\item
+Rellenar el formulario.
+\item
+Hacer click en Crear.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se creará la súper categoría.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-18 Gestión de súper categorías. Crear}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-19}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos:Súper categorías. Modificar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.3.2 Modificar súper categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá modificar la súper categoría.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar súper categorías.
+\item
+El sistema mostrará las súper categorías almacenadas en el sistema.
+\item
+Seleccionar la súper categoría que se desea modificar.
+\item
+El sistema enviará a una página con un formulario para modificar
+la súper categoría y asignarle o quitarle categorías.
+\item
+Rellenar los datos que se desean modificar
+\item
+Hacer click en modificar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se modificará la súper categoría seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-19 Gestión de súper categorías. Modificar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-20}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de súper categorías. Borrar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.3.3 Borrar súper categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar una súper categoría.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar súper categorías.
+\item
+El sistema mostrará las súper categorías almacenadas en el sistema.
+\item
+Seleccionar la súper categoría que se desea borrar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrará la súper categoría seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-20 Gestión de súper categorías. Borrar}
+\end{longtable}
+
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-21}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos: Ámbitos. Crear}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.4.1 Crear ámbito.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se creará un ámbito geográfico.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar ámbitos geográficos.
+\item
+El sistema mostrará los ámbitos almacenados en el sistema.
+\item
+Hacer click en el botón Crear ámbito geográfico.
+\item
+El sistema enviará a una página con un formulario para crear el ámbito.
+\item
+Rellenar el formulario.
+\item
+Hacer click en Crear.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se creará el nuevo ámbito.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-21 Gestión de ámbitos. Crear}
+\end{longtable}
+
+\newpage
+\begin{longtable}[H]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-22}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos:Ámbitos geográficos. Modificar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.4.2 Modificar categoría\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá modificar los ámbitos.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar ámbitos geográficos.
+\item
+El sistema mostrará los ámbitos geográficos almacenados en el sistema.
+\item
+Seleccionar el ámbito que se desea modificar.
+\item
+El sistema enviará a una página con un formulario.
+\item
+Rellenar los datos que se desean modificar.
+\item
+Hacer click en modificar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se modificará el ámbito seleccionada.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-22 Gestión de ámbitos geográficos. Modificar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-23}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de ámbitos. Borrar}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF5.4.3 Borrar ámbito\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá borrar un ámbito geográfico.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Estar registrado en la aplicación como Administrador/Editor o Súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos.
+\item
+Seleccionar ámbitos geográficos.
+\item
+El sistema mostrará los ámbitos almacenados en el sistema.
+\item
+Seleccionar el ámbito que se desea borrar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrará el ámbito geográfico.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-23 Gestión de ámbitos geográficos. Borrar}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-24}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Exportación de tablas a xls}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF6 Exportación de tablas a xls\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá exportar las tablas a formato xls.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Tablas predefinidas.
+\item
+Seleccionar una tabla.
+\item
+Elegir los datos de la tabla que quieres exportar.
+\item
+Hacer click en Exportar a Excel.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se descargará el archivo xls.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Media\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-24 Exportación de tablas a Excel}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-25}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de usuarios: Modificar rol de los usuarios}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF7.1 Modificar rol de los usuarios \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá modificar el rol a editor ó a súper administrador.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Tener privilegios de súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Administración de usuarios.
+\item
+Seleccionar un usuario para editar.
+\item
+El sistema nos dará a elegir entre los posibles roles.
+\item
+Hacer click en aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se cambiará el rol del usuario seleccionado.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-25 Modificar rol de los usuarios}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-26}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de usuarios: Borrar usuario}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF7.2 Borrar usuario. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se podrá modificar el rol a editor ó a súper administrador.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Tener privilegios de súper administrador.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Administración de usuarios.
+\item
+Seleccionar un usuario para borrar.
+\item
+Hacer click en aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se borrará el usuario seleccionado.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-26 Borrar usuarios}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-27}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de usuarios:  Gestión de peticiones de nuevos usuarios}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF7.3  Gestión de peticiones de nuevos usuarios. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Los usuarios que quieran solicitar el registro en la página deben rellenar un
+formulario para que el súper administrador decida si acepta o declina esta
+solicitud. Esta solicitud podrá ser aceptada o declinada.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Tener privilegios de súper administrador y que haya solicitudes de registro.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Administración de usuarios.
+\item
+El sistema mostrará las peticiones de registro de los usuarios.
+\item
+\begin{enumerate}
+    \item El súper administrador acepta la petición.
+    \item El súper administrador declina la petición.
+\end{enumerate}
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se acepta la petición de registro o se deniega.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-27 Borrar usuarios}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-28}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos desde el INE: Introducción de datos.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF8.1  Introducción de datos. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El administrador o el súper administrador pueden introducir datos a las tablas de la aplicación a partir de la dirección web de una página del INE.
+
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Tener privilegios de súper administrador o administrador/editor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos del INE.
+\item
+Se introducirá la dirección de la página del INE de la que queremos sacar la información.
+\item
+El sistema clasificará esa información y dará a elegir al usuario las variables y años de los datos que quiere introducir en la aplicación.
+\item
+Se muestran los datos elegidos y se selecciona en qué tabla van a introducirse y a qué categoría y ámbito van asociados.
+\item 
+Se selecciona Aceptar.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se introducen los valores en la base de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Si es un conjunto de datos que la aplicación no puede soportar, da un aviso. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-28 Gestión de datos del INE: Introducción de datos}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-29}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Gestión de datos desde el INE: Actualización de datos.}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF8.2  Actualización de datos. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+ El administrador o el súper administrador pueden actualizar las tablas que contengan datos que provengan del INE con información nueva.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Tener privilegios de súper administrador o administrador/editor.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Gestión de datos del INE.
+\item
+Se seleccionará la opción Actualizar tablas.
+\item
+El sistema comprobará qué tablas tienen datos del INE asociados, mirará si hay datos nuevos en la página del INE y actualizará las tablas.
+\item
+Se mostrarán los nombres de las tablas actualizadas.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se actualizan los valores en la base de datos.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Alta\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-29 Gestión de datos del INE: Actualización de datos}
+\end{longtable}
+
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-30}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Predicción de datos}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF9 Predicción de datos. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Todos los usuarios pueden acceder a una predicción del siguiente año de las variables de la aplicación.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Predicción de datos.
+\item
+Se muestran las tablas de la aplicación.
+\item
+Se seleccionará la tabla de la que queramos ver la predicción.
+\item
+Ahora se seleccionará la categoría y el ámbito para la predicción.
+\item
+Se mostrarán las predicciones en forma de tabla y de gráfico.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se muestran las predicciones.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Baja\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-30 Predicción de datos}
+\end{longtable}
+
+\newpage
+\begin{longtable}[t]{@{}ll@{}}
+\toprule
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{CU-31}\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+\textbf{Ayuda de la aplicación}\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Requisitos asociados}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+RF10 Ayuda de la aplicación. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Descripción}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+El usuario debe poder obtener ayuda sobre el uso de las funcionalidades de la aplicación.
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Precondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Acciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Pinchar en el menú situado a la izquierda de la pantalla, en el
+enlace a Ayuda.
+\item
+Se visualizará la ayuda.
+\end{enumerate}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Postcondición}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Se muestra la ayuda de la aplicación.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Excepciones}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Ninguna. \strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\textbf{Importancia}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+Baja\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\caption{CU-31 Ayuda de la aplicación}
+\end{longtable}

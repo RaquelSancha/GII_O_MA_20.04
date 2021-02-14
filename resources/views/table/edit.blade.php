@@ -13,21 +13,21 @@
    
       </div>
     </nav>
-    
-    <div id="navbar" class="navbar-collapse collapse">
+                                                
+        <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav ">
               <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opciones<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <li role="presentation" class="dropdown-header">Añadir</li>
-                <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertAmbito">Ámbito Geográfico</a></li>
-                <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertYear">Año</a></li>
-                <li><a role="menuitem" tabindex="-1"  href="/tables/{{$id}}/insertCategoria">Categoría</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="{{ url('/tables')}}/{{$id}}/{{'insertAmbito'}}">Ámbito Geográfico</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="{{ url('/tables')}}/{{$id}}/{{'insertYear'}}">Año</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="{{ url('/tables')}}/{{$id}}/{{'insertCategoria'}}">Categoría</a></li>
                 <li role="presentation" class="divider"></li>
                  <li role="presentation" class="dropdown-header">Borrar</li>
-                <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteAmbito">Ámbito Geográfico</a></li>
-                <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteYear">Año</a></li>
-                <li><a role="menuitem" tabindex="-1"  href="/form/{{$id}}/deleteCategoria">Categoría</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="{{ url('/form')}}/{{$id}}/{{'deleteAmbito'}}">Ámbito Geográfico</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="{{ url('/form')}}/{{$id}}/{{'deleteYear'}}">Año</a></li>
+                <li><a role="menuitem" tabindex="-1"  href="{{ url('/form')}}/{{$id}}/{{'deleteCategoria'}}">Categoría</a></li>
                 </u1>
               </ul>
             </li>

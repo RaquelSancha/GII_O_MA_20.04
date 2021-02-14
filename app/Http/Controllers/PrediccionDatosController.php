@@ -140,28 +140,23 @@ class PrediccionDatosController extends Controller
         $j = 0;
         for($i= 0;$i<(count($variables_aux)-1);$i++){ //Cogemos todos los valores menos los del último año ya que dejaremos al estimador que los predija
             $variables[$j] = array();
-            array_push($variables[$i], $idVariable);
-            array_push($variables[$i], $idCategoria);
-            array_push($variables[$i], $idAmbito);
-            array_push($variables[$i], $variables_aux[$i]->Mes);
-            array_push($variables[$i], $variables_aux[$i]->Year);
+            array_push($variables[$i],(int)$variables_aux[$i]->Mes);
+            array_push($variables[$i],(int)$variables_aux[$i]->Year);
             $j++;
         }
         $valores=array();
         for($i= 0;$i<(count($valores_aux)-1);$i++){
             if(!empty($valores_aux)){
-                array_push($valores,$valores_aux[$i]->Valor);
+                array_push($valores,(int)$valores_aux[$i]->Valor);
             }
         }
         $datasetTrain = new Labeled($variables,$valores);
+        print_r($datasetTrain);
         $datasetEstimar=array();
         for($j=1; $j<=12; $j++){
             $datasetEstimar[$i] = array();
-            array_push($datasetEstimar[$i], $idVariable);
-            array_push($datasetEstimar[$i], $idCategoria);
-            array_push($datasetEstimar[$i], $idAmbito);
-            array_push($datasetEstimar[$i], $j);
-            array_push($datasetEstimar[$i], $año);
+            array_push($datasetEstimar[$i], (int)$j);
+            array_push($datasetEstimar[$i], (int)$año);
             $i++;
         }
         $dataset = new Unlabeled($datasetEstimar); //Etiquetas que queremos predecir
@@ -176,7 +171,7 @@ class PrediccionDatosController extends Controller
         }
         */
         //Prueba con el estimador GradientBoost
-        /*
+        
         $estimator = new GradientBoost(new RegressionTree(3), 0.1, 0.8, 1000, 1e-4, 10, 0.1, new SMAPE(), new DummyRegressor(new Constant(0.0)));
         $estimator->train($datasetTrain); 
         $prediccionesGradientB_aux = $estimator->predict($dataset);
@@ -184,7 +179,7 @@ class PrediccionDatosController extends Controller
         for($i=0; $i<count($prediccionesGradientB_aux) ; $i++){
             array_push($predicciones,round($prediccionesGradientB_aux[$i],2));
         }
-        */
+        
         //Prueba con el estimador Adaline INCOMPATIBLE
         /*
         $estimator = new Adaline(100, new Adam(0.001), 1e-4, 500, 1e-6, 5, new HuberLoss(2.5));
@@ -246,7 +241,7 @@ class PrediccionDatosController extends Controller
         }
         */
           //Prueba con el estimador RegressionTree 
-        
+        /*
         $estimator = new RegressionTree(20, 2, 4, 1e-3);
         $estimator->train($datasetTrain); 
         $prediccionesRT_aux = $estimator->predict($dataset);
@@ -254,7 +249,7 @@ class PrediccionDatosController extends Controller
         for($i=0; $i<count($prediccionesRT_aux) ; $i++){
             array_push($predicciones,round($prediccionesRT_aux[$i],2));
         }
-        
+        */
         //Prueba con el estimador MLPRegressor INCOMPATIBLE
         /*
         $estimator = new MLPRegressor([

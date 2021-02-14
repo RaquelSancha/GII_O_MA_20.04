@@ -4,7 +4,7 @@
 En este apartado se va a hablar de la planificación temporal del proyecto mediante los sprints de github que es la herramienta que se ha usado para organizar las tareas y su secuencia de ejecución.\\
 También se hará un estudio sobre la viabilidad del proyecto para comprobar que su desarrollo en un marco real como puede ser el de una empresa sería posible.
 \section{Planificación temporal}
-Se ha intentado usar la metodología SCRUM pero adaptándola a mi forma de trabajar y a mis capacidades. Con esto quiero decir que aunque se ha trabajado con sprints, éstos no han tenido una duración fija y preestablecida como dice que deben ser en la definición de la técnica.\\
+Se ha intentado usar la metodología SCRUM pero adaptándola a la forma de trabajo. Con esto quiero decir que aunque se ha trabajado con sprints, éstos no han tenido una duración fija y preestablecida como dice que deben ser en la definición de la técnica.\\
 Estas iteraciones han tenido unas duraciones variables, de 15 días hasta 2 meses, dependiendo de las tareas de dichos sprints y de la dificultad que me ha supuesto resolverlas.\\
 Se realizaban reuniones de revisión al finalizar cada sprint y se pensaban y preparaban las siguientes tareas a realizar.
 Estas tareas se estimaban y priorizaban con la ayuda del tablón que nos ofrece Github.
@@ -21,8 +21,11 @@ En este primer sprint las principales tareas fueron:
 \end{itemize}
 \imagen{imagenes/sprint1}{Gráfica burndown del sprint 1}
 \subsection{Segundo sprint: Inicio del proyecto parte 2}
-Este sprint fue el más difícil para mí porque todavía no estaba familiarizada del todo con el código y me costó mucho empezar a programar.\\
-Las tareas de este sprint fueron ejecutar los tests que ya estaban hechos para probar el proyecto y empezar a arreglar los fallos que había en la administración de usuarios.\\
+Las principales tareas de este sprint fueron 
+\begin{itemize}
+    \item Ejecutar los tests para identificar errores.
+    \item Empezar con a arreglar fallos en la administración de usuarios.
+\end{itemize}
 \imagen{imagenes/sprint2}{Gráfica burndown del sprint 2}
 \subsection{Tercer sprint: Fase de pruebas}
 En esta iteración realicé una serie de tests para poner a prueba a la aplicación y así detectar sus posibles errores para posteriormente corregirlos.\\
@@ -30,7 +33,7 @@ Para ello usé el proyecto de barryvdh consistente en una debugbar para laravel.
 \imagen{imagenes/debugbar}{Debugbar para Laravel}
 \imagen{imagenes/sprint3}{Gráfica burndown del sprint 3}
 \subsection{Cuarto sprint:  Primera fase de cambios en el proyecto}
-El sprint se llama así porque es cuando realmente empecé a hacer cambios significativos en el proyecto.
+El sprint se llama así porque es cuando se empezaron a hacer cambios significativos en el proyecto.
 Las principales tareas que se llevaron a cabo fueron:
 \begin{itemize}
     \item Crear las migraciones de las tablas de la base de datos.
@@ -44,14 +47,14 @@ Las principales tareas que se llevaron a cabo fueron:
 \end{itemize}
 \imagen{imagenes/sprint4}{Gráfica burndown del sprint 4}
 \subsection{Quinto sprint: Introducción de datos desde el INE}
-Este fue el sprint más costoso. Para su realización hicieron falta casi tres meses. En él las funcionalidades que se implementaron fueron:
+Este fue el sprint más largo y costoso. Para su realización hicieron falta casi tres meses. En él las funcionalidades que se implementaron fueron:
 \begin{itemize}
-    \item Crear nuevas tablas en la base de datos para recoger los datos del INE y sus urls.
+    \item Creación de nuevas tablas en la base de datos para recoger los datos del INE y sus urls.
     \item Crear las vistas para mostrar los datos.
-    \item Paso de datos desde el json proporcionado por el INE a la base de datos.
+    \item Paso de datos desde el JSON proporcionado por el INE a la base de datos.
     \item Implementar funcionalidad para actualizar los datos de las variables del INE.  
     \item Crear la vista para indicar al usuario que se han actualizado los datos.
-    \item Elegir la librería para exportar los datos de las tablas a excel.
+    \item Elegir la librería para exportar los datos de las tablas a Excel.
     \item Arreglar la funcionalidad para exportar los datos a Excel.
 \end{itemize}
 \imagen{imagenes/sprint5}{Gráfica burndown del sprint 5}
@@ -65,26 +68,77 @@ Principales tareas:
 \end{itemize}
 \imagen{imagenes/sprint6}{Gráfica burndown del sprint 6}
 \subsection{Séptimo sprint: Configuración del entorno de pruebas}
-Para que mis tutores pudieran probar mi código decidí usar Docker y Heroku.\\
-Tanto la configuración de docker como la de Heroku me costaron mucho y me llevó más tiempo del esperado por lo que subí la duración de las tareas.\\
-En este sprint también conecté codacy al repositorio de Github para la revisión del código.
+Tareas de este sprint
+\begin{itemize}
+    \item Instalación y configuración en Docker.
+    \item Instalación y configuración en Heroku.
+    \item Implementación de codacy al repositorio de Github para la revisión del código.
+\end{itemize}
 \imagen{imagenes/sprint7}{Gráfica burndown del sprint 7}
 \subsection{Octavo sprint: Configuración de tests y documentación}
-Como no quería dejar la documentación para el final por si no me daba tiempo, comencé a escribirla antes de haber acabado el código.\\
-En esta iteración además de escribir la memoria del proyecto (aunque será retocada en un sprint posterior), también se conectó los test de laravel al repositorio de Github para que se pasen de forma automática al hacer cambios en el mismo.\\
+En este sprint se empezó a realizar la memoria del proyecto así como a configurar los tests de la aplicación.
 \imagen{imagenes/sprint8}{Gráfica burndown del sprint 8}
 \subsection{Noveno sprint: Mejora de tratamiento de datos 2ª parte}
 En este sprint las tareas fueron:
 \begin{itemize}
     \item Implementación del análisis de datos y su predicción posterior.
-    \item Creación de la vista de los datos predichos.
+    \item Creación de la vista de los datos predichos en forma de gráficos.
     \item Aspectos de configuración pendientes de Docker y Heroku.
 \end{itemize}
 \imagen{imagenes/sprint9}{Gráfica burndown del sprint 9}
 \section{Estudio de viabilidad}
 En esta sección se realizarán algunos cálculos para conocer los gastos que tendría el proyecto en una empresa real así como los temas legales que habría que solucionar.
 \subsection{Viabilidad económica}
-
-\subsection{Viabilidad legal}
+\subsubsection{Costes de personal}
+El proyecto habría sido desarrollado durante 5 meses por un trabajador a tiempo completo. Considerando los siguientes costes.
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{ r | l }
+        Concepto & Coste \\ \hline
+        Salario mensual neto & 1.000\euro \\
+        Retención IRPF (15\%) & 272,23\euro \\
+        Seguridad Social (29,9 \%) & 542,65\euro \\
+        Salario mensual bruto &  1.814,88\euro\\ 
+        Total & 9.074,40\euro \\ 
+        \end{tabular}
+    \caption{Costes de personal}
+    \label{tab:costesPersonal}
+    \end{center}
+\end{table}
+La retribución a la Seguridad Social se ha calculado como un 23,60\% por contingencias comunes, más un 5,50\% por desempleo de tipo general, más un 0,20\% para el Fondo de Garantía Salarial y más un 0,60\% de formación profesional. En total un 29,9\% que se aplica al salario bruto.
+\subsubsection{Costes de hardware}
+Para el desarrollo del proyecto se ha utilizado el siguiente portátil:
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{ r | l }
+        Concepto & Coste \\ \hline
+        Portátil Lenovo & 720\euro \\
+        \end{tabular}
+    \caption{Costes de hardware}
+    \label{tab:costesHardware}
+    \end{center}
+\end{table}
+El plazo de amortización de este tipo de productos según la Agencia Tributaria es de 4 años.\\
+$$Amortización=(Coste del hardware /Vidaútil) * Tiempo utilizado$$\\
+Por lo que:
+$$ (720/(4 años * 12 meses)) = 15\euro $$  
+$$ 15\euro * 5 meses = 75\euro $$
+Por lo que el coste del hardware asciende a 75\euro.\\
+\subsubsection{Costes de software}
+Todos las herramientas software utilizadas en el proyecto son gratuitas por lo que no existen costes software.
+\subsubsection{Otros costes}
+Aquí entran los gastos derivados del consumo de luz y de internet. Se ha aproximado un gasto de 30\euro al mes por el internet y de 25\euro por el consumo de luz al mes.
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{ r | l }
+        Concepto & Coste \\ \hline
+        Servicio de Internet & 150\euro \\
+        Gastos de luz & 125\euro \\
+        Total & 175\euro \\ 
+        \end{tabular}
+    \caption{Otros costes}
+    \label{tab:otrosCostes}
+    \end{center}
+\end{table}
 
 
