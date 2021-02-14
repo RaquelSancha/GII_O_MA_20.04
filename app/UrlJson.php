@@ -10,7 +10,7 @@ class UrlJson extends Model
      *
      * @var string
      */
-    protected $table = 'urlDatosINE';
+    protected $table = 'urldatosine';
 
   protected $throwValidationExceptions = true;
  /**

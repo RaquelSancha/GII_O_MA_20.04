@@ -15,8 +15,8 @@
 
       <td class="col-xs-3">
       <?php $id=$user->id ?>
-         <a class="btn btn-labeled btn-success" href="/register/editar/{{$id}}"><span class="btn-label">Editar</a>
-          <a class="btn btn-labeled btn-danger" href="/register/borrar/{{$id}}"><span class="btn-label">Borrar</a>
+         <a class="btn btn-labeled btn-success" href="{{ url('/register/editar')}}/{{$id}}"><span class="btn-label">Editar</a>
+          <a class="btn btn-labeled btn-danger"  onclick="return confirm('¿Quieres borrar este usuario?')" href="{{ url('/register/borrar')}}/{{$id}}"><span class="btn-label" >Borrar</a>
       </td>
     </tr>
   @endforeach
@@ -32,8 +32,8 @@
       <td>{{ $userconf->email }}</th>
       <?php $id=$userconf->id ?>
       <td class="col-xs-3">
-          <a class="btn btn-labeled btn-success" href="/register/aceptar/{{$id}}"><span class="btn-label">Aceptar</a>
-          <a class="btn btn-labeled btn-danger" href="/register/declinar/{{$id}}"><span class="btn-label">Declinar</a>
+          <a class="btn btn-labeled btn-success" href="{{ url('/register/aceptar')}}/{{$id}}"><span class="btn-label">Aceptar</a>
+          <a class="btn btn-labeled btn-danger" href="{{ url('/register/declinar/')}}/{{$id}}"><span class="btn-label">Declinar</a>
       </td>
     </tr>
   @endforeach

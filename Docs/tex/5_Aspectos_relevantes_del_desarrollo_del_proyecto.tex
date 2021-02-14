@@ -2,34 +2,28 @@
 En este apartado se van a recoger los aspectos más importantes del desarrollo del proyecto. Desde cuestiones del desarrollo del proyecto, hasta los numerosos problemas a los que hubo que enfrentarse y cómo se solucionaron.
 \section{Inicio del proyecto: Aprendizaje}
 En esta fase, probablemente la más costosa a nivel personal, detallaré los conceptos que me hicieron falta aprender para poder empezar mi trabajo.\\
-Como el código sobre el que tenía que trabajar no era mío y no estaba apenas comentado, me fue muy difícil entenderlo para poder hacer cambios propios.\\
-Al principio, no sabía cómo abordar este proyecto ya que no sabía nada de PHP ni de aplicaciones web ni de muchos otros aspectos relacionados, pero poco a poco pude abrirme paso y aprender a manejarme a través de una aplicación hecha con Laravel.\\
-\subsection{Aprender Laravel} 
-Entender y familiarizarme con este framework me costó mucho tiempo. Laravel tiene un sistema de carpetas y archivos de configuración muy extenso que al principio cuesta entender pero por suerte existen multitud de tutoriales en forma de vídeos o de artículos que explican como iniciarse en Laravel.\\
+\subsection{Aprendizaje de Laravel} 
+Laravel tiene un sistema de carpetas y archivos de configuración muy extenso que al principio cuesta entender pero por suerte existen multitud de tutoriales en forma de vídeos o de artículos que explican como iniciarse en Laravel.\\
 Si no se tiene ningún conocimiento previo sobre este framework no recomendaría mirar la documentación de la página oficial ya que, aunque es muy completa, no considero que ofrezca una visión general sobre el funcionamiento del mismo sino información muy específica que no sirve al usuario si no conoce primero la dinámica general de la herramienta.\\
-Por todo esto me apoyé fundamentalmente en tutoriales de Youtube o en artículos explicativos mas que en la documentación oficial.\\
 Tutoriales que seguí:
 \begin{itemize}
     \item \textit{Laravel PHP Framework Tutorial}(freeCodeCamp)\cite{TutorialLaravel}
     \item \textit{Curso Laravel}(pildorasinformaticas)\cite{TutorialLaravel2}
-    \item \textit{Ejemplo de un proyecto en laravel}(ulio Yáñez Novo)\cite{PrimerProyecto}
+    \item \textit{Ejemplo de un proyecto en laravel}(Julio Yáñez Novo)\cite{PrimerProyecto}
 \end{itemize}
-\subsection{Aprender PHP} 
+\subsection{Aprendizaje de PHP} 
 Este lenguaje no se enseña en la carrera y tampoco había trabajado con él antes así que tuve que aprenderlo desde cero. No me resultó tan difícil como aprender a entender proyectos con Laravel así que esta parte me supuso menos trabajo.\\
 Las herramientas que usé para familiarizarme con este lenguaje fueron:
 \begin{itemize}
     \item \textit{Tutorial de PHP para principiantes}(ionos)\cite{TutorialPHP}
     \item \textit{Curso php}(tutorialesya)\cite{CursoPHP} 
 \end{itemize}
-\subsection{Proyecto}
-Añado el propio proyecto a una de las cosas que tuve que aprender porque al ser un trabajo hecho por otra persona me costó mucho comprender su funcionamiento. De las cosas que más me costaron fue entender las plantillas y recursos externos que utilizaba porque no estaban documentados.
-\subsubsection{Gestión de los errores}
-El siguiente paso fue la identificación de los errores existentes en la aplicación para su posterior solución.\\
-Además de algún error de diseño, los dos principales errores que había eran:
-\begin{itemize}
-    \item {Exportar datos a excel} Había implementado un botón para exportar los datos de la tabla elegida a excel pero no funcionaba. Para conseguir que el botón cumpliera la funcionalidad prometida he usado la biblioteca Laravel Excel (explicada anteriormente en el apartado "Técnicas y herramientas")
-    \item{Administración de usuarios} Esta sección daba un error cuando se intentaba acceder a ella.\\
-    En la aplicación existen tres roles:
+\section{Gestión de los errores}
+En la aplicación original existían varios errores que hubo que solucionar. 
+\begin{description}
+    \item [Exportación de datos a excel]. Existía un botón para exportar los datos de la tabla elegida a Excel pero no funcionaba. Para conseguir que el botón cumpliera la funcionalidad prometida he usado la biblioteca Laravel Excel (explicada anteriormente en el apartado "Técnicas y herramientas")
+    \item[Administración de usuarios] Esta sección daba un error cuando se intentaba acceder a ella.\\
+    Para entender esta sección hace falta conocer el sistema de usuarios que usa la aplicación:
     \begin{description}
         \item [Súper administrador] Las personas con este rol pueden controlar los roles de los demás usuarios y modificarlos.
         Además se les permite aceptar o declinar las peticiones de registro en la aplicación a nuevos usuarios. También tienen acceso al resto las funcionalidades de la aplicación.
@@ -39,73 +33,109 @@ Además de algún error de diseño, los dos principales errores que había eran:
     \imagen{imagenes/Administracionusuarios}{Sección Administración de usuarios}
     Desde esta pantalla, la cual solo se puede acceder si tienes privilegios de súper administrador, se permite aceptar las solicitudes pendientes de creación de una cuenta así como editar y borrar otros perfiles.
     \imagen{imagenes/EditarUsuario}{Editar datos de un usuario}
-    También creé esta pantalla para permitir al usuario editar sus datos.
-\end{itemize}
-\section{Planteamiento de mejoras}
-Después de subsanar los errores que existían en la aplicación, decidí hacer algunas mejoras.\\
-Para realizar el informe de la coyuntura económica de Burgos se usan múltiples fuentes así que pensé en una forma de sacar la información de una manera más sencilla para el usuario.\\
-Las bases de datos más utilizadas son: eurostat, los datos abiertos de la junta de Castilla y León y el instituto nacional de estadística. Voy a hablar de cada una de ellas y de cuáles me ha parecido viable su incorporación en la aplicación y cuáles no.
-\subsection{Eurostat}
-Eurostat es una base de datos que recoge información a nivel europeo. Tiene un servicio de datos en json y en unicode mediante el cual permite descargar los archivos disponibles en estos dos formatos a través de una petición REST.
-\imagen{imagenes/eurostat}{Estructura de una petición REST de Eurostat}\cite{eurostat}
-Como podemos ver la estructura es muy parecida a la petición de datos del INE, con una parte fija, otra parte que indica el formato, una que indica el lenguaje y finalmente el código que identifica los datos. También permite filtrar la información.\\
-El inconveniente de este servicio es la forma de conseguir el identificador de los datos (datasetCode en la imagen).
-Los códigos de los conjuntos de datos se pueden encontrar ordenados por temas en la página de Eurostat así que pensé en las opciones que existían para automatizar las peticiones lo máximo posible:
-\begin{itemize}
-    \item Pedirle al usuario que seleccione el código del conjunto de datos y lo pegue en nuestra aplicación web para que cree la petición.
-    \item Guardar en mi base de datos todos los conjuntos de datos de Eurostat.
-\end{itemize}
-Ninguna de las opciones me parecía práctica así que descarté el uso de Eurostat en mi aplicación.
-\subsection{Datos abiertos de la junta de Castilla y León}
-La junta de Castilla y León tiene una API desde la que puedes buscar los datos.\cite{apijcyl}
-\imagen{imagenes/apijcyl}{Búsqueda de datos desde la API}
-Como esta página no ofrece un servicio para sacar la información de una forma más automatizada como con una petición url, no me pareció útil usar los datos abiertos de la junta de Castilla y León.
-\subsection{Instituto nacional de estadística}
-Una fuente de la que suelen sacar los datos para el análisis de la coyuntura económica es el instituto nacional de estadística (INE). Por ello, para facilitar la extracción de los datos, pensé que sería buena idea permitir seleccionar la información que queramos de esta página e insertarla directamente en nuestra base de datos.\\
-El INE tiene una API que permite mostrar los datos en formato JSON mediante una petición url como ya he explicado en el apartado "Conceptos teóricos".\\
+    También se creó esta pantalla para permitir al usuario editar sus datos.
+\end{description}
+\section{Ampliación de funcionalidades}
+Después de subsanar los errores que existían en la aplicación, se decidió implementar más funcionalidades.\\
+\subsection{Introducción de datos desde una base de datos externa}
+Para realizar el informe de la coyuntura económica de Burgos se usan múltiples fuentes así que se pensó en una forma de sacar la información de una manera más sencilla para el usuario.\\
+Las bases de datos abiertos más utilizadas son: el Instituto Nacional de Estadística, Eurostat y los datos abiertos de la Junta de Castilla y León. En esta sección se hablará de cada una de ellas y se explicará su manera de extraer datos concluyendo con la justificación de la plataforma elegida.
+\subsubsection{Instituto nacional de estadística}
+Una fuente de la que suelen sacar los datos para el análisis de la coyuntura económica es el Instituto Nacional de Estadística (INE). Por ello, para facilitar la extracción de los datos, se pensó en la posibilidad de permitir seleccionar la información de esta página y que la aplicación la insertara automáticamente en la base de datos.\\
+El catálogo de datos de esta plataforma proviene de dos fuentes: la base de datos de difusión Tempus3 y el repositorio de ficheros PC-Axis.\\
+La información se distribuye en tablas en las que se permite filtrar los datos según sus características.
+ \imagen{imagenes/Ine}{Ejemplo de una tabla del INE}
+Una vez se seleccionen los valores que se quieran consultar, los datos aparecen en forma de tablas o distribuidos en un gráfico.
+\imagen{imagenes/tablaine2}{Datos de una tabla del INE}
+Además de esta manera de visualizar los datos, el Instituto Nacional de Estadística proporciona un servicio que permite descargar la información en formato JSON. Para ello debemos crear una petición en forma de url.\\
 \imagen{imagenes/datosine}{Salida de los datos en formato JSON}
-Así que por la facilidad de obtención de los datos y la manera en la que están representados, me ha parecido muy interesante integrar este recurso en la aplicación.
-\section{Seguimiento}
-Para el seguimiento del proyecto he usado github. Esta herramienta me ha servido mucho para la organización de mis tareas.
-\imagen{imagenes/tablonGithub}{Tablón de mi proyecto en Github}
+ La url para la petición de los datos tiene el formato que aparece en la imagen. 
+ \imagen{imagenes/urlJSON}{Estructura de la url}
+Los campos que aparecen entre llaves, \{ \}, son obligatorios.\cite{ine:urljson}\\
+Los campos que aparecen entre corchetes, [ ], son opcionales y cambian en relación a la función considerada.\\
+Descripción de cada uno de ellos
+\begin{description}
+	\item [idioma] ES para español e EN para inglés. Por defecto está puesto el español.\\
+	\item [función] Funciones implementadas en el sistema para poder realizar diferentes tipos de consulta en función del tipo de fuente, Tempus3 o PC-Axis, y del elemento que se quiere obtener.
+    \item [inputs] Identificadores de los elementos de entrada de las funciones. Estos inputs varían en base al repositorio del que se extraen los datos.
+    \item [parámetros] Los parámetros en la URL se establecen a partir del símbolo ?.\\
+    Cuando haya más de un parámetro, el símbolo \& se utiliza como separador.\\
+    No todas las funciones admiten todos los parámetros posibles. Por ello haremos una clasificación para explicarlos mejor:  
+     \begin{enumerate}
+        \item Parámetros comunes a todas las funciones
+            \begin{description}
+            \item [page] Si hay más de 500 elementos, la consulta se divide en páginas. Esta opción nos permite seleccionar la página que queremos visualizar.
+            \item [download] Para descargar el fichero JSON.
+            \item [det] Este parámetro da más detalles de la información mostrada.
+            \item [tip] Cambia la forma de mostrar la información.
+            \end{description}
+        \item Parámetros para la petición de datos
+            \begin{description}
+                \item [date] Filtra los datos por fecha; fecha concreta, lista o rango de fechas.
+                \item [nult] Devuelve los últimos n datos. Ejemplo: nult=4 devuelve los 4 últimos datos.
+            \end{description}
+        \item Parámetros para la obtención de datos y metadatos en base al ámbito geográfico
+            \begin{description}
+                \item [geo] Con geo = 1 para provincias, municipios u otras desagregaciones y geo = 0 para datos nacionales.
+            \end{description}
+        \end{enumerate}
+\end{description}
+\subsubsection{Eurostat}
+Eurostat es una base de datos que recoge información a nivel europeo. Tiene un servicio de datos en JSON y en Unicode mediante el cual permite descargar los archivos disponibles en estos dos formatos a través de una petición REST.
+\imagen{imagenes/eurostat}{Estructura de una petición REST de Eurostat}\cite{eurostat}
+Como se puede ver la estructura es muy parecida a la petición de datos del INE, con una parte fija, otra parte que indica el formato, una que indica el lenguaje y finalmente el código que identifica los datos. También permite filtrar la información.\\
+El inconveniente de este servicio es la forma de conseguir el identificador de los datos (\textit{datasetCode} en la imagen).
+Los códigos de los conjuntos de datos se pueden encontrar ordenados por temas en la página de Eurostat
+\imagen{imagenes/EurostatData}{Conjuntos de datos del Eurostat}
+\subsubsection{Datos abiertos de la Junta de Castilla y León}
+El portal de Datos Abiertos se enmarca en el proyecto de Gobierno Abierto de la Junta de Castilla y León por el que se pone en marcha el Modelo de Gobierno Abierto de la Junta de Castilla y León junto con la información de transparencia, el espacio de participación ciudadana   y la presencia en redes sociales entre otras actuaciones.\\
+Este portal tiene como objetivos aumentar la transparencia, proporcionando mayor información sobre la actividad de la Junta de Castilla y León y conseguir la participación y colaboración de los ciudadanos y empresas, a través de la interlocución con los mismos, de manera que el intercambio de conocimiento y experiencias permita el avance conjunto de la iniciativa pública y privada.\cite{datosab}\\
+\imagen{imagenes/apijcyl}{Búsqueda de datos desde la API}
+Esta plataforma también permite descargar la información en formato JSON, CSV o Excel. Su funcionamiento es muy simple pero no permite automatizar la extracción de los datos como las bases de datos anteriores.
+\imagen{imagenes/datosjcyl}{Algunos conjuntos de datos de la aplicación}
+\subsubsection{Conclusión}
+Para elegir qué plataforma usar para la extracción de datos se hizo una evaluación de sus características.
+\tablaSmall{Comparativa de las plataformas de datos abiertos}{l c c c c}{comparativaplataformas}
+{ \multicolumn{1}{l}{} & INE & Eurostat & Datos abiertos JCYL \\}{ 
+Posee un sistema de petición de datos por url & X & X & \\
+La petición de los datos puede automatizarse & X & & \\
+Posee un gran catálogo de datos & X & X & X\\
+Facilidad de uso & X & & X\\
+Facilidad de extracción de datos & X & &\\
+}
+Habiendo sopesado las tres opciones, se eligió la plataforma del Instituto Nacional de Estadística por ser la más completa y sencilla de automatizar.
+\subsection{Predicción de datos}
+Otra funcionalidad interesante que se decidió añadir fue la posibilidad de predecir los datos de una variable.//
+Para ello, se utilizaron una serie de algoritmos de predicción de datos. 
+
 \section{Problemas}
-Esta sección condicionó mucho el desarrollo del proyecto porque encontré numerosas dificultades.
-\subsection{Problemas con el código}
-Al ser un proyecto que no era mío, me costó mucho entender su código. Además el framework y el lenguaje no me eran familiares. Una de las principales razones por las que ocurrió esto es porque la aplicación usa plantillas y recursos ajenos al mismo que no estaban documentados.
-\subsubsection{AdminLTE}
-AdminLTE es una plantilla que usa la aplicación para su diseño general y para la barra lateral del menú. Está programado en HTML5 con el framework CSS Bootstrap. 
-\imagen{imagenes/admnLTE}{Ejemplo de plantilla que propociona AdminLTE}
-\subsubsection{Entrust GUI}
-Entrust GUI es una interfaz de administrador que facilita la administración de usuarios, roles y permisos.
-\imagen{imagenes/entrustgui}{Ejemplo de la interfaz}
+A lo largo del desarrollo del proyecto se encontraron problemas que condicionaron el trabajo. En esta sección se expondrán y se explicarán cómo se solucionaron.
 \subsection{Problemas de compatibilidad}
 Este tipo de problemas tuvieron que ver con Composer.\\
-Como ya he explicado, Composer es un gestor de dependencias del proyecto. Algunas de las que he usado son laravel dusk, maatwebsite, phpspreadsheet, etc y casi todas han dado algún problema de compatibilidad en su instalación.
+Como ya se ha explicado, Composer es un gestor de dependencias del proyecto. El problema de usar este gestor es que al instalar nuevas librerías era muy frecuente que aparecieran errores de compatibilidad.
 \imagen{imagenes/problemaComposer}{Captura de un problema típico al intentar instalar un paquete nuevo}
-Ha sido necesaria una solución diferente para resolver cada uno de estos problemas lo que ha supuesto un retraso importante en la realización del proyecto.
+Para la resolución de estos problemas se han tenido que actualizar, borrar e incluso instalar versiones viejas de las dependencias problemáticas.
 \subsection{Problemas en el despliegue del proyecto}
-Para la producción del trabajo se han usado muchos servidores locales y online como Xampp, Wampp, Docker, etc y todos ellos han dado algún problema.\\
+Para la producción del trabajo se han usado muchos servidores locales y on-line como Xampp, Wampp, Docker, etc y todos ellos han supuesto un reto en su correcta configuración.\\
 \subsubsection{Xampp}
-Xampp ha sido la herramienta más usada para probar el proyecto, sin embargo, tuve muchos problemas para conseguir que funcionara correctamente.\\
+Xampp ha sido la herramienta más usada para probar el proyecto.\\
 La mayoría de los problemas los tuve a la hora de configurar el host virtual.
 \imagen{imagenes/vhostxamp}{Configuración de los hosts virtuales}
-Aunque a primera vista parece fácil, conseguir que cogiera la ruta del proyecto me costó mucho y todavía sigo sin entender el por qué. Mis suposiciones son que el navegador desde que accedía al host virtual guardaba la caché y por lo tanto usaba una configuración desactualizada. Se solucionó al borrar su caché y reiniciar el servidor.
+Al principio, la ruta no era resuelta correctamente por el navegador. Para la solución a este problema hizo falta cambiar el archivo de configuración del servidor de Xampp, y habilitar los hosts virtuales.\\
+Además hubo que borrar la caché del navegador ya que cargaba la anterior configuración.
 \subsubsection{Docker}
-Para usar esta herramienta usé el contenedor \textit{laradock} que tiene multitud de imágenes para proyectos de Laravel. El principal problema que tuve fue el servidor que utilizaba ya que en todos los tutoriales aconsejaba usar \textit{nginx}, con el que no estaba familiarizada, pero al cambiar a \textit{apache} todo fue algo más fácil aunque también tuve problemas para direccionar el proyecto.
+Para usar esta herramienta se usó el contenedor \textit{laradock} que tiene multitud de imágenes para proyectos de Laravel. El principal problema fue el servidor que utilizaba ya que en un principio se usó \textit{nginx} y no funcionaba correctamente. Después se cambió a \textit{apache}.\\
 \imagen{imagenes/envlaradock}{Archivo de configuración .env de laradock}
-Laradock usa un direccionamiento virtual de los archivos lo que me confundió mucho ya que no veía realmente dónde se encontraba el proyecto.\\
-Otro problema que tuve con Docker fue la ejecución de los tests con Laravel Dusk. En la documentación de la página oficial de Laravel pone que usa un driver de Chrome así que intenté descargarme una imagen para instalarla en laradock. Esto no fue una buena idea porque las imágenes de laradock están conectadas entre sí en un archivo de configuración \textit{docker-compose.yml} y no conseguí que mi nueva imagen funcionara con las demás.\\
-Después de mucho buscar encontré un artículo \cite{selenium} que explicaba cómo usar Selenium para ejecutar los test con Laravel dusk en laradock. Como Selenium es una de las imágenes incluidas en laradock ya estaba configurada y sólo tuve que cargarla.
+El direccionamiento del proyecto se realiza desde el archivo \textit{.env}.\\
+Laradock usa un direccionamiento virtual de los archivos así que esta parte también fue problemática.\\
 \subsubsection{Heroku}
-Para la presentación de la aplicación se decidió utilizar en Heroku en un principio, que es un hosting gratuito donde se puede alojar tu aplicación web. Tuve varios problemas al instalarlo ya que el proyecto tiene dos partes, la parte del código y la base de datos. Heroku ofrece una base de datos propia pero es de pago, además está en PostgreSQL y la mía está en MySQL.\\
-Para solucionar esto conseguí conectar mi proyecto a una base de datos externa totalmente gratuita llamada db4free.net.\\
-Cuando se consiguió que todo funcionaba correctamente, se notó la lentitud de la aplicación, pero al ser un hosting gratuito
+Para la presentación de la aplicación se decidió utilizar en Heroku en un principio, que es un hosting gratuito donde se puede alojar tu aplicación web. Hubo varios problemas al instalarlo ya que el proyecto tiene dos partes, la parte del código y la base de datos. Heroku ofrece una base de datos propia pero es de pago, además está en PostgreSQL y la del proyecto está en MySQL.\\
+Para solucionar esto se consiguió conectar la aplicación a una base de datos externa totalmente gratuita llamada \href{https://www.db4free.net/}{db4free.net}.\\
+Cuando se consiguió que todo funcionara correctamente, se notó la lentitud de la aplicación, pero al ser un hosting gratuito
 es normal ya que no nos ofrecen mucha memoria.\\
 La aplicación funciona, pero al tener tantos servicios con peticiones agotamos la memoria RAM que nos ofrece Heroku y el rendimiento de la aplicación no es el esperado.\\
 Para poder tener un buen rendimiento, sería necesario usar la versión de pago de Heroku, mucho más potente.
-\subsection{Problemas con laravel}
-La principal ventaja y a la vez problema que tuve con Laravel son los archivos que te proporciona. Con esto me refiero a que sin haber programado nada, al crear un proyecto de Laravel ya te da un sistema de archivos y carpetas que contiene una aplicación funcional. Lo que al principio puede ser cómodo pero cuando se produce algún error, la información sobre el por qué se ha producido el fallo puede ser confusa porque refleja ficheros que no han sido escritos por mí.
-\imagen{imagenes/errorlaravel}{Ejemplo de un error que se produce en laravel}
+
 
 
 

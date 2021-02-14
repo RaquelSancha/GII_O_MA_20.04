@@ -48,7 +48,7 @@ class RegisterController extends Controller
 	    	return view('confirm/solicitud');
     	}else{
     		
-    		return view('register/register',compact('errorPass','errorNombreEmail'));
+    		return view('vendor/adminlte/auth/register',compact('errorPass','errorNombreEmail'));
     	}	
     }
 

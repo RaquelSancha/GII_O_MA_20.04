@@ -104,8 +104,6 @@ Route::get('/tables/{id}/edit','TableController@edit');
 
 Route::post('/tables/{id}/exportar','TableController@exportar');
 
-Route::get('/tables/{id}/cambiarDescripcion','TableController@cambiarDescripcion');
-
 Route::get('/tables/{id}/insertAmbito','TableController@showInsertAmbito');
 
 Route::get('/tables/{id}/insertYear','TableController@showInsertYear');

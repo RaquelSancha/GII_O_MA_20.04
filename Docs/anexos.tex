@@ -8,6 +8,9 @@
 \usepackage{lmodern} % scalable font
 \usepackage{microtype}
 \usepackage{placeins}
+\usepackage{eurosym} 
+\usepackage[usenames]{color}
+\usepackage{longtable}
 
 \RequirePackage{booktabs}
 \RequirePackage[table]{xcolor}
@@ -315,7 +318,7 @@
   \vfill
   % Título proyecto y escudo informática ----------------
   \colorbox{cpardoBox}{%
-    \begin{minipage}{.8\textwidth}
+    \begin{minipage}{\textwidth}
       \vspace{.5cm}\Large
       \begin{center}
       \textbf{TFG del Grado en Ingeniería Informática}\vspace{.6cm}\\
@@ -325,9 +328,7 @@
     \end{minipage}
 
   }%
-  \hfill\begin{minipage}{.20\textwidth}
-    \includegraphics[width=\textwidth]{imagenes/escudoubu}
-  \end{minipage}
+  \hfill
   \vfill
   % Datos de alumno, curso y tutores ------------------
   \begin{center}%
@@ -345,9 +346,12 @@
 
 
 % Datos de portada
-\title{título del TFG \\Documentación Técnica}
-\author{nombre alumno}
-\tutor{nombre tutor}
+\title{Mejora de la herramienta web dinámica para la
+captación, tratamiento y presentación de
+datos relacionados con la coyuntura
+económica de Burgos \\Documentación Técnica}
+\author{Raquel Sancha Sánchez}
+\tutor{Bruno Baruque Zanon}
 \date{\today}
 
 \begin{document}

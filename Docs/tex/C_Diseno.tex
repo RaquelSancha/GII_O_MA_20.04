@@ -1,11 +1,32 @@
 \apendice{Especificación de diseño}
 
 \section{Introducción}
-
+En este anexo se define cómo se han resuelto los objetivos y especificaciones expuestos con anterioridad. Define los datos que va a manejar la aplicación y sus características.
 \section{Diseño de datos}
-
-\section{Diseño procedimental}
+La aplicación cuenta con las siguientes entidades de datos:
+\begin{description}
+    \item [Fuente] Recoge el nombre de la procedencia de los datos y sus identificadores.
+    \item [Variable] Definen las tablas de la aplicación. Esta entidad recoge los nombres, descripción y tipo de las variables. Cada variable tiene asociada una fuente.
+    \item [Ámbito] Contiene los ámbitos geográficos que pueden tener las tablas y su identificador.
+    \item [Categoría] Tiene los nombres y los identificadores de las categorías de las tablas. Cada categoría tiene asociada una súper categoría.
+    \item [Súper categoría] Súper categorías que clasifican las categorías de la aplicación. Contiene su nombre y un identificador.
+    \item [VariableÁmbitoCategoría] Contiene la relación entre las variables, las categorías y los ámbitos. También guarda los valores asociados a dicha relación asociados a un mes y a un año.
+    \item [Users] Contiene la información de los usuarios de la aplicación: su nombre, email, contraseña y fecha de creación del usuario.
+    \item [Usersconfirm] Tiene los datos de los usuarios que aún no están registrados pero que han solicitado su registro en la aplicación.
+    \item [Roles] Son los posibles roles que pueden tener los usuarios: Administrador o editor.
+    \item [Role\_user] Tabla que guarda la relación entre los usuarios y su rol.
+    \item [DatosINE] Esta tabla guarda los datos que se han introducido desde el INE junto con la información de a qué variable, ámbito y categoría han sido asignados. También guarda los ids de las urls de las que han sido extraídos los datos. 
+    \item [UrlDatosINE] Guarda las urls de los archivos JSON de los que hemos cogido los datos para introducirlos en nuestras tablas.
+\end{description}
+\subsection{Diagramas relacionales}
+\imagen{imagenes/Relacionestablas}{Diagrama relacional de las tablas}
+\imagen{imagenes/RelacionesUsuarios}{Diagrama relacional de los usuarios}
 
 \section{Diseño arquitectónico}
+El que sea una aplicación hecha con Laravel condiciona fuertemente su diseño arquitectónico.
+\subsection{Diagramas de paquetes}
+\section{Diseño procedimental}
+
+
 
 
