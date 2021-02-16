@@ -46,7 +46,9 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan clear-compiled",
+            "chmod -R 777 public/"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
@@ -57,4 +59,5 @@
         "preferred-install": "dist",
         "sort-packages": true
     }
+  
 }
