@@ -31,8 +31,9 @@
             @if (! Auth::guest())
             <li ><a href="{{ url('/datosINE') }}"><i class='fa fa-database'></i> <span>Gestión datos INE</span></a></li>
 
+            @endif
             <li ><a href="{{ url('/prediccionDatos') }}"><i class='fa fa-database'></i> <span>Predicción de datos</span></a></li>
-
+            @if (! Auth::guest())
             <li ><a href="{{ url('data/choose') }}"><i class='fa fa-database'></i> <span>Gestión Datos</span></a></li>
             @endif
             <li class="treeview">

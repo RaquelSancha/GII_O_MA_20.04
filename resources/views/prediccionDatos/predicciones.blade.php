@@ -64,7 +64,7 @@ var myChart = new Chart(ctx, {
         datasets: [
           
           {
-            label: 'PREDICCIÓN',
+            label: 'PREDICCIÓN {{$año}}',
             data: [ @for($i=0 ; $i<count($predicciones);$i++) {{$predicciones[$i]}}, @endfor  ],
             borderColor: "#357ebd",
             borderWidth: 1
@@ -93,7 +93,7 @@ var myChart2 = new Chart(ctx2, {
         datasets: [
           
         {
-          label: 'VALORES DEL ÚLTIMO AÑO',
+          label: 'VALORES DEL ÚLTIMO AÑO ({{$año-1}})',
             data: [ @for($i=count($valores)-12 ; $i<count($valores);$i++) {{$valores[$i]}},  @endfor],
             borderColor: "#FF3333",
             borderWidth: 1

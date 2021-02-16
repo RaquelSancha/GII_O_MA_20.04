@@ -200,6 +200,6 @@ Route::get('/prediccionDatos', 'VariableController@index2');
 
 Route::get('/prediccionDatos/{id}', 'PrediccionDatosController@show');
 
-//Route::post('prediccionDatos/predecir/{id}','PrediccionDatosController@prueba');
+//Route::post('prediccionDatos/predecir/{id}','PrediccionDatosController@prueba'); //Prueba para comparar los estimadores
 
 Route::post('prediccionDatos/predecir/{id}','PrediccionDatosController@predecir');
