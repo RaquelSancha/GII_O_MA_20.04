@@ -2,20 +2,16 @@
 @section('main-content')
 <h2><b>Ayuda de la aplicación Proyecto Coyuntura</b></h2>
 <br>
+<p><i><a href="#predecir">Predicción de datos</a></i></p>
 <p><i>Tablas</i></p>
 <ul>
   	<li><a href="#predefinidas">Tablas predefinidas</a></li>
   		<ul>
     	<li><a href="#ver">Ver tabla</a></li>
 </ul>
-<u1>
-  		<li><a href="#crear">Crear tablas</a></li>
-  	<ul>
-    	<li><a href="#insertar">Insertar tabla con valores nuevos</a></li>
-   	 	<li><a href="#crearCategorias">Crear tabla a partir de categorías existentes</a></li>
-	</ul>
-</ul>
+
 <hr>
+
 
 <ul>
 	<a name="predefinidas"><h3>Tablas predefinidas</h3></a>
@@ -52,34 +48,34 @@
 	         </div>
 	<br>
 
-	<a name="crear"><h3>Crear tablas</h3></a>
-		   <br>
-            	Desde este apartado se podran introducir <b>nuevas tablas</b> a la aplicación o si se desea, crear una tabla nueva a partir de <b>cualquier categoría</b> que se enuentre en el sistema
-                  <div align="center">
-                <img src="img/crear.jpg"  title="Formulario crear tablas">
-            	</div>	
+</ul>
 
+<ul>
+<a name="predecir"><h3>Predicción de datos</h3></a>
+<div align="justify">	
+		La opción "Predicción de datos" permite predecir el siguiente año de los datos de una variable.  
+		Se podrá seleccionar la variable de la que se quiera hacer predicciones.
+		   <br><br>
+		    <div align="center">
+                <img src="img/predecirInicio.png"  title="Variables predefinidas del sistema">
+            </div>
+	    </div>
+		<br><br>
+		Después, habrá que seleccionar el ámbito y la categoría de la variable.
+		<br><br>
+	        <div align="center">
+	                <img src="img/predecirElegir.png"  title="Elegir el ámbito y la categoría a predecir">
+	         </div>
+			 <br><br>
+		Por último podremos ver las predicciones del próximo año de la variable elegida.
+		<br><br>
+			 <div align="center">
+	                <img src="img/pantallaPredecir1.png"  title="Resultados de la predicción">
+					<img src="img/pantallaPredecir2.png"  title="Resultados de la predicción">
+					<img src="img/pantallaPredecir3.png"  title="Resultados de la predicción">
+	         </div>
 	<br>
-	
-	<li><a name="insertar"><h4>Insertar tabla con valores nuevos</h4></a></li>	
-		   <br>
-            	Para introducir una tabla nueva en la aplicación se deberá rellenar este formulario:
-                  <div align="center">
-                <img src="img/insertar.jpg"  title="Formulario crear tablas">
-            	</div>	
-            	<br><br>
-            	Se creará la tabla con los valores vacios, y se dará la oportunidad de rellenarlos.
-                <img src="img/insertarForm.jpg"  title="formulario para crear tablas de cero">	
+	<br>
+</ul>
 
-	<br>
-	<li><a name="crearCategorias"><h4>Crear tabla a partir de categorías existentes</h4></a></li>	
-		   <br>
-            	Para crear una tabla con cualquier categoría que esté en la aplicación se rellenará el siguiente formulario. 
-                 <div align="center">
-                <img src="img/crearCategorias.jpg"  title="Formulario crear categorias">
-            	</div>	
-	<br>
-</ul>	
-
-	
 @endsection

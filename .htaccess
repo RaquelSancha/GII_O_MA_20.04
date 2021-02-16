@@ -1,5 +1,0 @@
-RewriteEngine on
-RewriteCond %{HTTP_HOST}$
-RewriteRule (.*)https://www3.ubu.es/boletincoyuntura/$1 [R=301,L]
-RewriteRule ^$ /public/ [L]
-

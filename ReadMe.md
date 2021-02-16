@@ -15,7 +15,6 @@
   <i>Carlos López Nozal</i><br>
   <i>Bruno Baruque Zanon</i><br>
   <i>Santiago Porras Alfonso</i><br>
-  <i>Julio César Puche Regaliza</i><br>
 </p>
 
 # Descripción
@@ -50,3 +49,7 @@ vendor/bin/phpunit
 ## Construido con 🛠️
 * [Laravel](https://laravel.com/) - El framework web usado
 * [Composer](https://getcomposer.org/) - El gestor de dependencias
+
+## La aplicación
+Permite la introducción de datos en forma de tablas. Cada tabla representa la información de una variable. Cada variable puede tener categorías y ámbitos asociados.
+ <img href="Docs/imagenes/verTabla.jpg" alt="Tablas de la aplicación"/> 

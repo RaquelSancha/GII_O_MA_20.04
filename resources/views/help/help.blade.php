@@ -9,6 +9,11 @@
   <li><a href="#categorias">Mostrar categorías</a></li>
   <li><a href="#ambitos">Mostrar ámbitos geográficos</a></li>
 </ul>
+<p><i>Gestión de datos del INE</i></p>
+<ul>
+  <li><a href="#subirDatos">Subir datos</a></li>
+</ul>
+<p><i><a href="#predecir">Predicción de datos</a></i></p>
 <p><i>Tablas</i></p>
 <ul>
   	<li><a href="#predefinidas">Tablas predefinidas</a></li>
@@ -177,6 +182,63 @@ Desde la gestión de datos, se podrán <b>crear</b>, <b>modificar</b> y <b>borra
             	</div>	
 	<br>
 </ul>	
+<ul>
 
+<h3>Gestión de datos del INE</h3>
+Desde la gestión de datos, se podrán <b>subir</b> y <b>actualizar</b> datos del Instituto Nacional de Estadística.
+<a href="https://www.ine.es/">Acceso al INE </a>
+
+<ul>
+	<li><a name="subirDatos"><h4>Subir datos</h4></a></li>
+		<div align="justify">	
+		    Para subir datos desde el INE, se deberá copiar la url de la página que se quiera, como por ejemplo la de la imagen
+			<br><br>
+		    <div align="center">
+                <img src="img/Ine.png"  title="Ejemplo de página del ine de donde sacar la url">
+            </div>
+			<br><br>A continuación se deberá insertar la dirección de la página en la siguiente pantalla. <br><br>
+			<div align="center">
+                <img src="img/direccionine.png"  title="Pantalla para insertar la dirección del INE">
+            </div>
+			<br><br> Después se deberán seleccionar los conjuntos de datos que deseemos junto con sus años o meses. <br><br>
+			<div align="center">
+                <img src="img/elegirDatosINE.png"  title="Selección de datos">
+            </div>
+			<br><br> Por último se mostrarán los datos seleccionados y se deberá elegir a qué variable, ámbito y categoría de los existentes pertenecen o crear una tabla/variable nueva para insertarlos.<br><br>
+			<div align="center">
+                <img src="img/subirdatos.png"  title="Inserción de datos">
+            </div>
+	    </div>
+	<br>
+	
+</ul>
+<hr>
+
+<a name="predecir"><h3>Predicción de datos</h3></a>
+<div align="justify">	
+		La opción "Predicción de datos" permite predecir el siguiente año de los datos de una variable.  
+		Se podrá seleccionar la variable de la que se quiera hacer predicciones.
+		   <br><br>
+		    <div align="center">
+                <img src="img/predecirInicio.png"  title="Variables predefinidas del sistema">
+            </div>
+	    </div>
+		<br><br>
+		Después, habrá que seleccionar el ámbito y la categoría de la variable.
+		<br><br>
+	        <div align="center">
+	                <img src="img/predecirElegir.png"  title="Elegir el ámbito y la categoría a predecir">
+	         </div>
+			 <br><br>
+		Por último podremos ver las predicciones del próximo año de la variable elegida.
+		<br><br>
+			 <div align="center">
+	                <img src="img/pantallaPredecir1.png"  title="Resultados de la predicción">
+					<img src="img/pantallaPredecir2.png"  title="Resultados de la predicción">
+					<img src="img/pantallaPredecir3.png"  title="Resultados de la predicción">
+	         </div>
+	<br>
+	<br>
+</ul>
 	
 @endsection
