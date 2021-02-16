@@ -37,7 +37,7 @@
                     <option>{{$fechas['Año'][$i]}} {{$fechas['Periodo'][$j]}}</option>
                   @endfor
                 @else
-                <option>HOLA</option>
+                <option></option>
                 @endif
               @endfor
             </select>  

@@ -73,12 +73,6 @@
 </form>
 <br><br>
 
-
-
-
-
-
-
 <div id="table_wrapper">
 <div class="table-responsive">
 <table  class="table table-striped header-fixed"  id="tabla" align="center" border="5" class="display nowrap" cellspacing="0" width="50%">

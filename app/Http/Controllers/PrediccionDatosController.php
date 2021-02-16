@@ -72,9 +72,6 @@ class PrediccionDatosController extends Controller
         $i = 0;
         foreach($variables_aux as $variable){
             $variables[$i] = array();
-            array_push($variables[$i], $nombreVariable);
-            array_push($variables[$i], $categoria);
-            array_push($variables[$i], $ambito);
             array_push($variables[$i], $variable->Mes);
             array_push($variables[$i], $variable->Year);
             $i++;
@@ -91,27 +88,17 @@ class PrediccionDatosController extends Controller
         $datasetEstimar=array();
         for($j=1; $j<=12; $j++){
             $datasetEstimar[$i] = array();
-            array_push($datasetEstimar[$i], $nombreVariable);
-            array_push($datasetEstimar[$i], $categoria);
-            array_push($datasetEstimar[$i], $ambito);
             array_push($datasetEstimar[$i], $j);
             array_push($datasetEstimar[$i], $año);
             $i++;
         }
         $dataset = new Unlabeled($datasetEstimar);
-        $prediccionesExtraTree_aux = $estimator->predict($dataset);
+        $predicciones_aux = $estimator->predict($dataset);
         $predicciones=array();
-        for($i=0; $i<count($prediccionesExtraTree_aux) ; $i++){
-            array_push($predicciones,round($prediccionesExtraTree_aux[$i],2));
+        for($i=0; $i<count($predicciones_aux) ; $i++){
+            array_push($predicciones,round($predicciones_aux[$i],2));
         }
-        $estimator = new GradientBoost(new RegressionTree(3), 0.1, 0.8, 1000, 1e-4, 10, 0.1, new SMAPE(), new DummyRegressor(new Constant(0.0)));
-        $estimator->train($datasetTrain); 
-        $prediccionesGradientB_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesGradientB_aux) ; $i++){
-            array_push($predicciones,round($prediccionesGradientB_aux[$i],2));
-        }
-
+      
         return view('prediccionDatos/predicciones',compact('predicciones','nombreVariable','categoria','ambito','valores','año'));
     }
     public function prueba(Request $request,$id){
@@ -151,7 +138,6 @@ class PrediccionDatosController extends Controller
             }
         }
         $datasetTrain = new Labeled($variables,$valores);
-        print_r($datasetTrain);
         $datasetEstimar=array();
         for($j=1; $j<=12; $j++){
             $datasetEstimar[$i] = array();
@@ -161,97 +147,39 @@ class PrediccionDatosController extends Controller
         }
         $dataset = new Unlabeled($datasetEstimar); //Etiquetas que queremos predecir
         //Prueba con el estimador ExtraTreeRegressor
-        /*
-        $estimator = new ExtraTreeRegressor(30, 3, 20, 0.05);
-        $estimator->train($datasetTrain); 
-        $prediccionesExtraTree_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesExtraTree_aux) ; $i++){
-            array_push($predicciones,round($prediccionesExtraTree_aux[$i],2));
-        }
-        */
+        
+        //$estimator = new ExtraTreeRegressor(30, 3, 20, 0.05);
+
         //Prueba con el estimador GradientBoost
+
+       // $estimator = new GradientBoost(new RegressionTree(3), 0.1, 0.8, 1000, 1e-4, 10, 0.1, new SMAPE(), new DummyRegressor(new Constant(0.0)));
+       
+        //Prueba con el estimador Adaline 
         
-        $estimator = new GradientBoost(new RegressionTree(3), 0.1, 0.8, 1000, 1e-4, 10, 0.1, new SMAPE(), new DummyRegressor(new Constant(0.0)));
-        $estimator->train($datasetTrain); 
-        $prediccionesGradientB_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesGradientB_aux) ; $i++){
-            array_push($predicciones,round($prediccionesGradientB_aux[$i],2));
-        }
+       // $estimator = new Adaline(100, new Adam(0.001), 1e-4, 500, 1e-6, 5, new HuberLoss(2.5));
+    
+        //Prueba con el estimador KDNeighborsRegressor 
+
+       // $estimator = new KDNeighborsRegressor(5, true, new BallTree(50));
+
+        //Prueba con el estimador KNN 
+
+        //$estimator = new KNNRegressor(2, false, new SafeEuclidean());
         
-        //Prueba con el estimador Adaline INCOMPATIBLE
-        /*
-        $estimator = new Adaline(100, new Adam(0.001), 1e-4, 500, 1e-6, 5, new HuberLoss(2.5));
-        $estimator->train($datasetTrain); 
-        $prediccionesAdaline_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesAdaline_aux) ; $i++){
-            array_push($predicciones,round($prediccionesAdaline_aux[$i],2));
-        }
-        */
-        //Prueba con el estimador SVR NO LO ENCUENTRA
-        /*
-        $estimator = new SVR(1.0, 0.03, new RBF(), true, 1e-3, 256.0);
-        $estimator->train($datasetTrain); 
-        $prediccionesSVR_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesSVR_aux) ; $i++){
-            array_push($predicciones,round($prediccionesSVR_aux[$i],2));
-        }
-        */
-        //Prueba con el estimador KDNeighborsRegressor INCOMPATIBLE
-        /*
-        $estimator = new KDNeighborsRegressor(5, true, new BallTree(50));
-        $estimator->train($datasetTrain); 
-        $prediccionesKDN_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesKDN_aux) ; $i++){
-            array_push($predicciones,round($prediccionesKDN_aux[$i],2));
-        }
-        */
-        //Prueba con el estimador KNN INCOMPATIBLE
-        /*
-        $estimator = new KNNRegressor(2, false, new SafeEuclidean());
-        $estimator->train($datasetTrain); 
-        $prediccionesKNN_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesKNN_aux) ; $i++){
-            array_push($predicciones,round($prediccionesKNN_aux[$i],2));
-        }
-        */
-        //Prueba con el estimador RadiusNeighborsRegressor INCOMPATIBLE
-        /*
-        $estimator = new RadiusNeighborsRegressor(0.5, true, new BallTree(30, new Diagonal()));
-        $estimator->train($datasetTrain); 
-        $prediccionesRadius_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesRadius_aux) ; $i++){
-            array_push($predicciones,round($prediccionesRadius_aux[$i],2));
-        }
-        */
-          //Prueba con el estimador Ridge INCOMPATIBLE
-        /*
-        $estimator = new Ridge(2.0);
-        $estimator->train($datasetTrain); 
-        $prediccionesRidge_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesRidge_aux) ; $i++){
-            array_push($predicciones,round($prediccionesRidge_aux[$i],2));
-        }
-        */
-          //Prueba con el estimador RegressionTree 
-        /*
-        $estimator = new RegressionTree(20, 2, 4, 1e-3);
-        $estimator->train($datasetTrain); 
-        $prediccionesRT_aux = $estimator->predict($dataset);
-        $predicciones=array();
-        for($i=0; $i<count($prediccionesRT_aux) ; $i++){
-            array_push($predicciones,round($prediccionesRT_aux[$i],2));
-        }
-        */
-        //Prueba con el estimador MLPRegressor INCOMPATIBLE
-        /*
+        //Prueba con el estimador RadiusNeighborsRegressor 
+        
+        //$estimator = new RadiusNeighborsRegressor(0.5, true, new BallTree(30, new Diagonal()));
+
+        //Prueba con el estimador Ridge 
+
+       // $estimator = new Ridge(2.0);
+
+        //Prueba con el estimador RegressionTree 
+       
+        //$estimator = new RegressionTree(20, 2, 4, 1e-3);
+
+        //Prueba con el estimador MLPRegressor 
+        
         $estimator = new MLPRegressor([
             new Dense(100),
             new Activation(new ReLU()),
@@ -262,11 +190,17 @@ class PrediccionDatosController extends Controller
             new Dense(50),
             new Activation(new ReLU()),
         ], 128, new RMSProp(0.001), 1e-3, 100, 1e-5, 3, 0.1, new LeastSquares(), new RSquared());
+        
         $estimator->train($datasetTrain); 
-        $prediccionesMLP = $estimator->predict($dataset);
-       */
+        $predicciones_aux = $estimator->predict($dataset);
+        $predicciones=array();
+        for($i=0; $i<count($predicciones_aux) ; $i++){
+            array_push($predicciones,round($predicciones_aux[$i],2));
+        }
+        
         return view('prediccionDatos/prueba',compact('predicciones','nombreVariable','categoria','ambito','valoresReales','año'));
     }
+   
         /**
     * Función que se encarga de mostrar las supercategorias, categorias, ambitos y años de una variable pasada por parametro.
     *

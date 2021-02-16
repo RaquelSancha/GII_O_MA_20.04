@@ -412,6 +412,10 @@ public function subirDatos($datos, $idUrl){
                 $idAmbito= DB::select('SELECT ambito.idAmbito FROM ambito where idAmbito=?', [$ambito]);
                 $idVariable= DB::select('SELECT variable.idVariable FROM variable where idVariable=?', [$variable]);
                 $nomVarAux= DB::select('SELECT * FROM variable where idVariable=?', [$variable]);
+                if(!isset($nomVarAux->Nombre) ){
+                    throw new \App\Exceptions\ActualizacionException('No hay datos para actualizar');
+    
+                }
                 array_push($nomVarActualizadas, $nomVarAux->Nombre);
                 $id= $dat->id;
                 for ($i = 0; $i < $count; $i++) {
