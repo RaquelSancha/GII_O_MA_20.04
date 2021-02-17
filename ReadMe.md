@@ -57,6 +57,7 @@ vendor/bin/phpunit
 
 ## La aplicación
 Permite la introducción de datos en forma de tablas. Cada tabla representa la información de una variable. Cada variable puede tener categorías y ámbitos asociados.
- <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/verTabla.jpg" alt="Tablas de la aplicación"/> 
+ <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/verTabla.jpg" alt="Tablas de la aplicación"/> <br><br>
  También te permite realizar una predicción de los datos a futuro
+  <br><br>
  <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/pantallaPredecir2.PNG" alt="Predicción de los datos"/> 
