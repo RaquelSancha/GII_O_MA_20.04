@@ -4,6 +4,10 @@
 <p align="center">
   <a href="https://app.codacy.com/gh/RaquelSancha/GII17.0R_CoyunturaEconomica/dashboard?branch=master"><img src="https://app.codacy.com/project/badge/Grade/5a86b32c970a40a981b82a1324254596"/></a>
 </p>
+<p align="center">
+  <a href="https://coyunturaeconomica2.herokuapp.com/">
+   Despliegue en Heroku</a>
+</p>
 <h4 align="center">TFG de la <a href="https://www.ubu.es/">UBU</a></h4>
 <h3 align="center">
   <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/readme/escudoubu.jpg" alt="Escudo UBU"/> 
@@ -53,4 +57,6 @@ vendor/bin/phpunit
 
 ## La aplicación
 Permite la introducción de datos en forma de tablas. Cada tabla representa la información de una variable. Cada variable puede tener categorías y ámbitos asociados.
- <img href="Docs/imagenes/verTabla.jpg" alt="Tablas de la aplicación"/> 
+ <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/verTabla.jpg" alt="Tablas de la aplicación"/> 
+ También te permite realizar una predicción de los datos a futuro
+ <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/pantallaPredecir2.jpg" alt="Predicción de los datos"/> 
