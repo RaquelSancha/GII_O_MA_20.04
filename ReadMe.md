@@ -6,7 +6,7 @@
 </p>
 <h4 align="center">TFG de la <a href="https://www.ubu.es/">UBU</a></h4>
 <h3 align="center">
-  <img href=" https://raw.githubusercontent.com/RaquelSancha/GII_O_MA_20.04/tree/master/Docs/readme/escudoubu.jpg" alt="Escudo UBU"/> 
+  <img href="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/readme/escudoubu.jpg" alt="Escudo UBU"/> 
 
 </h3>
 <p align="center">
