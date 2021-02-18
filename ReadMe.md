@@ -6,7 +6,7 @@
 </p>
 <p align="center">
   <a href="https://coyunturaeconomica2.herokuapp.com/"><img 
-src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/heroku.png" alt="Despliegue en Heroku"/></a>
+src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/heroku2.png" alt="Despliegue en Heroku"/></a>
 </p>
 <h4 align="center">TFG de la <a href="https://www.ubu.es/">UBU</a></h4>
 <h3 align="center">
