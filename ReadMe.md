@@ -55,14 +55,14 @@ vendor/bin/phpunit
 * [Laravel](https://laravel.com/) - El framework web usado
 * [Composer](https://getcomposer.org/) - El gestor de dependencias
 ## Prueba de la aplicación como usuarios
-<p>Para probar la aplicación como usuario y no como desarrollador se deberá acceder al enlace de Heroku situado en  la cabecera de este archivo.</p><br><br>
+<p>Para probar la aplicación como usuario y no como desarrollador se deberá acceder al enlace de Heroku situado en  la cabecera de este archivo.</p>
 <p>Credenciales para probar la aplicación:</p>
 <p>
 Email: superadmin@superadmin.es<br>
 Contraseña: superadmin<br>
-  </p>
+ </p>
 De esta forma se logrará acceder a todas las funcionalidades de la aplicación para su uso. 
-<br><br>
+<br>
 ## La aplicación
 Permite la introducción de datos en forma de tablas. Cada tabla representa la información de una variable. Cada variable puede tener categorías y ámbitos asociados.
  <img src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/verTabla.jpg" alt="Tablas de la aplicación"/> <br><br>
