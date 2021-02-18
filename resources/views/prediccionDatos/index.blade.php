@@ -1,6 +1,6 @@
 @extends('adminlte::layouts.app')
 @section('main-content')
-<h2><b>Tablas Predefinidas</b></h1><hr>
+<h2><b>Elige una de estas variables para predecirla</b></h1><hr>
 <div class="table-responsive">
 <table class="table table-striped">
   <tr>

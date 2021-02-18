@@ -6,6 +6,9 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">Inserta aquí la dirección del archivo del INE que quieras subir</h3>
+    <br>
+    <p><a href="https://www.ine.es/">Acceso al INE </a></p>
+
   </div>
   <div class="box-body"> 
 <form class="form-horizontal" role="form" method="POST" action="{{ url('/datosINE/confirmarsubida') }}">
