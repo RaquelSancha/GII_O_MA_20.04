@@ -5,7 +5,7 @@
   <a href="https://app.codacy.com/gh/RaquelSancha/GII_O_MA_20.04/dashboard?branch=master"><img src="https://app.codacy.com/project/badge/Grade/5a86b32c970a40a981b82a1324254596"/></a>
 </p>
 <p align="center">
-  <a href="https://coyunturaeconomica2.herokuapp.com/">
+  <a href="https://coyunturaeconomica2.herokuapp.com/"><img 
 src="https://github.com/RaquelSancha/GII_O_MA_20.04/blob/master/Docs/imagenes/heroku.png" alt="Despliegue en Heroku"/></a>
 </p>
 <h4 align="center">TFG de la <a href="https://www.ubu.es/">UBU</a></h4>
